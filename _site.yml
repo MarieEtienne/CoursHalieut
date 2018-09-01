@@ -16,7 +16,7 @@ navbar:
       - text: "Manipulation de données"
         href: intror_manip.html
       - text: "Visualisation"
-        href: intro_visu.html
+        href: intror_visu.html
   - text: "Echantillonnage"
     href: echant.html
     menu:
