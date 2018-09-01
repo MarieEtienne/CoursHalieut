@@ -438,6 +438,34 @@ div.tocify {
 </ul>
 </div>
 </div>
+<div id="idee-principale" class="section level2">
+<h2>Idée principale</h2>
+<p>Le principe de base qui est de séparer les données de la représentation graphique et de diviser la représentation en éléments de base tels que les courbes, les axes ou les labels.</p>
+<p>C’est un peu abstrait, lançons nous</p>
+</div>
+<div id="premier-exemple" class="section level2">
+<h2>Premier exemple</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> DFO_STAT_AREA_CODE, <span class="dt">y =</span> Ntot)) </code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> dfo_area_factor, <span class="dt">y =</span> Ntot)) </code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> dfo_area_factor, <span class="dt">y =</span> Ntot)) </code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
+<p>On peut facilement différencier les années, il faut tut d’abord indiquer que l’année est un facteur</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_longline<span class="op">$</span>year_fact &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_longline<span class="op">$</span>Year)
+<span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> dfo_area_factor, <span class="dt">y =</span> Ntot, <span class="dt">fill=</span>year_fact)) </code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Pour changer la gamme de couleurs, notamment pour les daltoniens</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> dfo_area_factor, <span class="dt">y =</span> Ntot, <span class="dt">fill=</span>year_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">&#39;E&#39;</span>)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Si on veut rajouter la moyenne</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_longline, <span class="kw">aes</span>(<span class="dt">x =</span> dfo_area_factor, <span class="dt">y =</span> Ntot, <span class="dt">fill=</span>year_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()  <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean,  <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="kw">aes</span>(<span class="dt">group =</span> year_fact, <span class="dt">col =</span> year_fact), 
+               <span class="dt">shape=</span><span class="dv">18</span>, <span class="dt">size=</span><span class="dv">3</span>,<span class="dt">show.legend =</span> <span class="ot">TRUE</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.8</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">&#39;E&#39;</span>)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>De belles possibilés et une communauté très active</p>
+</div>
 </div>
 
 

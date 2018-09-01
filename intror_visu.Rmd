@@ -107,3 +107,40 @@ Il est possible de les mettre à notre goût mais c'est parfois un peu pénible.
 * Statistical tools for high-throughput data analysis:(http://www.sthda.com/english/wiki/ggplot2-essentials)
 * Github repository: https://github.com/yhat/ggplot/)
 * RStudio Cheat Sheet : probably the most useful (http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
+
+## Idée principale 
+
+Le principe de base qui est de séparer les données de la représentation graphique et de diviser la représentation en éléments de base tels que les courbes, les axes ou les labels.
+
+C'est un peu abstrait, lançons nous
+
+## Premier exemple
+
+```{r}
+library(ggplot2)
+ggplot(data=df_longline) + geom_point(aes(x = DFO_STAT_AREA_CODE, y = Ntot)) 
+ggplot(data=df_longline) + geom_point(aes(x = dfo_area_factor, y = Ntot)) 
+ggplot(data=df_longline) + geom_boxplot(aes(x = dfo_area_factor, y = Ntot)) 
+```
+
+
+On peut facilement différencier les années, il faut tut d'abord indiquer que l'année est un facteur
+
+```{r}
+df_longline$year_fact <- as.factor(df_longline$Year)
+ggplot(data=df_longline) + geom_boxplot(aes(x = dfo_area_factor, y = Ntot, fill=year_fact)) 
+```
+
+Pour changer la gamme de couleurs, notamment pour les daltoniens
+```{r}
+ggplot(data=df_longline) + geom_boxplot(aes(x = dfo_area_factor, y = Ntot, fill=year_fact)) + scale_fill_viridis_d(option = 'E')
+```
+
+Si on veut rajouter la moyenne 
+```{r}
+ggplot(data=df_longline, aes(x = dfo_area_factor, y = Ntot, fill=year_fact)) + geom_boxplot()  +
+  stat_summary(fun.y=mean,  geom="point", aes(group = year_fact, col = year_fact), 
+               shape=18, size=3,show.legend = TRUE, position=position_dodge(width=0.8)) + scale_fill_viridis_d(option = 'E')
+```
+
+De belles possibilés et une communauté très active
