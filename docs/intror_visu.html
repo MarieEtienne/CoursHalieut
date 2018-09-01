@@ -27,6 +27,49 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -312,8 +355,89 @@ div.tocify {
 </div>
 
 
-<div id="visualisation" class="section level1">
-<h1>Visualisation</h1>
+<div id="simple-plots" class="section level1">
+<h1>Simple plots</h1>
+<p>Il est très simple de produire des graphiques dans <code>R</code>. On peut par exemple lire le fichier <code>growth_data.txt</code> et représenter la longueur en fonction de l’âge.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_growth &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&#39;data/growth_data.txt&#39;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>)
+<span class="kw">head</span>(df_growth)</code></pre></div>
+<pre><code>##   age   length
+## 1  19 36.29889
+## 2  12 31.84360
+## 3   1 15.77166
+## 4  17 33.56730
+## 5  38 39.41566
+## 6  11 30.48877</code></pre>
+<p>Que fait la commande :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(length <span class="op">~</span><span class="st"> </span>age)</code></pre></div>
+<p>Pourquoi, cela ne fonctionne t il pas ? Quel est le message d’erreur ?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(length <span class="op">~</span><span class="st"> </span>age, <span class="dt">data=</span>df_growth)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Pourquoi est ce que ca fonctionne ? Quelles autres alternatives pouvez vous proposer ?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(df_growth<span class="op">$</span>length <span class="op">~</span><span class="st"> </span>df_growth<span class="op">$</span>age)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>ou encore</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(df_growth, <span class="kw">plot</span>(length <span class="op">~</span><span class="st"> </span>age))</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>et aussi</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">y =</span> length, <span class="dt">x =</span> age, <span class="dt">data=</span>df_growth)</code></pre></div>
+<p>Expliquer les différentes versions.</p>
+<div id="avec-de-la-couleur-pour-faire-joli" class="section level2">
+<h2>Avec de la couleur pour faire joli</h2>
+<p>Si on veut des points en rouge</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(length <span class="op">~</span><span class="st"> </span>age, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">data =</span> df_growth)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="avec-de-la-couleur-car-cest-utile" class="section level2">
+<h2>Avec de la couleur car c’est utile</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_longline &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&#39;data/LonglineExample.csv&#39;</span>, <span class="dt">skip =</span> <span class="dv">3</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;;&#39;</span>)
+<span class="kw">head</span>(df_longline, <span class="dt">n=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##   Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 1 2003                 12     50.81   -127.66         127
+## 2 2003                 12     50.88   -127.64         128
+## 3 2003                 12     50.93   -127.77         127
+##   Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 1                 6                 9               6              119
+## 2                 0                22               0              166
+## 3                 3                46               0               50
+##   Nhooks_empty Nhooks Ntot Nother
+## 1           27    196   50     29
+## 2           25    229   38     16
+## 3           73    222   99     50</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Ntot <span class="op">~</span><span class="st"> </span>soaktime_mn, <span class="dt">col =</span> DFO_STAT_AREA_CODE, <span class="dt">data =</span> df_longline)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Ntot <span class="op">~</span><span class="st">  </span>DFO_STAT_AREA_CODE, <span class="dt">col =</span> Year, <span class="dt">data =</span> df_longline)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Le langage objet</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_longline<span class="op">$</span>dfo_area_factor &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_longline<span class="op">$</span>DFO_STAT_AREA_CODE)
+<span class="kw">plot</span>(Ntot <span class="op">~</span><span class="st">  </span>dfo_area_factor, <span class="dt">data =</span> df_longline)</code></pre></div>
+<p><img src="intror_visu_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Représenter le nombre total d’hameçons occupés en fonction de l’année, soit en considérant l’année comme une variable quantitative, soit comme un facteur.</p>
+<p>Les graphiques en <code>R</code>, sont simples à produire, mais assez laids.</p>
+<p>Il est possible de les mettre à notre goût mais c’est parfois un peu pénible.</p>
+</div>
+</div>
+<div id="graphique-avec-ggplot2" class="section level1">
+<h1>Graphique avec <code>ggplot2</code></h1>
+<div id="des-idees-sur-ce-package" class="section level2">
+<h2>Des idées sur ce package</h2>
+<ul>
+<li>developed by Hadley Wickham (Rice University, Houston, USA)</li>
+<li>highly recommended R packages to work with ggplot2: reshape2 and plyr (also developed by H. Wickham)</li>
+<li>first version called in 2007</li>
+</ul>
+<div id="online-resources" class="section level3">
+<h3>Online resources</h3>
+<ul>
+<li>ggplot2 official documentation: (<a href="http://docs.ggplot2.org/current/" class="uri">http://docs.ggplot2.org/current/</a>)</li>
+<li>R code related to ggplot2 cookbook:(<a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a>)</li>
+<li>R code related to useR! ggplot2 book:(<a href="http://ggplot2.org/book/" class="uri">http://ggplot2.org/book/</a>)</li>
+<li>Google groups to ask questions: (<a href="mailto:ggplot2@googlegroups.com">ggplot2@googlegroups.com</a>)</li>
+<li>Statistical tools for high-throughput data analysis:(<a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a>)</li>
+<li>Github repository: <a href="https://github.com/yhat/ggplot/" class="uri">https://github.com/yhat/ggplot/</a>)</li>
+<li>RStudio Cheat Sheet : probably the most useful (<a href="http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf" class="uri">http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf</a>)</li>
+</ul>
+</div>
+</div>
 </div>
 
 

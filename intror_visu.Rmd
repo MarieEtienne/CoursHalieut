@@ -19,8 +19,91 @@ library(tidyr)
 library(stringr)
 library(purrr)
 library(dplyr)
-main.dir <- '/home/metienne/AOBOX/Cours/AgrocampusOuest/SpéHalieutique/CoursSTAT-SIG'
+library(ggplot2)
 ```
 
-# Visualisation
+# Simple plots
 
+Il est très simple de produire des graphiques dans `R`. On peut par exemple lire le fichier `growth_data.txt` et représenter la longueur en fonction de l'âge.
+
+```{r}
+df_growth <- read.table('data/growth_data.txt', header=TRUE)
+head(df_growth)
+```
+
+Que fait la commande :
+```{r, eval = FALSE}
+plot(length ~ age)
+```
+
+Pourquoi, cela ne fonctionne t il pas ? Quel est le message d'erreur ?
+
+```{r}
+plot(length ~ age, data=df_growth)
+```
+
+Pourquoi est ce que ca fonctionne ? Quelles autres alternatives pouvez vous proposer ? 
+
+```{r}
+plot(df_growth$length ~ df_growth$age)
+```
+
+ou encore
+
+```{r}
+with(df_growth, plot(length ~ age))
+```
+
+et aussi 
+
+```{r, eval = FALSE}
+plot(y = length, x = age, data=df_growth)
+```
+
+Expliquer les différentes versions.
+
+## Avec de la couleur pour faire joli
+Si on veut des points en rouge 
+
+```{r}
+plot(length ~ age, col = 'red', data = df_growth)
+```
+
+## Avec de la couleur car c'est utile
+
+```{r}
+df_longline <- read.table(file = 'data/LonglineExample.csv', skip = 3, header = TRUE, sep = ';')
+head(df_longline, n=3)
+plot(Ntot ~ soaktime_mn, col = DFO_STAT_AREA_CODE, data = df_longline)
+plot(Ntot ~  DFO_STAT_AREA_CODE, col = Year, data = df_longline)
+
+## Le langage objet
+
+```{r}
+df_longline$dfo_area_factor <- as.factor(df_longline$DFO_STAT_AREA_CODE)
+plot(Ntot ~  dfo_area_factor, data = df_longline)
+```
+
+Représenter le nombre total d'hameçons occupés en fonction de l'année, soit en considérant l'année comme une variable quantitative, soit comme un facteur.
+
+
+Les graphiques en `R`, sont simples à produire, mais assez laids.
+
+Il est possible de les mettre à notre goût mais c'est parfois un peu pénible.
+
+# Graphique avec `ggplot2`
+
+## Des idées sur ce package
+
+* developed by Hadley Wickham (Rice University, Houston, USA)
+* highly recommended R packages to work with ggplot2: reshape2 and plyr (also developed by H. Wickham)
+* first version called in 2007
+
+### Online resources
+* ggplot2 official documentation: (http://docs.ggplot2.org/current/)
+* R code related to ggplot2 cookbook:(http://www.cookbook-r.com/Graphs/)
+* R code related to useR! ggplot2 book:(http://ggplot2.org/book/)
+* Google groups to ask questions: (ggplot2@googlegroups.com)
+* Statistical tools for high-throughput data analysis:(http://www.sthda.com/english/wiki/ggplot2-essentials)
+* Github repository: https://github.com/yhat/ggplot/)
+* RStudio Cheat Sheet : probably the most useful (http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
