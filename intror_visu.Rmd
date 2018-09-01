@@ -1,0 +1,26 @@
+---
+title: "Introduction au logiciel R"
+author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
+date: "July 17, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(dplyr)
+main.dir <- '/home/metienne/AOBOX/Cours/AgrocampusOuest/SpéHalieutique/CoursSTAT-SIG'
+```
+
+# Visualisation
+

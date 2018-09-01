@@ -1,0 +1,194 @@
+---
+title: "Manipulation de données"
+author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
+date: "July 17, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(dplyr)
+```
+
+# Lecture de fichiers de données 
+Créer un fichier RMarkdown intitulé introR.Rmd
+
+## Lire des données  présentes sur l'ordinateur
+   Identifier le type de fichier (essentiellement txt, csv ou xlsx)
+   
+- Cas d'un fichier texte ou csv : ouvrir le fichier pour indiquer à R comment le lire 
+```{r}
+myData <- read.table(file = 'data/LonglineExample.csv', skip = 3, header = TRUE, sep = ';')
+head(myData, n=3)
+```
+
+
+## Ecrire une table de données
+
+Pour définir une table de données dans R contenant les informations sur les intervenants de ce cours, on peut utiliser la commande suivante :
+```{r}
+enseignants <- data.frame(nom = c('Etienne', 'Guitton', 'Lecomte'),
+                          prenom = c('Marie-Pierre', 'Jérôme', 'Jean-Baptiste'),
+                          mail = c('marie-pierre.etienne@agrocampus-ouest.fr', 'jerome.guitton@agrocampus-ouest.fr', 'jean-baptiste.lecomte@agrocampus-ouest.fr'))
+
+enseignants
+```
+
+On peut l'enregistrer sur le disque avec la commande
+
+```{r}
+write.table(enseignants, file='data/enseignants.txt', row.names = F)
+```
+
+Lire le fichier ` enseignants.txt`. 
+
+Refaire l'exercice avec le fichier growth_data.txt
+   
+   
+On évite de lire des fichiers Excel, mais si besoin il existe la fonction  `read_excel` du package `readxl`̀.
+
+Installer le package `readxl` :
+
+```{r, eval=FALSE} 
+install.packages('readxl') ## une seule fois
+```
+
+```{r}
+library('readxl') ## avant chaque premiere utilisation du package
+```
+
+   
+## Lire des données depuis une url
+On souhaite lire le fichier [decathlon](http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt)
+
+\pause
+
+
+```{r}
+monFichier <- 'http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt'
+decathlon <- read.table(file = monFichier, header = TRUE, sep = '\t')
+head(decathlon, n=2)
+
+decathlon <- read.table(file = monFichier, header = TRUE, sep = '\t', row.names = 1)
+head(decathlon, n=2)
+```
+
+
+## Lire des données avec une requête SQL (base de données)
+
+Il faut se connecter à la base
+```{r, eval=FALSE}
+library(RODBC)
+# Fait la liste des tables de la base de données connectée
+sqlTables(connect_base, tableType = "TABLE")
+# Fait la liste des colonnes
+sqlColumns(connect_base, sqtable = "DonneesTotales")
+# Extraction par requête SQL
+OtoYFT <- sqlQuery( channel = connect_base,
+query =
+"
+SELECT * FROM DonneesTotales
+WHERE (DonneesTotales.ProblemeSp = 'Ok' AND DonneesTotales.REC_Sp='Y'
+AND DonneesTotales.Otolithe = 'OT')
+")
+head(OtoYFT)
+```
+
+# Objet data.frame
+```{r}
+class(myData)
+dim(myData)
+colnames(myData)
+```
+
+## Accéder aux colonnes
+
+Acceder à la variable Year
+```{r}
+head(myData$Year, n=15)
+summary(myData$Year)
+```
+
+Donner les numéros des lignes correspondant à l'année 2004
+
+
+
+## Travailler sur les lignes  
+- Afficher la première ligne,
+- Afficher les lignes 1,4 et 10
+- Supprimer une ligne
+```{r}
+head(myData, n=3)
+head(myData[-1,], n=3)
+```
+- Afficher uniquement les lignes correspondant à l'année 2004
+
+
+Solution tidy
+```{r, eval=FALSE}
+myData %>% dplyr::filter(Year==2004)
+```
+
+## Reordonner 
+
+- Ordonner les lignes selon la latitude
+```{r}
+myData[order(myData$Lat_start),] 
+```
+
+```{r, echo=FALSE, results='hide'}
+arrange(myData, Lat_start)
+## Garder l'année 2004 et ordonner selon la latidu, puis longitude 
+myData %>% dplyr::filter(Year==2004) %>% arrange( Lat_start, Lon_start)
+```
+
+
+## Concaténer deux tables 
+
+Fabriquer 2 jeux de données pour les années 2003 et 2004 et les stocker dans  `myData2004`̀ et myData23
+
+```{r, echo=F, results='hide'}
+myData2004 <- myData %>% dplyr::filter(Year==2004)
+myData2003 <- myData %>% dplyr::filter(Year==2003)
+```
+Que fait la commande rbind(myData2003, myData2004) ?
+
+
+solution tidy 
+```{r}
+myData2003 %>% bind_rows( myData2004)
+```
+
+## Sauvegarder les résultats
+
+Dans un fichier texte
+
+```{r}
+write.table(x = myData2004, file = 'table2004.txt', sep = ' ', row.names = FALSE)
+```
+
+Sous forme compressée dans un fichier Rdata.
+
+```{r}
+save(list = 'myData2004', file = 'table2004.Rdata')
+load('table2004.Rdata')
+```
+
+
+## Petit exercice
+Charger le fichier iris, puis
+* Garder uniquement l'espece virginica
+* Supprimer toutes les observations correspondantes à des largeurs de sépale inférieures à 3
+* Ordonner la table restante selon la longueur des sépales.
+* Ajouter une colonne contenant la longueur des sépals au carré.

@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte" />
+
+<meta name="date" content="2018-07-17" />
+
+<title>Manipulation de données</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Statistique halieutique</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intro_visu.html">Visualisation</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="echant.html">Echantillonnage</a>
+</li>
+<li>
+  <a href="model.html">Ajustement de modèles</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Manipulation de données</h1>
+<h4 class="author"><em>Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte</em></h4>
+<h4 class="date"><em>July 17, 2018</em></h4>
+
+</div>
+
+
+<div id="lecture-de-fichiers-de-donnees" class="section level1">
+<h1>Lecture de fichiers de données</h1>
+<p>Créer un fichier RMarkdown intitulé introR.Rmd</p>
+<div id="lire-des-donnees-presentes-sur-lordinateur" class="section level2">
+<h2>Lire des données présentes sur l’ordinateur</h2>
+<p>Identifier le type de fichier (essentiellement txt, csv ou xlsx)</p>
+<ul>
+<li>Cas d’un fichier texte ou csv : ouvrir le fichier pour indiquer à R comment le lire</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myData &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&#39;data/LonglineExample.csv&#39;</span>, <span class="dt">skip =</span> <span class="dv">3</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;;&#39;</span>)
+<span class="kw">head</span>(myData, <span class="dt">n=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##   Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 1 2003                 12     50.81   -127.66         127
+## 2 2003                 12     50.88   -127.64         128
+## 3 2003                 12     50.93   -127.77         127
+##   Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 1                 6                 9               6              119
+## 2                 0                22               0              166
+## 3                 3                46               0               50
+##   Nhooks_empty Nhooks Ntot Nother
+## 1           27    196   50     29
+## 2           25    229   38     16
+## 3           73    222   99     50</code></pre>
+</div>
+<div id="ecrire-une-table-de-donnees" class="section level2">
+<h2>Ecrire une table de données</h2>
+<p>Pour définir une table de données dans R contenant les informations sur les intervenants de ce cours, on peut utiliser la commande suivante :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">enseignants &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">nom =</span> <span class="kw">c</span>(<span class="st">&#39;Etienne&#39;</span>, <span class="st">&#39;Guitton&#39;</span>, <span class="st">&#39;Lecomte&#39;</span>),
+                          <span class="dt">prenom =</span> <span class="kw">c</span>(<span class="st">&#39;Marie-Pierre&#39;</span>, <span class="st">&#39;Jérôme&#39;</span>, <span class="st">&#39;Jean-Baptiste&#39;</span>),
+                          <span class="dt">mail =</span> <span class="kw">c</span>(<span class="st">&#39;marie-pierre.etienne@agrocampus-ouest.fr&#39;</span>, <span class="st">&#39;jerome.guitton@agrocampus-ouest.fr&#39;</span>, <span class="st">&#39;jean-baptiste.lecomte@agrocampus-ouest.fr&#39;</span>))
+
+enseignants</code></pre></div>
+<pre><code>##       nom        prenom                                      mail
+## 1 Etienne  Marie-Pierre  marie-pierre.etienne@agrocampus-ouest.fr
+## 2 Guitton        Jérôme        jerome.guitton@agrocampus-ouest.fr
+## 3 Lecomte Jean-Baptiste jean-baptiste.lecomte@agrocampus-ouest.fr</code></pre>
+<p>On peut l’enregistrer sur le disque avec la commande</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.table</span>(enseignants, <span class="dt">file=</span><span class="st">&#39;data/enseignants.txt&#39;</span>, <span class="dt">row.names =</span> F)</code></pre></div>
+<p>Lire le fichier <code>enseignants.txt</code>.</p>
+<p>Refaire l’exercice avec le fichier growth_data.txt</p>
+<p>On évite de lire des fichiers Excel, mais si besoin il existe la fonction <code>read_excel</code> du package <code>readxl</code>̀.</p>
+<p>Installer le package <code>readxl</code> :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&#39;readxl&#39;</span>) ## une seule fois</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;readxl&#39;</span>) ## avant chaque premiere utilisation du package</code></pre></div>
+</div>
+<div id="lire-des-donnees-depuis-une-url" class="section level2">
+<h2>Lire des données depuis une url</h2>
+<p>On souhaite lire le fichier <a href="http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt">decathlon</a></p>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">monFichier &lt;-<span class="st"> &#39;http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt&#39;</span>
+decathlon &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> monFichier, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)
+<span class="kw">head</span>(decathlon, <span class="dt">n=</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>##        X X100m Longueur Poids Hauteur X400m X110m.haies Disque Perche
+## 1 Sebrle 10.85     7.84 16.36    2.12 48.36       14.05  48.72    5.0
+## 2   Clay 10.44     7.96 15.23    2.06 49.19       14.13  50.11    4.9
+##   Javelot X1500m Classement Nb.pts Epreuve
+## 1   70.52 280.01          1   8893      JO
+## 2   69.71 282.00          2   8820      JO</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">decathlon &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> monFichier, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>, <span class="dt">row.names =</span> <span class="dv">1</span>)
+<span class="kw">head</span>(decathlon, <span class="dt">n=</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>##        X100m Longueur Poids Hauteur X400m X110m.haies Disque Perche
+## Sebrle 10.85     7.84 16.36    2.12 48.36       14.05  48.72    5.0
+## Clay   10.44     7.96 15.23    2.06 49.19       14.13  50.11    4.9
+##        Javelot X1500m Classement Nb.pts Epreuve
+## Sebrle   70.52 280.01          1   8893      JO
+## Clay     69.71 282.00          2   8820      JO</code></pre>
+</div>
+<div id="lire-des-donnees-avec-une-requete-sql-base-de-donnees" class="section level2">
+<h2>Lire des données avec une requête SQL (base de données)</h2>
+<p>Il faut se connecter à la base</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RODBC)
+<span class="co"># Fait la liste des tables de la base de données connectée</span>
+<span class="kw">sqlTables</span>(connect_base, <span class="dt">tableType =</span> <span class="st">&quot;TABLE&quot;</span>)
+<span class="co"># Fait la liste des colonnes</span>
+<span class="kw">sqlColumns</span>(connect_base, <span class="dt">sqtable =</span> <span class="st">&quot;DonneesTotales&quot;</span>)
+<span class="co"># Extraction par requête SQL</span>
+OtoYFT &lt;-<span class="st"> </span><span class="kw">sqlQuery</span>( <span class="dt">channel =</span> connect_base,
+<span class="dt">query =</span>
+<span class="st">&quot;</span>
+<span class="st">SELECT * FROM DonneesTotales</span>
+<span class="st">WHERE (DonneesTotales.ProblemeSp = &#39;Ok&#39; AND DonneesTotales.REC_Sp=&#39;Y&#39;</span>
+<span class="st">AND DonneesTotales.Otolithe = &#39;OT&#39;)</span>
+<span class="st">&quot;</span>)
+<span class="kw">head</span>(OtoYFT)</code></pre></div>
+</div>
+</div>
+<div id="objet-data.frame" class="section level1">
+<h1>Objet data.frame</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(myData)</code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(myData)</code></pre></div>
+<pre><code>## [1] 210  13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(myData)</code></pre></div>
+<pre><code>##  [1] &quot;Year&quot;               &quot;DFO_STAT_AREA_CODE&quot; &quot;Lat_start&quot;         
+##  [4] &quot;Lon_start&quot;          &quot;soaktime_mn&quot;        &quot;Nyelloweye_caught&quot; 
+##  [7] &quot;Nquillback_caught&quot;  &quot;Ndogfish_caught&quot;    &quot;Nhooks_with_bait&quot;  
+## [10] &quot;Nhooks_empty&quot;       &quot;Nhooks&quot;             &quot;Ntot&quot;              
+## [13] &quot;Nother&quot;</code></pre>
+<div id="acceder-aux-colonnes" class="section level2">
+<h2>Accéder aux colonnes</h2>
+<p>Acceder à la variable Year</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(myData<span class="op">$</span>Year, <span class="dt">n=</span><span class="dv">15</span>)</code></pre></div>
+<pre><code>##  [1] 2003 2003 2003 2003 2003 2003 2003 2003 2003 2003 2003 2003 2003 2003
+## [15] 2003</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(myData<span class="op">$</span>Year)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    2003    2003    2004    2005    2007    2008</code></pre>
+<p>Donner les numéros des lignes correspondant à l’année 2004</p>
+</div>
+<div id="travailler-sur-les-lignes" class="section level2">
+<h2>Travailler sur les lignes</h2>
+<ul>
+<li>Afficher la première ligne,</li>
+<li>Afficher les lignes 1,4 et 10</li>
+<li>Supprimer une ligne</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(myData, <span class="dt">n=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##   Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 1 2003                 12     50.81   -127.66         127
+## 2 2003                 12     50.88   -127.64         128
+## 3 2003                 12     50.93   -127.77         127
+##   Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 1                 6                 9               6              119
+## 2                 0                22               0              166
+## 3                 3                46               0               50
+##   Nhooks_empty Nhooks Ntot Nother
+## 1           27    196   50     29
+## 2           25    229   38     16
+## 3           73    222   99     50</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(myData[<span class="op">-</span><span class="dv">1</span>,], <span class="dt">n=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##   Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 2 2003                 12     50.88   -127.64         128
+## 3 2003                 12     50.93   -127.77         127
+## 4 2003                 12     50.87   -127.46         122
+##   Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 2                 0                22               0              166
+## 3                 3                46               0               50
+## 4                 0                 9              15              100
+##   Nhooks_empty Nhooks Ntot Nother
+## 2           25    229   38     16
+## 3           73    222   99     50
+## 4           48    216   68     44</code></pre>
+<ul>
+<li>Afficher uniquement les lignes correspondant à l’année 2004</li>
+</ul>
+<p>Solution tidy</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myData <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year<span class="op">==</span><span class="dv">2004</span>)</code></pre></div>
+</div>
+<div id="reordonner" class="section level2">
+<h2>Reordonner</h2>
+<ul>
+<li>Ordonner les lignes selon la latitude</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myData[<span class="kw">order</span>(myData<span class="op">$</span>Lat_start),] </code></pre></div>
+<pre><code>##     Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 198 2005                 14     49.44   -124.18         121
+## 199 2005                 14     49.45   -124.21         120
+## 210 2008                 14     49.45   -124.20         119
+## 200 2005                 14     49.50   -124.70         121
+## 209 2008                 14     49.52   -124.73         120
+## 201 2005                 14     49.54   -124.63         120
+## 202 2005                 14     49.57   -124.70         121
+## 208 2008                 14     49.58   -124.76         119
+## 203 2005                 14     49.74   -124.87         120
+## 207 2008                 14     49.87   -124.83         120
+## 206 2008                 14     49.91   -125.12         120
+## 204 2005                 14     49.92   -125.01         119
+## 197 2003                 14     49.94   -125.15         120
+## 205 2008                 14     49.94   -125.15         120
+## 138 2003                 13     49.99   -125.11         122
+## 185 2007                 13     49.99   -125.11         121
+## 136 2003                 13     50.01   -125.02         120
+## 196 2008                 13     50.01   -124.99         118
+## 184 2007                 13     50.03   -125.01         124
+## 137 2003                 13     50.04   -125.05         122
+## 183 2007                 13     50.04   -125.07         110
+## 190 2008                 13     50.05   -125.17         171
+## 139 2003                 13     50.11   -125.21         119
+## 182 2007                 13     50.11   -125.09          67
+## 181 2007                 13     50.13   -125.12         110
+## 191 2008                 13     50.26   -125.04         116
+## 180 2007                 13     50.30   -125.04         118
+## 192 2008                 13     50.30   -125.10         120
+## 193 2008                 13     50.31   -125.11         120
+## 163 2004                 13     50.32   -125.07         118
+## 166 2005                 13     50.32   -124.98         119
+## 179 2007                 13     50.32   -125.08         126
+## 194 2008                 13     50.33   -124.99         119
+## 195 2008                 13     50.34   -125.01         120
+## 164 2004                 13     50.35   -124.99         120
+## 142 2003                 13     50.36   -125.09         120
+## 132 2003                 13     50.37   -125.78         110
+## 148 2003                 13     50.37   -125.11         121
+## 162 2004                 13     50.37   -125.06         119
+## 178 2007                 13     50.37   -125.10         130
+## 147 2003                 13     50.38   -125.06         121
+## 165 2004                 13     50.38   -124.97         134
+## 133 2003                 13     50.39   -125.54         121
+## 172 2007                 13     50.39   -125.33         125
+## 186 2008                 13     50.39   -125.54         120
+## 171 2007                 13     50.40   -125.34         119
+## 188 2008                 13     50.40   -125.85         127
+## 189 2008                 13     50.42   -125.15         120
+## 140 2003                 13     50.43   -124.95         122
+## 157 2004                 13     50.43   -125.30         119
+## 177 2007                 13     50.43   -125.06         137
+## 141 2003                 13     50.44   -125.01         122
+## 155 2004                 13     50.44   -125.43         120
+## 170 2007                 13     50.44   -125.45         126
+## 131 2003                 13     50.45   -125.95         121
+## 167 2007                 13     50.45   -125.93         111
+## 187 2008                 13     50.45   -126.00         121
+## 80  2004                 12     50.46   -126.17         119
+## 81  2004                 12     50.46   -126.13         120
+## 134 2003                 13     50.46   -125.40         123
+## 158 2004                 13     50.46   -125.27         120
+## 174 2007                 13     50.46   -125.27         114
+## 45  2003                 12     50.47   -126.29         120
+## 123 2007                 12     50.47   -126.04         111
+## 145 2003                 13     50.47   -125.11         118
+## 146 2003                 13     50.47   -125.05         119
+## 46  2003                 12     50.48   -126.01         120
+## 135 2003                 13     50.48   -125.35         120
+## 150 2003                 13     50.48   -125.57         119
+## 152 2004                 13     50.48   -125.57         120
+## 159 2004                 13     50.48   -125.05         120
+## 121 2007                 12     50.49   -126.40         158
+## 153 2004                 13     50.49   -125.58         121
+## 156 2004                 13     50.49   -125.38         121
+## 118 2007                 12     50.50   -126.63         128
+## 122 2007                 12     50.50   -126.22         124
+## 144 2003                 13     50.50   -125.11         120
+## 173 2007                 13     50.50   -125.26         128
+## 71  2004                 12     50.51   -126.65         121
+## 151 2004                 13     50.51   -125.83         120
+## 168 2007                 13     50.51   -125.59           8
+## 176 2007                 13     50.51   -124.97         139
+## 120 2007                 12     50.52   -126.50         133
+## 175 2007                 13     50.52   -125.02         148
+## 70  2004                 12     50.53   -126.62         120
+## 169 2007                 13     50.53   -125.55         131
+## 44  2003                 12     50.54   -126.77         126
+## 119 2007                 12     50.54   -126.77         155
+## 43  2003                 12     50.56   -126.80         120
+## 69  2004                 12     50.56   -126.76         120
+## 103 2007                 12     50.57   -126.87         121
+## 149 2003                 13     50.58   -125.56         119
+## 40  2003                 12     50.59   -126.76         136
+## 76  2004                 12     50.59   -126.42         120
+## 104 2007                 12     50.59   -126.81          48
+## 117 2007                 12     50.59   -126.73         129
+## 143 2003                 13     50.59   -124.87         119
+## 48  2004                 12     50.60   -126.91         120
+## 106 2007                 12     50.60   -126.89         131
+## 116 2007                 12     50.60   -126.74         131
+## 26  2003                 12     50.61   -126.33         126
+## 28  2003                 12     50.61   -126.73         120
+## 39  2003                 12     50.61   -126.93         122
+## 47  2004                 12     50.61   -127.08         120
+## 75  2004                 12     50.61   -126.34         120
+## 77  2004                 12     50.61   -126.74         120
+## 105 2007                 12     50.62   -126.81         123
+## 107 2007                 12     50.62   -127.11         122
+## 128 2008                 12     50.62   -126.28         120
+## 154 2004                 13     50.62   -125.55         122
+## 27  2003                 12     50.63   -126.43         135
+## 34  2003                 12     50.63   -127.19         120
+## 37  2003                 12     50.63   -127.07         126
+## 38  2003                 12     50.63   -127.05         123
+## 160 2004                 13     50.63   -124.90         119
+## 161 2004                 13     50.63   -124.88         120
+## 36  2003                 12     50.64   -127.20         122
+## 42  2003                 12     50.64   -126.85         122
+## 25  2003                 12     50.65   -126.25         123
+## 79  2004                 12     50.65   -126.54         120
+## 72  2004                 12     50.66   -126.39         119
+## 130 2008                 12     50.66   -126.41         115
+## 16  2003                 12     50.67   -126.69         124
+## 29  2003                 12     50.67   -127.15         122
+## 30  2003                 12     50.67   -126.97         142
+## 115 2007                 12     50.67   -126.68         124
+## 129 2008                 12     50.67   -126.19         135
+## 49  2004                 12     50.68   -126.93         122
+## 78  2004                 12     50.68   -126.74         120
+## 98  2007                 12     50.68   -127.01         118
+## 102 2007                 12     50.68   -127.22         118
+## 41  2003                 12     50.70   -126.86         120
+## 101 2007                 12     50.70   -127.32         131
+## 35  2003                 12     50.71   -127.21         140
+## 100 2007                 12     50.71   -127.21         121
+## 114 2007                 12     50.71   -126.73         123
+## 17  2003                 12     50.72   -126.78         146
+## 24  2003                 12     50.72   -126.18         122
+## 113 2007                 12     50.72   -126.64         121
+## 9   2003                 12     50.73   -127.41         124
+## 50  2004                 12     50.73   -126.98         121
+## 96  2007                 12     50.73   -126.98         110
+## 97  2007                 12     50.73   -127.03         123
+## 112 2007                 12     50.73   -126.58         122
+## 111 2007                 12     50.74   -126.56         121
+## 18  2003                 12     50.75   -126.64         123
+## 33  2003                 12     50.76   -126.88         123
+## 60  2004                 12     50.76   -127.41         120
+## 63  2004                 12     50.76   -126.80         120
+## 95  2007                 12     50.76   -126.90         123
+## 15  2003                 12     50.77   -126.53         122
+## 23  2003                 12     50.77   -126.21         121
+## 51  2004                 12     50.77   -126.90         121
+## 65  2004                 12     50.77   -126.66         126
+## 109 2007                 12     50.77   -126.66         120
+## 127 2008                 12     50.77   -126.20         120
+## 19  2003                 12     50.78   -126.69         120
+## 31  2003                 12     50.78   -126.90         120
+## 74  2004                 12     50.78   -126.22         121
+## 82  2007                 12     50.78   -127.55         131
+## 108 2007                 12     50.78   -126.71         120
+## 126 2008                 12     50.78   -126.22         119
+## 64  2004                 12     50.79   -126.86         122
+## 73  2004                 12     50.79   -126.20         120
+## 14  2003                 12     50.80   -126.81         138
+## 20  2003                 12     50.80   -126.57         122
+## 32  2003                 12     50.80   -126.88         120
+## 83  2007                 12     50.80   -127.60         144
+## 99  2007                 12     50.80   -127.13         119
+## 1   2003                 12     50.81   -127.66         127
+## 59  2004                 12     50.81   -127.48         123
+## 125 2008                 12     50.81   -126.20         123
+## 21  2003                 12     50.82   -126.38         120
+## 22  2003                 12     50.82   -126.36         129
+## 52  2004                 12     50.82   -126.96         126
+## 54  2004                 12     50.82   -127.01         121
+## 84  2007                 12     50.82   -127.58         126
+## 85  2007                 12     50.82   -127.63         132
+## 124 2008                 12     50.82   -126.23         124
+## 91  2007                 12     50.83   -127.48         122
+## 110 2007                 12     50.83   -126.58         122
+## 8   2003                 12     50.84   -127.09         121
+## 53  2004                 12     50.84   -127.09         122
+## 68  2004                 12     50.84   -126.60         120
+## 13  2003                 12     50.85   -126.61         123
+## 58  2004                 12     50.85   -127.45         120
+## 4   2003                 12     50.87   -127.46         122
+## 11  2003                 12     50.87   -126.68         127
+## 12  2003                 12     50.87   -126.65         111
+## 56  2004                 12     50.87   -127.29         120
+## 92  2007                 12     50.87   -127.42         127
+## 94  2007                 12     50.87   -127.21         122
+## 2   2003                 12     50.88   -127.64         128
+## 6   2003                 12     50.88   -127.39         121
+## 7   2003                 12     50.88   -127.24         120
+## 67  2004                 12     50.88   -126.57         120
+## 5   2003                 12     50.89   -127.42         134
+## 57  2004                 12     50.89   -127.39         120
+## 86  2007                 12     50.89   -127.97         124
+## 93  2007                 12     50.89   -127.36         125
+## 10  2003                 12     50.90   -127.01         126
+## 55  2004                 12     50.90   -127.00         120
+## 66  2004                 12     50.90   -126.78         120
+## 62  2004                 12     50.91   -127.70         129
+## 87  2007                 12     50.92   -127.64         117
+## 90  2007                 12     50.92   -127.45         124
+## 3   2003                 12     50.93   -127.77         127
+## 61  2004                 12     50.93   -127.76         120
+## 88  2007                 12     50.94   -127.57         124
+## 89  2007                 12     50.95   -127.51         132
+##     Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 198                 0                 0             116               36
+## 199                 6                 3             138               39
+## 210                11                 0              92               86
+## 200                 0                18             123               19
+## 209                 0                 0             141                4
+## 201                16                 7              41               83
+## 202                 0                 0             171                5
+## 208                 0                 0             122               16
+## 203                 0                 0              96               43
+## 207                 1                 1             154                0
+## 206                 0                 3             104               13
+## 204                 3                 2             170                8
+## 197                 0                 1             133                9
+## 205                 0                 0             178                3
+## 138                 0                 0             156                1
+## 185                 0                 0             194                0
+## 136                 4                 3             159                3
+## 196                 1                 1             155                9
+## 184                 0                 0             156                1
+## 137                 2                 0             104                1
+## 183                 0                 1             126               34
+## 190                 2                 1             141               34
+## 139                 0                 1             111                9
+## 182                 0                 0             182                1
+## 181                 1                 1              95              115
+## 191                 3                 3              94               99
+## 180                 1                 6             112               70
+## 192                 4                 3              24              177
+## 193                 1                 5             144               16
+## 163                 7                 8              36              141
+## 166                 2                 2             153                0
+## 179                 4                13              20              161
+## 194                 7                 1              43              143
+## 195                 2                 1             176               10
+## 164                 7                 2              42               29
+## 142                12                19              71               60
+## 132                 0                 0               8               73
+## 148                 6                 3              32              136
+## 162                 7                 3              73              106
+## 178                 2                 6              18              179
+## 147                 6                 5              86               63
+## 165                 3                 3             170               10
+## 133                 0                 0             158                1
+## 172                 2                13             110               61
+## 186                 0                 4             164                0
+## 171                 5                 7              97               74
+## 188                 0                 3             133                4
+## 189                 0                 2             149                0
+## 140                17                 8             122               26
+## 157                 1                 2               4              191
+## 177                 7                 2             115               65
+## 141                24                 4             113               47
+## 155                 5                 7             121               31
+## 170                 1                21              72               71
+## 131                 0                 0             151                0
+## 167                 0                 0             131                0
+## 187                 2                16              20              153
+## 80                  3                 8               5               76
+## 81                 12                 5               9              142
+## 134                 1                13             103               20
+## 158                 7                16              97               34
+## 174                 0                 9               4              189
+## 45                 10                 1              95               54
+## 123                 0                 2              10              137
+## 145                 0                 9              61              122
+## 146                 0                 6             149                0
+## 46                  3                18              97               27
+## 135                 0                 1             148                1
+## 150                 5                 3              74               57
+## 152                 0                 0             168                4
+## 159                 7                16              25              122
+## 121                 0                 5              73               28
+## 153                 6                 2             132               23
+## 156                 0                 1             164                0
+## 118                 1                34              68               20
+## 122                 1                 7              27               59
+## 144                 9                24              82               61
+## 173                 0                 0             179                1
+## 71                  4                 9              29               51
+## 151                 0                 0             108                6
+## 168                 3                 5              86               49
+## 176                 5                15              89               74
+## 120                10                28              12               77
+## 175                 1                 6              32              153
+## 70                  8                26               8               58
+## 169                 0                 0             128                5
+## 44                  3                 0              72               12
+## 119                 6                36               9               83
+## 43                  0                 3               3               40
+## 69                  1                 3               8               50
+## 103                 0                 0              72               20
+## 149                 4                18               7              155
+## 40                  0                 6              18                5
+## 76                  0                 0              69               64
+## 104                 0                 2               0               13
+## 117                 1                15               2               41
+## 143                 0                 0             110               42
+## 48                  0                 0              91                0
+## 106                 0                 1              69               48
+## 116                 0                 0              98                1
+## 26                  0                 8              41              137
+## 28                  0                32              18               84
+## 39                  0                 0              61               56
+## 47                  0                 0              54                0
+## 75                  0                 3              98               21
+## 77                  0                17               9               87
+## 105                 0                32              14               81
+## 107                 0                 4              12               75
+## 128                 0                 0              95               34
+## 154                12                20              26               75
+## 27                  0                 0             142               30
+## 34                  0                 0              29               59
+## 37                  0                 3              46               22
+## 38                  0                 0              27               65
+## 160                 5                 3             126               23
+## 161                 5                 2             147               15
+## 36                  0                 0               3              129
+## 42                  0                 5               4               24
+## 25                  0                 6              18              175
+## 79                  0                 0              42               59
+## 72                  0                 2             108               10
+## 130                 0                 1              45              159
+## 16                  0                 0              12              197
+## 29                  0                 0              20                1
+## 30                  0                 1              21              142
+## 115                 0                12              12              159
+## 129                 0                 2              14              201
+## 49                  1                 3              16               55
+## 78                  0                 0              88                0
+## 98                  0                 8              19              133
+## 102                 0                 0              22               90
+## 41                  0                 2              68               46
+## 101                 0                 0              15               76
+## 35                  0                 8              27               18
+## 100                 0                 3              30              139
+## 114                 0                 0              14              143
+## 17                  5                27              40              113
+## 24                  0                 2              30              166
+## 113                 0                 0             105                1
+## 9                   0                 0             141               13
+## 50                  0                 3             120                3
+## 96                  1                 5               9              165
+## 97                  1                18              23              131
+## 112                 0                 0             109                2
+## 111                 0                 1              65               97
+## 18                  0                 0              70               65
+## 33                  0                 6              35              130
+## 60                  1                 9              33               49
+## 63                  2                10              48               58
+## 95                  2                28              35              127
+## 15                  3                 6               9              176
+## 23                  2                 1             100               59
+## 51                  0                12              85               39
+## 65                  2                16               1              152
+## 109                 1                 3               0              111
+## 127                 1                 3              75              102
+## 19                  3                11               9              168
+## 31                  1                19              72               34
+## 74                  0                 6             132               29
+## 82                  0                11               2              171
+## 108                 3                15              11              100
+## 126                 0                 1             151               12
+## 64                  0                 8              49               10
+## 73                  0                22              66               88
+## 14                  0                 1              92               80
+## 20                  0                 1             104               65
+## 32                  0                 0              64               54
+## 83                  1                34               0              131
+## 99                  0                 4              54               81
+## 1                   6                 9               6              119
+## 59                  0                17               9               52
+## 125                 1                 4             128               53
+## 21                  4                 8              45              116
+## 22                 12                14              84               44
+## 52                  0                 0               1               13
+## 54                  0                 2              69               30
+## 84                  5                15               3              158
+## 85                  2                26               0              140
+## 124                 9                11              88               78
+## 91                  0                56               1              125
+## 110                 6                19               0              134
+## 8                   1                 8              60               65
+## 53                  2                 5               7               93
+## 68                  3                 6             132               31
+## 13                  1                 6             157               11
+## 58                  4                21               1              110
+## 4                   0                 9              15              100
+## 11                  0                 6               6              192
+## 12                  0                 2             140               46
+## 56                  0                 6              47               63
+## 92                  3                14               0              167
+## 94                  4                23               0              159
+## 2                   0                22               0              166
+## 6                   1                13               9              137
+## 7                   1                12              23              128
+## 67                  1                10              66              115
+## 5                   2                 3               5              119
+## 57                  2                 6               0              170
+## 86                  0                 0              47               54
+## 93                  6                28              29              110
+## 10                  0                 0             117               28
+## 55                  1                 0             113               11
+## 66                  4                13             108               14
+## 62                  0                 2               0               22
+## 87                 12                18               0              157
+## 90                  0                 2               3              161
+## 3                   3                46               0               50
+## 61                  0                21               1               60
+## 88                 15                17              18              148
+## 89                  1                 7               2              147
+##     Nhooks_empty Nhooks Ntot Nother
+## 198           52    204  116      0
+## 199           37    224  148      1
+## 210           24    217  107      4
+## 200           59    222  144      3
+## 209           60    215  151     10
+## 201           47    221   91     27
+## 202           40    221  176      5
+## 208           42    210  152     30
+## 203           73    222  106     10
+## 207           62    218  156      0
+## 206           59    211  139     32
+## 204           40    224  176      1
+## 197           79    224  136      2
+## 205           24    207  180      2
+## 138           61    220  158      2
+## 185           32    226  194      0
+## 136           54    234  177     11
+## 196           52    220  159      2
+## 184           58    215  156      0
+## 137          111    222  110      4
+## 183           63    225  128      1
+## 190           32    214  148      4
+## 139           95    225  121      9
+## 182           40    223  182      0
+## 181           16    229   98      1
+## 191           20    220  101      1
+## 180           34    224  120      1
+## 192            9    220   34      3
+## 193           54    220  150      0
+## 163           30    225   54      3
+## 166           63    220  157      0
+## 179           22    222   39      2
+## 194           26    221   52      1
+## 195           34    223  179      0
+## 164           19    104   56      5
+## 142           58    222  104      2
+## 132          107    216   36     28
+## 148           46    223   41      0
+## 162           37    226   83      0
+## 178           20    225   26      0
+## 147           65    226   98      1
+## 165           35    223  178      2
+## 133           74    235  160      2
+## 172           22    214  131      6
+## 186           51    223  172      4
+## 171           25    213  114      5
+## 188           71    216  141      5
+## 189           52    204  152      1
+## 140           51    226  149      2
+## 157           24    225   10      3
+## 177           34    223  124      0
+## 141           36    224  141      0
+## 155           58    223  134      1
+## 170           51    225  103      9
+## 131           67    221  154      3
+## 167           87    222  135      4
+## 187           19    219   47      9
+## 80           112    224   36     20
+## 81            49    229   38     12
+## 134           75    213  118      1
+## 158           68    224  122      2
+## 174           15    225   21      8
+## 45            45    212  113      7
+## 123           50    223   36     24
+## 145           28    222   72      2
+## 146           68    223  155      0
+## 46            57    226  142     24
+## 135           72    223  150      1
+## 150           82    221   82      0
+## 152           51    224  169      1
+## 159           55    226   49      1
+## 121           82    224  114     36
+## 153           59    222  140      0
+## 156           58    223  165      0
+## 118           56    209  133     30
+## 122           83    225   83     48
+## 144           48    225  116      1
+## 173           49    229  179      0
+## 71            92    225   82     40
+## 151          105    219  108      0
+## 168           57    204   98      4
+## 176           41    225  110      1
+## 120           62    219   80     30
+## 175           26    220   41      2
+## 70            87    224   79     37
+## 169           89    224  130      2
+## 44            60    221  149     74
+## 119           28    202   91     40
+## 43           149    223   34     28
+## 69           125    215   40     28
+## 103           55    222  147     75
+## 149           39    224   30      1
+## 40           127    221   89     65
+## 76            85    223   74      5
+## 104            7     24    4      2
+## 117          136    227   50     32
+## 143           72    224  110      0
+## 48           122    217   95      4
+## 106           66    219  105     35
+## 116          110    218  107      9
+## 26            20    211   54      5
+## 28            51    224   89     39
+## 39            89    215   70      9
+## 47           129    184   55      1
+## 75            96    220  103      2
+## 77            85    224   52     26
+## 105           30    222  111     65
+## 107           71    220   74     58
+## 128           92    227  101      6
+## 154           87    221   59      1
+## 27            51    224  143      1
+## 34            96    211   56     27
+## 37           114    221   85     36
+## 38           105    218   48     21
+## 160           69    227  135      1
+## 161           51    220  154      0
+## 36            50    192   13     10
+## 42           155    222   43     34
+## 25            26    225   24      0
+## 79            95    220   66     24
+## 72           100    221  111      1
+## 130           13    220   48      2
+## 16             4    220   19      7
+## 29           148    215   66     46
+## 30            56    240   42     20
+## 115           15    223   49     25
+## 129            6    224   17      1
+## 49           106    221   60     40
+## 78           101    223  122     34
+## 98            28    227   66     39
+## 102           46    217   81     59
+## 41            84    223   93     23
+## 101          101    220   43     28
+## 35            74    220  128     93
+## 100           18    226   69     36
+## 114           45    225   37     23
+## 17            19    221   89     17
+## 24            24    223   33      1
+## 113          106    220  113      8
+## 9             57    221  151     10
+## 50            88    219  128      5
+## 96            22    225   38     23
+## 97            27    224   66     24
+## 112          109    229  118      9
+## 111           49    224   78     12
+## 18            70    226   91     21
+## 33            39    218   49      8
+## 60           104    223   70     27
+## 63            92    224   74     14
+## 95            15    224   82     17
+## 15            20    225   29     11
+## 23            60    224  105      2
+## 51            64    214  111     14
+## 65            34    225   39     20
+## 109           44    214   59     55
+## 127           26    211   83      4
+## 19            13    225   44     21
+## 31            53    228  141     49
+## 74            58    226  139      1
+## 82             8    218   39     26
+## 108           44    215   71     42
+## 126           53    217  152      0
+## 64           116    223   97     40
+## 73            41    221   92      4
+## 14            41    214   93      0
+## 20            41    215  109      4
+## 32            70    225  101     37
+## 83            23    221   67     32
+## 99            58    224   85     27
+## 1             27    196   50     29
+## 59           113    227   62     36
+## 125           26    212  133      0
+## 21            40    220   64      7
+## 22            60    225  121     11
+## 52            11     26    2      1
+## 54            93    209   86     15
+## 84            18    222   46     23
+## 85            17    224   67     39
+## 124           30    218  110      2
+## 91            24    221   72     15
+## 110           31    219   54     29
+## 8             47    219  107     38
+## 53            87    220   40     26
+## 68            49    225  145      4
+## 13            39    214  164      0
+## 58            53    223   60     34
+## 4             48    216   68     44
+## 11            15    222   15      3
+## 12            30    219  143      1
+## 56            72    220   85     32
+## 92            12    223   44     27
+## 94            11    219   49     22
+## 2             25    229   38     16
+## 6             21    214   56     33
+## 7             31    224   65     29
+## 67            30    224   79      2
+## 5             45    213   49     39
+## 57            36    225   19     11
+## 86            65    209   90     43
+## 93            20    225   95     32
+## 10            49    207  130     13
+## 55            89    226  126     12
+## 66            79    225  132      7
+## 62            63    102   17     15
+## 87            11    222   54     24
+## 90            14    192   17     12
+## 3             73    222   99     50
+## 61           107    223   56     34
+## 88            21    225   56      6
+## 89            18    210   45     35</code></pre>
+</div>
+<div id="concatener-deux-tables" class="section level2">
+<h2>Concaténer deux tables</h2>
+<p>Fabriquer 2 jeux de données pour les années 2003 et 2004 et les stocker dans <code>myData2004</code>̀ et myData23</p>
+<p>Que fait la commande rbind(myData2003, myData2004) ?</p>
+<p>solution tidy</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myData2003 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>( myData2004)</code></pre></div>
+<pre><code>##     Year DFO_STAT_AREA_CODE Lat_start Lon_start soaktime_mn
+## 1   2003                 12     50.81   -127.66         127
+## 2   2003                 12     50.88   -127.64         128
+## 3   2003                 12     50.93   -127.77         127
+## 4   2003                 12     50.87   -127.46         122
+## 5   2003                 12     50.89   -127.42         134
+## 6   2003                 12     50.88   -127.39         121
+## 7   2003                 12     50.88   -127.24         120
+## 8   2003                 12     50.84   -127.09         121
+## 9   2003                 12     50.73   -127.41         124
+## 10  2003                 12     50.90   -127.01         126
+## 11  2003                 12     50.87   -126.68         127
+## 12  2003                 12     50.87   -126.65         111
+## 13  2003                 12     50.85   -126.61         123
+## 14  2003                 12     50.80   -126.81         138
+## 15  2003                 12     50.77   -126.53         122
+## 16  2003                 12     50.67   -126.69         124
+## 17  2003                 12     50.72   -126.78         146
+## 18  2003                 12     50.75   -126.64         123
+## 19  2003                 12     50.78   -126.69         120
+## 20  2003                 12     50.80   -126.57         122
+## 21  2003                 12     50.82   -126.38         120
+## 22  2003                 12     50.82   -126.36         129
+## 23  2003                 12     50.77   -126.21         121
+## 24  2003                 12     50.72   -126.18         122
+## 25  2003                 12     50.65   -126.25         123
+## 26  2003                 12     50.61   -126.33         126
+## 27  2003                 12     50.63   -126.43         135
+## 28  2003                 12     50.61   -126.73         120
+## 29  2003                 12     50.67   -127.15         122
+## 30  2003                 12     50.67   -126.97         142
+## 31  2003                 12     50.78   -126.90         120
+## 32  2003                 12     50.80   -126.88         120
+## 33  2003                 12     50.76   -126.88         123
+## 34  2003                 12     50.63   -127.19         120
+## 35  2003                 12     50.71   -127.21         140
+## 36  2003                 12     50.64   -127.20         122
+## 37  2003                 12     50.63   -127.07         126
+## 38  2003                 12     50.63   -127.05         123
+## 39  2003                 12     50.61   -126.93         122
+## 40  2003                 12     50.59   -126.76         136
+## 41  2003                 12     50.70   -126.86         120
+## 42  2003                 12     50.64   -126.85         122
+## 43  2003                 12     50.56   -126.80         120
+## 44  2003                 12     50.54   -126.77         126
+## 45  2003                 12     50.47   -126.29         120
+## 46  2003                 12     50.48   -126.01         120
+## 47  2003                 13     50.45   -125.95         121
+## 48  2003                 13     50.37   -125.78         110
+## 49  2003                 13     50.39   -125.54         121
+## 50  2003                 13     50.46   -125.40         123
+## 51  2003                 13     50.48   -125.35         120
+## 52  2003                 13     50.01   -125.02         120
+## 53  2003                 13     50.04   -125.05         122
+## 54  2003                 13     49.99   -125.11         122
+## 55  2003                 13     50.11   -125.21         119
+## 56  2003                 13     50.43   -124.95         122
+## 57  2003                 13     50.44   -125.01         122
+## 58  2003                 13     50.36   -125.09         120
+## 59  2003                 13     50.59   -124.87         119
+## 60  2003                 13     50.50   -125.11         120
+## 61  2003                 13     50.47   -125.11         118
+## 62  2003                 13     50.47   -125.05         119
+## 63  2003                 13     50.38   -125.06         121
+## 64  2003                 13     50.37   -125.11         121
+## 65  2003                 13     50.58   -125.56         119
+## 66  2003                 13     50.48   -125.57         119
+## 67  2003                 14     49.94   -125.15         120
+## 68  2004                 12     50.61   -127.08         120
+## 69  2004                 12     50.60   -126.91         120
+## 70  2004                 12     50.68   -126.93         122
+## 71  2004                 12     50.73   -126.98         121
+## 72  2004                 12     50.77   -126.90         121
+## 73  2004                 12     50.82   -126.96         126
+## 74  2004                 12     50.84   -127.09         122
+## 75  2004                 12     50.82   -127.01         121
+## 76  2004                 12     50.90   -127.00         120
+## 77  2004                 12     50.87   -127.29         120
+## 78  2004                 12     50.89   -127.39         120
+## 79  2004                 12     50.85   -127.45         120
+## 80  2004                 12     50.81   -127.48         123
+## 81  2004                 12     50.76   -127.41         120
+## 82  2004                 12     50.93   -127.76         120
+## 83  2004                 12     50.91   -127.70         129
+## 84  2004                 12     50.76   -126.80         120
+## 85  2004                 12     50.79   -126.86         122
+## 86  2004                 12     50.77   -126.66         126
+## 87  2004                 12     50.90   -126.78         120
+## 88  2004                 12     50.88   -126.57         120
+## 89  2004                 12     50.84   -126.60         120
+## 90  2004                 12     50.56   -126.76         120
+## 91  2004                 12     50.53   -126.62         120
+## 92  2004                 12     50.51   -126.65         121
+## 93  2004                 12     50.66   -126.39         119
+## 94  2004                 12     50.79   -126.20         120
+## 95  2004                 12     50.78   -126.22         121
+## 96  2004                 12     50.61   -126.34         120
+## 97  2004                 12     50.59   -126.42         120
+## 98  2004                 12     50.61   -126.74         120
+## 99  2004                 12     50.68   -126.74         120
+## 100 2004                 12     50.65   -126.54         120
+## 101 2004                 12     50.46   -126.17         119
+## 102 2004                 12     50.46   -126.13         120
+## 103 2004                 13     50.51   -125.83         120
+## 104 2004                 13     50.48   -125.57         120
+## 105 2004                 13     50.49   -125.58         121
+## 106 2004                 13     50.62   -125.55         122
+## 107 2004                 13     50.44   -125.43         120
+## 108 2004                 13     50.49   -125.38         121
+## 109 2004                 13     50.43   -125.30         119
+## 110 2004                 13     50.46   -125.27         120
+## 111 2004                 13     50.48   -125.05         120
+## 112 2004                 13     50.63   -124.90         119
+## 113 2004                 13     50.63   -124.88         120
+## 114 2004                 13     50.37   -125.06         119
+## 115 2004                 13     50.32   -125.07         118
+## 116 2004                 13     50.35   -124.99         120
+## 117 2004                 13     50.38   -124.97         134
+##     Nyelloweye_caught Nquillback_caught Ndogfish_caught Nhooks_with_bait
+## 1                   6                 9               6              119
+## 2                   0                22               0              166
+## 3                   3                46               0               50
+## 4                   0                 9              15              100
+## 5                   2                 3               5              119
+## 6                   1                13               9              137
+## 7                   1                12              23              128
+## 8                   1                 8              60               65
+## 9                   0                 0             141               13
+## 10                  0                 0             117               28
+## 11                  0                 6               6              192
+## 12                  0                 2             140               46
+## 13                  1                 6             157               11
+## 14                  0                 1              92               80
+## 15                  3                 6               9              176
+## 16                  0                 0              12              197
+## 17                  5                27              40              113
+## 18                  0                 0              70               65
+## 19                  3                11               9              168
+## 20                  0                 1             104               65
+## 21                  4                 8              45              116
+## 22                 12                14              84               44
+## 23                  2                 1             100               59
+## 24                  0                 2              30              166
+## 25                  0                 6              18              175
+## 26                  0                 8              41              137
+## 27                  0                 0             142               30
+## 28                  0                32              18               84
+## 29                  0                 0              20                1
+## 30                  0                 1              21              142
+## 31                  1                19              72               34
+## 32                  0                 0              64               54
+## 33                  0                 6              35              130
+## 34                  0                 0              29               59
+## 35                  0                 8              27               18
+## 36                  0                 0               3              129
+## 37                  0                 3              46               22
+## 38                  0                 0              27               65
+## 39                  0                 0              61               56
+## 40                  0                 6              18                5
+## 41                  0                 2              68               46
+## 42                  0                 5               4               24
+## 43                  0                 3               3               40
+## 44                  3                 0              72               12
+## 45                 10                 1              95               54
+## 46                  3                18              97               27
+## 47                  0                 0             151                0
+## 48                  0                 0               8               73
+## 49                  0                 0             158                1
+## 50                  1                13             103               20
+## 51                  0                 1             148                1
+## 52                  4                 3             159                3
+## 53                  2                 0             104                1
+## 54                  0                 0             156                1
+## 55                  0                 1             111                9
+## 56                 17                 8             122               26
+## 57                 24                 4             113               47
+## 58                 12                19              71               60
+## 59                  0                 0             110               42
+## 60                  9                24              82               61
+## 61                  0                 9              61              122
+## 62                  0                 6             149                0
+## 63                  6                 5              86               63
+## 64                  6                 3              32              136
+## 65                  4                18               7              155
+## 66                  5                 3              74               57
+## 67                  0                 1             133                9
+## 68                  0                 0              54                0
+## 69                  0                 0              91                0
+## 70                  1                 3              16               55
+## 71                  0                 3             120                3
+## 72                  0                12              85               39
+## 73                  0                 0               1               13
+## 74                  2                 5               7               93
+## 75                  0                 2              69               30
+## 76                  1                 0             113               11
+## 77                  0                 6              47               63
+## 78                  2                 6               0              170
+## 79                  4                21               1              110
+## 80                  0                17               9               52
+## 81                  1                 9              33               49
+## 82                  0                21               1               60
+## 83                  0                 2               0               22
+## 84                  2                10              48               58
+## 85                  0                 8              49               10
+## 86                  2                16               1              152
+## 87                  4                13             108               14
+## 88                  1                10              66              115
+## 89                  3                 6             132               31
+## 90                  1                 3               8               50
+## 91                  8                26               8               58
+## 92                  4                 9              29               51
+## 93                  0                 2             108               10
+## 94                  0                22              66               88
+## 95                  0                 6             132               29
+## 96                  0                 3              98               21
+## 97                  0                 0              69               64
+## 98                  0                17               9               87
+## 99                  0                 0              88                0
+## 100                 0                 0              42               59
+## 101                 3                 8               5               76
+## 102                12                 5               9              142
+## 103                 0                 0             108                6
+## 104                 0                 0             168                4
+## 105                 6                 2             132               23
+## 106                12                20              26               75
+## 107                 5                 7             121               31
+## 108                 0                 1             164                0
+## 109                 1                 2               4              191
+## 110                 7                16              97               34
+## 111                 7                16              25              122
+## 112                 5                 3             126               23
+## 113                 5                 2             147               15
+## 114                 7                 3              73              106
+## 115                 7                 8              36              141
+## 116                 7                 2              42               29
+## 117                 3                 3             170               10
+##     Nhooks_empty Nhooks Ntot Nother
+## 1             27    196   50     29
+## 2             25    229   38     16
+## 3             73    222   99     50
+## 4             48    216   68     44
+## 5             45    213   49     39
+## 6             21    214   56     33
+## 7             31    224   65     29
+## 8             47    219  107     38
+## 9             57    221  151     10
+## 10            49    207  130     13
+## 11            15    222   15      3
+## 12            30    219  143      1
+## 13            39    214  164      0
+## 14            41    214   93      0
+## 15            20    225   29     11
+## 16             4    220   19      7
+## 17            19    221   89     17
+## 18            70    226   91     21
+## 19            13    225   44     21
+## 20            41    215  109      4
+## 21            40    220   64      7
+## 22            60    225  121     11
+## 23            60    224  105      2
+## 24            24    223   33      1
+## 25            26    225   24      0
+## 26            20    211   54      5
+## 27            51    224  143      1
+## 28            51    224   89     39
+## 29           148    215   66     46
+## 30            56    240   42     20
+## 31            53    228  141     49
+## 32            70    225  101     37
+## 33            39    218   49      8
+## 34            96    211   56     27
+## 35            74    220  128     93
+## 36            50    192   13     10
+## 37           114    221   85     36
+## 38           105    218   48     21
+## 39            89    215   70      9
+## 40           127    221   89     65
+## 41            84    223   93     23
+## 42           155    222   43     34
+## 43           149    223   34     28
+## 44            60    221  149     74
+## 45            45    212  113      7
+## 46            57    226  142     24
+## 47            67    221  154      3
+## 48           107    216   36     28
+## 49            74    235  160      2
+## 50            75    213  118      1
+## 51            72    223  150      1
+## 52            54    234  177     11
+## 53           111    222  110      4
+## 54            61    220  158      2
+## 55            95    225  121      9
+## 56            51    226  149      2
+## 57            36    224  141      0
+## 58            58    222  104      2
+## 59            72    224  110      0
+## 60            48    225  116      1
+## 61            28    222   72      2
+## 62            68    223  155      0
+## 63            65    226   98      1
+## 64            46    223   41      0
+## 65            39    224   30      1
+## 66            82    221   82      0
+## 67            79    224  136      2
+## 68           129    184   55      1
+## 69           122    217   95      4
+## 70           106    221   60     40
+## 71            88    219  128      5
+## 72            64    214  111     14
+## 73            11     26    2      1
+## 74            87    220   40     26
+## 75            93    209   86     15
+## 76            89    226  126     12
+## 77            72    220   85     32
+## 78            36    225   19     11
+## 79            53    223   60     34
+## 80           113    227   62     36
+## 81           104    223   70     27
+## 82           107    223   56     34
+## 83            63    102   17     15
+## 84            92    224   74     14
+## 85           116    223   97     40
+## 86            34    225   39     20
+## 87            79    225  132      7
+## 88            30    224   79      2
+## 89            49    225  145      4
+## 90           125    215   40     28
+## 91            87    224   79     37
+## 92            92    225   82     40
+## 93           100    221  111      1
+## 94            41    221   92      4
+## 95            58    226  139      1
+## 96            96    220  103      2
+## 97            85    223   74      5
+## 98            85    224   52     26
+## 99           101    223  122     34
+## 100           95    220   66     24
+## 101          112    224   36     20
+## 102           49    229   38     12
+## 103          105    219  108      0
+## 104           51    224  169      1
+## 105           59    222  140      0
+## 106           87    221   59      1
+## 107           58    223  134      1
+## 108           58    223  165      0
+## 109           24    225   10      3
+## 110           68    224  122      2
+## 111           55    226   49      1
+## 112           69    227  135      1
+## 113           51    220  154      0
+## 114           37    226   83      0
+## 115           30    225   54      3
+## 116           19    104   56      5
+## 117           35    223  178      2</code></pre>
+</div>
+<div id="sauvegarder-les-resultats" class="section level2">
+<h2>Sauvegarder les résultats</h2>
+<p>Dans un fichier texte</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.table</span>(<span class="dt">x =</span> myData2004, <span class="dt">file =</span> <span class="st">&#39;table2004.txt&#39;</span>, <span class="dt">sep =</span> <span class="st">&#39; &#39;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Sous forme compressée dans un fichier Rdata.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save</span>(<span class="dt">list =</span> <span class="st">&#39;myData2004&#39;</span>, <span class="dt">file =</span> <span class="st">&#39;table2004.Rdata&#39;</span>)
+<span class="kw">load</span>(<span class="st">&#39;table2004.Rdata&#39;</span>)</code></pre></div>
+</div>
+<div id="petit-exercice" class="section level2">
+<h2>Petit exercice</h2>
+<p>Charger le fichier iris, puis * Garder uniquement l’espece virginica * Supprimer toutes les observations correspondantes à des largeurs de sépale inférieures à 3 * Ordonner la table restante selon la longueur des sépales. * Ajouter une colonne contenant la longueur des sépals au carré.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

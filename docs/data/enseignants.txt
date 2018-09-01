@@ -1,0 +1,4 @@
+"nom" "prenom" "mail"
+"Etienne" "Marie-Pierre" "marie-pierre.etienne@agrocampus-ouest.fr"
+"Guitton" "Jérôme" "jerome.guitton@agrocampus-ouest.fr"
+"Lecomte" "Jean-Baptiste" "jean-baptiste.lecomte@agrocampus-ouest.fr"

@@ -1,0 +1,70 @@
+---
+title: "Présentation du logiciel R"
+author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
+date: "July 17, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(dplyr)
+```
+
+
+# Historique
+- 1992 : projet de développer un logiciel qui implémente le langage S
+- 1995 première version R et en 2000  première version stable
+
+## Développement 
+- Soutenu par une forte communauté internationale: useR! conferences
+    - 2006, Vienna, Austria; 2007, Ames, Iowa, USA
+    - 2008, Dortmund, Germany; \textcolor{red}{2009, Rennes, France}
+    - 2010, Gaithersburg, Maryland, USA;  2011, Coventry, UK
+    - 2012, Nashville, Tennessee, USA; 2013, Albacete, Spain
+    - 2014, Los Angeles, California, USA;  2015, Aalborg, Denmark
+    - 2016, Stanford, California, USA; 2017, Brussels, Belgium
+    - 2018, Brisbane, Australia; \textcolor{red}{2019, Toulouse, France}
+    
+- et nationale : Rencontres R   2012 Bordeaux, 2013 Lyon, 2014 Montpellier, 2015 Grenoble, 2016 Toulouse, 2017 Anglet, <span class="emphase">2018 Rennes</span>, 2019 Paris 
+    
+# Spécificités de R 
+## Fonctionnement par packages
+
+Permet la diffusion rapide de nouvelles méthodes statistiques. La qualité d'un package est améliorée grâce au retour de la communauté.
+
+[Une visite sur le cran s'impose ](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+
+## Installation d'un package
+Pour installer un package, par exemple le package `car` , il suffira d'éxécuter une seule fois  la commande :
+
+```{r, eval=FALSE}
+install.packages('car')
+```
+
+Puis avant chaque utilisation du package 
+```{r}
+library('car')
+```
+
+
+
+## La programmation objet (exemple plot d'un facteur)
+
+```{r, fig.width=6, fig.height=3}
+data("iris"); par(mfrow=c(1,2))
+plot(Sepal.Length~Petal.Length, data=iris)
+plot(Sepal.Length~Species, data=iris)
+```
+
+

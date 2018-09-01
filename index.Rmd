@@ -1,0 +1,92 @@
+---
+title: "Traitement de données pour l'halieutique "
+author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
+date: "July 17, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(dplyr)
+main.dir <- '../'
+```
+
+## Contexte {#future-steps}
+
+- Le traitement et la visualisation de données est une étape clé dans la compréhension de toute sorte de phénomène.
+
+- Les données sont de plus en plus massives et complexes et nécessitent des outils et des méthodes pour
+    - visualiser les données et  résumer les données
+    - extraire de l'information des données
+
+- Une démarche scientifique  ouverte et reproductible  implique de 
+    - fournir les données dans un format utilisable
+    - pouvoir reproduire l'ensemble du traitement des données 
+    - fournir une explication détaillée des procédures choisies et des motivations
+
+
+## Objectifs du module
+
+- Fournir des outils pour visualiser et analyser des données
+
+- Revisiter les stats pour les ancrer dans des problématiques halieutiques
+
+- Proposer un ensemble de bonnes pratiques dans le cadre d'une démarche scientifique reproductible
+
+
+## Concrètement
+
+- Outils : \verb+R+ et l'environnement \verb+RStudio+  (cf Jérôme pour la partie SIG)
+    - Manipulation de données 
+    - Visualisation de données
+    - Modèles linéaires 
+    - (Analyses multivariées)
+    - Production de rapport scientifique
+- Des notions sur l'échantillonnage pour guider les choix
+- Des notions sur l'ajustement de modèles et les tests
+
+## Planning 
+```{r, echo = FALSE}
+  edt <- readxl::read_excel(file.path(getwd(),'..',"EDT SHA S9 2018-2019 s36-s40-1.xlsx")) %>% select(`M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, X__1, X__2, X__3, X__4, X__5) %>%  dplyr::rename(Date = `M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, Lundi=X__1,Mardi=X__2,Mercredi=X__3,Jeudi=X__4, Vendredi=X__5  )
+test <- edt %>% select(Lundi)  %>% filter(stringr::str_detect(Lundi , 'semaine'))  %>% map(function(d_){
+  str_extract(d_, "\\d\\d") }) 
+
+date_debut <- as.Date(paste(2018, as.numeric(test$Lundi) - 1, 1, sep = "-"), "%Y-%U-%u")
+
+
+res <- as.tibble(data.frame(  date_t=c(data.table::shift(edt$Date, type='lead')), debut=c( rep(date_debut, each=8),NA), edt))%>%
+  filter(stringr::str_detect(Lundi , 'Etienne') | stringr::str_detect(Mardi , 'Etienne') | stringr::str_detect(Mercredi , 'Etienne') | stringr::str_detect(Jeudi , 'Etienne') | stringr::str_detect(Vendredi , 'Etienne'))  %>% select(-Date)
+names(res) <- tolower(names(res)) 
+
+
+final      <- res %>% as.data.frame() %>% reshape2::melt( id.vars = c("date_t","debut")) %>%  filter(stringr::str_detect(value, 'Etienne'))
+
+final$date <- final$debut + as.difftime(sapply(as.character(final$variable), function(s_){
+  switch(s_,
+         lundi = 0,
+         mardi = 1,
+         mercredi = 2, 
+         jeudi = 3,
+         vendredi = 4)
+}), units = "days")
+
+final <- final %>%  
+  mutate(  salle = sapply(as.character(final$value), function(s_){ str_split(s_,"Salle[ s]")[[1]][2]}) %>% str_remove_all("\\n")) %>% select(date, date_t, variable,salle) %>%
+  select(date, variable, date_t,  salle) %>%
+  arrange(date, date_t ) %>%
+  dplyr::rename(horaire=date_t, jour=variable)
+
+DT::datatable(final) %>% DT::formatStyle( columns = colnames(final)[-1])
+
+```

@@ -1,0 +1,84 @@
+---
+title: "Utilisation de RStudio"
+author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
+date: "July 17, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(dplyr)
+```
+
+
+# Environnement RStudio
+
+
+## Description de l'environnement
+
+Hop on ouvre Rstudio !
+
+## Les aspects pratiques
+
+Ouvrir le fichier IntroR-Ex1.R 
+
+- coloration syntaxique : pour faire mois d'erreur
+- la touche de tabulation : parce qu'il ne faut pas trop se fatiguer 
+- l'environnement 
+
+
+# Bonnes pratiques
+
+## Créer un projet (spécifique RStudio)
+
+### Pourquoi ?
+
+- faciliter l'accès aux fichiers
+- reprendre le travail où l'on s'est arreté au prochain cours
+
+### Comment ?
+
+File --> New Project 
+
+## Créer un script R
+
+### Pourquoi ?
+
+- pour garder une trace de son travail
+- pour poursuivre au prochain cours
+- pour reprendre des morceaux de code qui serot utiles
+
+### Comment ?
+
+File --> New File --> R script et on sauve
+
+
+## Créer un fichier Rmarkdown
+
+### Pourquoi ?
+
+- pour méler un texte rédiger et du code R
+- pour etre capable de reproduire ses résultats et les communiquer 
+- pour écrire des rapports et des présentations 
+
+### Comment ?
+
+File --> New File --> R Markdown et on sauve
+
+On écrit normalement et on peut insérer du code R avec CTL + ALT + i 
+
+Dans un fichier RMarkdown, il faut mettre tous les packages à charger dans le premier 'chunk'.
+
+
+

@@ -1,0 +1,30 @@
+name: "Statistique pour l'halieutique"
+output_dir: "docs"
+navbar:
+  title: "Statistique halieutique"
+  left:
+  - text: "Organisation"
+    href: index.html
+  right:
+  - text: "Introduction à R"
+    href: introR.html
+    menu:
+      - text: "Présentation du logiciel R"
+        href: intror_presentation.html
+      - text: "Environnement RStudio"
+        href: intror_rstudio.html
+      - text: "Manipulation de données"
+        href: intror_manip.html
+      - text: "Visualisation"
+        href: intro_visu.html
+  - text: "Echantillonnage"
+    href: echant.html
+    menu:
+  - text: "Ajustement de modèles"
+    href: model.html
+    menu:
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+  
