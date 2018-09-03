@@ -1,7 +1,5 @@
 ---
 title: "Rappels de statisique élémentaire"
-author: "Marie-Pierre Etienne"
-date: "September 3, 2018"
 output: 
   html_document:
    toc: true

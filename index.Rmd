@@ -58,7 +58,7 @@ library(dplyr)
 
 ## Planning 
 ```{r, echo = FALSE, cache=FALSE}
-  edt <- readxl::read_excel(file.path(getwd(),'..',"EDT SHA S9 2018-2019 s36-s40-1.xlsx")) %>% select(`M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, X__1, X__2, X__3, X__4, X__5) %>%  dplyr::rename(Date = `M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, Lundi=X__1,Mardi=X__2,Mercredi=X__3,Jeudi=X__4, Vendredi=X__5  )
+  edt <- readxl::read_excel(file.path(getwd(),"EDT SHA S9 2018-2019 s36-s40-1.xlsx")) %>% select(`M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, X__1, X__2, X__3, X__4, X__5) %>%  dplyr::rename(Date = `M2 SHA    -    2018-2019    -    EDT Semaine 36-40`, Lundi=X__1,Mardi=X__2,Mercredi=X__3,Jeudi=X__4, Vendredi=X__5  )
 test <- edt %>% select(Lundi)  %>% filter(stringr::str_detect(Lundi , 'semaine'))  %>% map(function(d_){
   str_extract(d_, "\\d\\d") }) 
 

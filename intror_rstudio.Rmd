@@ -1,7 +1,5 @@
 ---
 title: "Utilisation de RStudio"
-author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
-date: "July 17, 2018"
 output: 
   html_document:
    toc: true

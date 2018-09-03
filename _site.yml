@@ -27,6 +27,5 @@ navbar:
     menu:
 output:
   html_document:
-    theme: cosmo
+    theme: lumen
     highlight: textmate
-  
