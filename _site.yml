@@ -17,6 +17,8 @@ navbar:
         href: intror_manip.html
       - text: "Visualisation"
         href: intror_visu.html
+      - text: "Rappels de statistique"
+        href: intror_rappel.html
   - text: "Echantillonnage"
     href: echant.html
     menu:

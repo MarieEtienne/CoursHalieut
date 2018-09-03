@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Marie-Pierre Etienne" />
+
+
+<title>Rappels de statisique élémentaire</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Statistique halieutique</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intror_visu.html">Visualisation</a>
+    </li>
+    <li>
+      <a href="intror_rappel.html">Rappels de statistique</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="echant.html">Echantillonnage</a>
+</li>
+<li>
+  <a href="model.html">Ajustement de modèles</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Rappels de statisique élémentaire</h1>
+<h4 class="author"><em>Marie-Pierre Etienne</em></h4>
+<h4 class="date"><em>September 3, 2018</em></h4>
+
+</div>
+
+
+<div id="modele-de-regression-simple" class="section level1">
+<h1>Modèle de régression simple</h1>
+<p>Le fichier <code>data/T_Oir_StHilaire_87_02.txt</code> contient des relevés journaliers de la température de l’eau et de la température de l’air dans l’Oir, un petit fleuve côtier de Basse Normandie. Données journalières. On se pose la question du lien entre la température de l’eau et la température de l’air.</p>
+<div id="visualisation-des-donnees-de-temperature" class="section level2">
+<h2>Visualisation des données de température</h2>
+<p>Une première étape essentielle consiste à visualiser les données. Proposer un code permettant de produire le graphique ci dessous~:</p>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="un-modele-de-regression-simple" class="section level2">
+<h2>Un modèle de régression simple</h2>
+<p>Le modèle de la régression simple s’écrit mathématiquement sous la forme suivante :</p>
+<p><span class="math display">\[ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où - <span class="math inline">\(Y_k\)</span> désigne la température de l’eau de la k$^{} mesure, - <span class="math inline">\(x_k\)</span> désigne la température de l’air de la k$^{} mesure, - <span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span>, on suppose qu’il suit une loi normale centrée de variance inconnue <span class="math inline">\(\sigma^2\)</span>, - <span class="math inline">\(\alpha\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine, - <span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien entre température de l’air et température de l’eau.</p>
+</div>
+<div id="estimation-des-parametres" class="section level2">
+<h2>Estimation des paramètres</h2>
+<p>L’estimation consiste à déterminer le choix des paramètre <span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span> les plus pertinents. Une méthode générique d’estimation des paramètres d’un modèle statistique, consiste à optimiser une fonction nommée la vraisemblance, on le verra plus tard.</p>
+<p>Dans un premier temps, on cherche à trouver la droite d’équation <span class="math inline">\(y=a +bx\)</span> qui résume au mieux les données, i.e on cherche à minimiser l’écart entre nos observations <span class="math inline">\(y_i\)</span> et la prédiction par le modèle <span class="math inline">\(\alpha + \beta x_i\)</span>, ce qui revient à trouver le minimum de la fonction</p>
+<p><span class="math display">\[MCO(\alpha, \beta;  \boldsymbol{y},\boldsymbol{x}) = \sum_{i=1}^{n} \{y_i - (\alpha + \beta x_i) \}^2. \]</span></p>
+<p>La commande <code>lm</code> de <code>R</code> fait le travail, dans la commande suivante :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air &lt;-<span class="st">  </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>T_air, <span class="dt">data=</span>df_temp)
+<span class="kw">coef</span>(lm_eau_air)</code></pre></div>
+<pre><code>## (Intercept)       T_air 
+##   5.4149067   0.5976255</code></pre>
+<p>On a davantage de résultats dans la fonction <code>lm</code> :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lm_eau_air)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ T_air, data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.8562 -0.9267 -0.0471  0.7730  8.9537 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 5.414907   0.075402   71.81   &lt;2e-16 ***
+## T_air       0.597626   0.006115   97.72   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.539 on 2189 degrees of freedom
+## Multiple R-squared:  0.8135, Adjusted R-squared:  0.8134 
+## F-statistic:  9550 on 1 and 2189 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>On peut se demander si la relation qui lie température de l’air et température de l’eau est la même chaque année. Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :</p>
+<p><span class="math display">\[ Y_{ik} = \mu + \alpha_i  + \beta x_{ik} + \gamma x_{ik} + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où</p>
+<p>où - <span class="math inline">\(Y_{ik}\)</span> désigne la température de l’eau de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(x_k\)</span> désigne la température de l’air de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span> de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années, - <span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span> , - <span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien, commun à toutes les années, entre température de l’air et température de l’eau, - <span class="math inline">\(\gamma_i\)</span> est le paramètre inconnu qui règle la différence entre la pente commune à toutes les années et la pente de l’année <span class="math inline">\(i\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>annee_fact  &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>annee)
+<span class="kw">ggplot</span>(<span class="dt">data=</span>df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> T_air, <span class="dt">y =</span>  T_eau, <span class="dt">col =</span> annee_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">col=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Année&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air_annee &lt;-<span class="st"> </span><span class="kw">lm</span>( T_eau <span class="op">~</span><span class="st"> </span>annee <span class="op">+</span><span class="st"> </span>T_air <span class="op">+</span><span class="st"> </span>annee<span class="op">:</span><span class="st"> </span>T_air, <span class="dt">data =</span> df_temp)
+<span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ annee + T_air + annee:T_air, data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.1868 -0.9101  0.0457  0.8298  8.4296 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 148.263258  25.561853   5.800 7.59e-09 ***
+## annee        -0.071651   0.012821  -5.588 2.58e-08 ***
+## T_air        -3.243721   2.114907  -1.534   0.1252    
+## annee:T_air   0.001928   0.001061   1.818   0.0692 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.511 on 2187 degrees of freedom
+## Multiple R-squared:  0.8204, Adjusted R-squared:  0.8202 
+## F-statistic:  3331 on 3 and 2187 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Pourquoi n’a t on pas une pente par année ?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air_annee &lt;-<span class="st"> </span><span class="kw">lm</span>( T_eau <span class="op">~</span><span class="st"> </span>annee_fact <span class="op">+</span><span class="st"> </span>T_air <span class="op">+</span><span class="st"> </span>annee_fact<span class="op">:</span>T_air, <span class="dt">data =</span> df_temp)
+<span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ annee_fact + T_air + annee_fact:T_air, data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.9420 -0.8083  0.0689  0.7628  7.2236 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           6.84177    0.13847  49.409  &lt; 2e-16 ***
+## annee_fact1988       -3.11366    0.23502 -13.249  &lt; 2e-16 ***
+## annee_fact1994       -0.87285    0.23588  -3.700 0.000221 ***
+## annee_fact1995       -1.96999    0.21485  -9.169  &lt; 2e-16 ***
+## annee_fact2001       -1.83219    0.21429  -8.550  &lt; 2e-16 ***
+## annee_fact2002       -2.12815    0.25564  -8.325  &lt; 2e-16 ***
+## T_air                 0.53445    0.01180  45.279  &lt; 2e-16 ***
+## annee_fact1988:T_air  0.24044    0.01991  12.076  &lt; 2e-16 ***
+## annee_fact1994:T_air -0.01323    0.01903  -0.695 0.487047    
+## annee_fact1995:T_air  0.07885    0.01739   4.534 6.10e-06 ***
+## annee_fact2001:T_air  0.08313    0.01767   4.704 2.71e-06 ***
+## annee_fact2002:T_air  0.11075    0.02112   5.245 1.72e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.426 on 2179 degrees of freedom
+## Multiple R-squared:  0.8406, Adjusted R-squared:  0.8398 
+## F-statistic:  1045 on 11 and 2179 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm_eau_air)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: T_eau
+##             Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## T_air        1 22628.3 22628.3  9549.9 &lt; 2.2e-16 ***
+## Residuals 2189  5186.8     2.4                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="modele-lineaire" class="section level1">
+<h1>Modèle linéaire</h1>
+<p>Le modèle linéaire regroupe tous les modèles pour lesquels le comportement moyen de la variable réponse, i.e. ce qui est prédit par le modèle, est une fonction <b>linéaire</b> des paramètres inconnus. On note souvent <span class="math inline">\(\hat{y_k}\)</span> la prédiction par le modèle de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure, dans ce cas un modèle linéaire est un modèle tel que <span class="math inline">\(\hat{y_k}\)</span> est une fonction linéaire des paramètres. Avec cette définition, le modèle <span class="math display">\[ Y_k = \alpha  + \beta x_k+ \delta x^2_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
+<p>est toujours un modèle linéaire, bien que le lien entre <span class="math inline">\(y\)</span> et <span class="math inline">\(x\)</span> ne soit pas linéaire.</p>
+<p>Tous les modèles linéaires peuvent être ajustés avec la fonction <code>lm</code>.</p>
+</div>
+<div id="ajustement-dun-modele-non-lineaire" class="section level1">
+<h1>Ajustement d’un modèle non linéaire</h1>
+</div>
+<div id="analyse-en-composantes-principales" class="section level1">
+<h1>Analyse en composantes principales</h1>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

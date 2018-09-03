@@ -1,5 +1,5 @@
 ---
-title: "Introduction au logiciel R"
+title: "Visualiser des données ou des résultats"
 author: " Marie-Pierre Etienne, Jérome Guitton et Jean-Baptiste Lecomte"
 date: "July 17, 2018"
 output: 
@@ -143,4 +143,5 @@ ggplot(data=df_longline, aes(x = dfo_area_factor, y = Ntot, fill=year_fact)) + g
                shape=18, size=3,show.legend = TRUE, position=position_dodge(width=0.8)) + scale_fill_viridis_d(option = 'E')
 ```
 
-De belles possibilés et une communauté très active
+De belles possibilités et une communauté très active
+

@@ -1,0 +1,118 @@
+---
+title: "Rappels de statisique élémentaire"
+author: "Marie-Pierre Etienne"
+date: "September 3, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+# Modèle de régression simple
+
+Le fichier `data/T_Oir_StHilaire_87_02.txt` contient des relevés journaliers de  la température de l’eau et de la température de l’air dans
+l’Oir, un petit fleuve côtier de Basse Normandie. Données journalières. On se pose la question du lien entre la température de l'eau et la température de l'air.
+
+## Visualisation des données de température
+
+Une première étape essentielle consiste à visualiser les données. Proposer un code permettant de produire le graphique ci dessous~:
+```{r, echo = FALSE}
+df_temp <- read.table(file = "data/T_Oir_StHilaire_87_02.txt", header = TRUE, sep = "")
+```
+
+
+
+```{r, echo=FALSE}
+
+p <- ggplot(data = df_temp, aes(x = T_air, y = T_eau, col = as.factor(annee))) + geom_point() + guides(col=guide_legend(title = "Année"))
+print(p)
+```
+
+## Un modèle de régression simple
+
+Le modèle de la régression simple s'écrit mathématiquement sous la forme suivante :
+
+$$ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+où 
+- $Y_k$ désigne la température de l'eau de la k$^{\mbox{ème}} mesure,
+- $x_k$ désigne la température de l'air de la k$^{\mbox{ème}} mesure,
+- $E_k$ est un terme d'écart au modèle pour la mesure $k$, on suppose qu'il suit une loi normale centrée de variance inconnue $\sigma^2$,
+- $\alpha$ est le paramètre inconnu qui ajuste l'ordonnée à l'origine,
+- $\beta$ est le paramètre inconnu qui règle le lien entre température de l'air et température de l'eau.
+
+
+## Estimation des paramètres
+
+L'estimation consiste à déterminer le choix des paramètre $\alpha$ et $\beta$ les plus pertinents. Une méthode générique d'estimation des paramètres d'un modèle statistique, consiste à optimiser une fonction nommée la vraisemblance, on le verra plus tard. 
+
+Dans un premier temps, on cherche à trouver la droite d'équation  $y=a +bx$ qui résume au mieux les données, i.e  on cherche à minimiser l'écart entre nos observations $y_i$ et la prédiction par le modèle $\alpha + \beta x_i$, ce qui revient à trouver le minimum de la fonction
+
+$$MCO(\alpha, \beta;  \boldsymbol{y},\boldsymbol{x}) = \sum_{i=1}^{n} \{y_i - (\alpha + \beta x_i) \}^2. $$
+ 
+La commande `lm` de `R` fait le travail, dans la commande suivante :
+```{r}
+lm_eau_air <-  lm(T_eau ~ T_air, data=df_temp)
+coef(lm_eau_air)
+```
+
+On a davantage de résultats dans la fonction `lm` :
+```{r}
+summary(lm_eau_air)
+```
+
+On peut se demander si la relation qui lie température de l'air et température de l'eau est la même chaque année. Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :
+
+$$ Y_{ik} = \mu + \alpha_i  + \beta x_{ik} + \gamma x_{ik} + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+où 
+
+où 
+- $Y_{ik}$ désigne la température de l'eau de la k$^{\mbox{ème}}$ mesure de l'année $i$,
+- $x_k$ désigne la température de l'air de la k$^{\mbox{ème}}$ mesure de l'année $i$,
+- $E_k$ est un terme d'écart au modèle pour la mesure $k$ de l'année $i$,
+- $\mu$ est le paramètre inconnu qui ajuste l'ordonnée à l'origine commune à toutes les années,
+- $\alpha_i$ est le paramètre inconnu qui ajuste la différence entre l'ordonnée à l'origine commune à toutes les années et celle de l'année $i$ ,
+- $\beta$ est le paramètre inconnu qui règle le lien, commun à toutes les années, entre température de l'air et température de l'eau,
+- $\gamma_i$ est le paramètre inconnu qui règle la différence entre la pente commune à toutes les années et la pente de l'année $i$.
+
+
+```{r}
+df_temp$annee_fact  <- as.factor(df_temp$annee)
+ggplot(data=df_temp, aes(x = T_air, y =  T_eau, col = annee_fact)) + geom_point() + guides(col=guide_legend(title = "Année")) + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r}
+lm_eau_air_annee <- lm( T_eau ~ annee + T_air + annee: T_air, data = df_temp)
+summary(lm_eau_air_annee)
+```
+
+
+Pourquoi n'a t on pas une pente par année ?
+
+```{r}
+lm_eau_air_annee <- lm( T_eau ~ annee_fact + T_air + annee_fact:T_air, data = df_temp)
+summary(lm_eau_air_annee)
+anova(lm_eau_air)
+```
+
+
+# Modèle linéaire 
+
+Le modèle linéaire regroupe tous les modèles pour lesquels le comportement moyen de la variable réponse, i.e. ce qui est prédit par le modèle, est une fonction <b>linéaire</b> des paramètres inconnus. On note souvent $\hat{y_k}$ la prédiction par le modèle de la k$^{\mbox{ème}}$ mesure, dans ce cas un modèle linéaire est un modèle tel que $\hat{y_k}$ est une fonction linéaire des paramètres. Avec cette définition, le modèle 
+$$ Y_k = \alpha  + \beta x_k+ \delta x^2_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+
+est toujours un modèle linéaire, bien que le lien entre $y$ et $x$ ne soit pas linéaire.
+
+Tous les modèles linéaires peuvent être ajustés avec la fonction `lm`.
+
+# Ajustement d'un modèle non linéaire
+
+# Analyse en composantes principales
