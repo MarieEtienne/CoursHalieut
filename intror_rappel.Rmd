@@ -1,5 +1,5 @@
 ---
-title: "Rappels de statisique élémentaire"
+title: "Rappels de statistique élémentaire"
 output: 
   html_document:
    toc: true
@@ -12,17 +12,19 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
-library(ggplot2)
-library(ggfortify)
-library(car)
+library(ggplot2) ## pour de beaux graphiques
+library(ggfortify) ## pour de beaux graphiques
+library(car) # pour les modèles linéaires
+library(nlstools) # pour la régression non linéaire
 ```
+# Modèles linéaires
 
-# Modèle de régression simple
+## Modèle de régression simple
 
 Le fichier `data/T_Oir_StHilaire_87_02.txt` contient des relevés journaliers de  la température de l’eau et de la température de l’air dans
 l’Oir, un petit fleuve côtier de Basse Normandie. Données journalières. On se pose la question du lien entre la température de l'eau et la température de l'air.
 
-## Visualisation des données de température
+### Visualisation des données de température
 
 Une première étape essentielle consiste à visualiser les données. Proposer un code permettant de produire le graphique ci dessous~:
 ```{r, echo = FALSE}
@@ -30,7 +32,7 @@ df_temp <- read.table(file = "data/T_Oir_StHilaire_87_02.txt", header = TRUE, se
 ```
 
 
-Transformation d'e la date en jours calendaires'une chaîne de caractères en dates. 
+Transformation de la date en jours calendaires'une chaîne de caractères en dates. 
 
 ```{r}
 df_temp <- df_temp %>% mutate(date_posixct = as.POSIXct(strptime(df_temp$date,  format = "%d/%m/%Y"))) 
@@ -49,7 +51,7 @@ p <- ggplot(data = df_temp, aes(x = T_air, y = T_eau)) + geom_point()
 print(p)
 ```
 
-## Un modèle de régression simple
+### Le modèle de régression simple
 
 Le modèle de la régression simple s'écrit mathématiquement sous la forme suivante :
 
@@ -63,7 +65,7 @@ où
 - $\beta$ est le paramètre inconnu qui règle le lien entre température de l'air et température de l'eau.
 
 
-## Estimation des paramètres
+### Estimation des paramètres
 
 L'estimation consiste à déterminer le choix des paramètre $\alpha$ et $\beta$ les plus pertinents. Une méthode générique d'estimation des paramètres d'un modèle statistique, consiste à optimiser une fonction nommée la vraisemblance, on le verra plus tard. 
 
@@ -117,6 +119,7 @@ C'est un modèle d'analyse de la variance.
 
 ## Analyse de la variance
 
+### Analyse de la variance à 1 facteur
 ```{r}
 ggplot(data=df_temp, aes(x = as.factor(annee), y = T_eau)) + geom_boxplot()
 ```
@@ -166,6 +169,9 @@ Sans grande surprise, on ne met pas en évidence d'effet années, mais on consta
 
 Néanmoins il est possible que cette absence d'effet année soit du à une trop grande variabilité du fait de la variabilité annuelle de la température au cours de l'année.
 
+
+### Analyse de la variance à 2 facteurs
+
 ```{r}
 ggplot(data = df_temp, aes(x = as.factor(mois), y = T_eau)) + geom_boxplot()
 ```
@@ -190,7 +196,7 @@ où
 Il est important de regarder le plan d'expérience pour détecter des potentiels déséquilibres dans le dispositif expérimental.
 
 ```{r plan_exp}
-with(df_temp, table(mois_fact, annee_fact))
+with(df_temp, table(mois, annee_fact))
 ```
 
 Le plan d'expérience est quasimment équilibré.
@@ -288,7 +294,8 @@ summary(lm_eau_air_annee)
 ```
 
 
-# Modèle linéaire 
+## La famille des modèles linéaires
+
 Tous les modèles étudiés dans cet exemple font partie de la famille des modèles linéaires.
 
 Le modèle linéaire regroupe tous les modèles pour lesquels le comportement moyen de la variable réponse, i.e. ce qui est prédit par le modèle, est une fonction <b>linéaire</b> des paramètres inconnus. On note souvent $\hat{y_k}$ la prédiction par le modèle de la k$^{\mbox{ème}}$ mesure, dans ce cas un modèle linéaire est un modèle tel que $\hat{y_k}$ est une fonction linéaire des paramètres. Avec cette définition, le modèle 
@@ -299,3 +306,79 @@ est toujours un modèle linéaire, bien que le lien entre $y$ et $x$ ne soit pas
 Tous les modèles linéaires peuvent être ajustés avec la fonction `lm`.
 
 # Ajustement d'un modèle non linéaire
+
+On s'intéresse maintenant aux données de croissance du fichier `` data/growth_data.txt``. 
+```{r}
+df_growth <- read.table('data/growth_data.txt', header = TRUE, sep = ' ')
+head(df_growth)
+ggplot(data=df_growth, aes(y=length, x=age)) + geom_point(alpha = 0.3)
+```
+
+
+Ajustement d'un modèle linéaire
+
+```{r}
+lm_length_age <- lm( length ~ age, data= df_growth)
+autoplot(lm_length_age, data=df_growth)
+```
+
+On constate une tendance forte dans les résidus. Le modèle n'est pas adapté; S'agissant de données de croissance, on peut tenter d'ajuster un modèle de von Bertalanffy. Dans ce cas le modèle s'écrit
+
+$$ Y_k = g(x_k) + E_{k}, \quad E_{k} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+
+avec 
+- $Y_k$ la longueur de l'individu $k$,
+- $x_k$ l'âge de lindividu $k$ 
+- $g$ la fonction de von Bertalanffy : $g(x)= L_{\infty} (1-exp(-K*(x-x_0))).$
+
+
+```{r}
+func_VonB <- function(x, K, Linf, x0){
+  res <-  Linf*(1-exp(-K*(x-x0))) 
+  return(res)
+  }
+
+```
+
+## Ajustement en utilisant la fonction ``nls``
+
+Pour ajuster cette relation on peut utiliser la fonction ``nls``
+
+```{r}
+## definir des valeurs initiales de parametres
+nls_vonB <- nls(length ~ func_VonB(age, K, Linf, x0), start = list(Linf=40,K=1, x0=10), data = df_growth)
+summary(nls_vonB)
+```
+
+
+Les hypothèses sur les résidus étant les mêmes,  il faut les vérifier 'à la main'.
+```{r}
+df_nls_vonB <- df_growth %>% mutate(
+  fitted = nlsResiduals(nls_vonB)$resi2[,1],
+  res_stand = nlsResiduals(nls_vonB)$resi2[,2])
+
+ggplot(data = df_nls_vonB, aes(x = fitted, y = res_stand)) + geom_point() + geom_smooth(method = 'loess')
+```
+
+On peut calculer une somme des carrés résiduelle
+
+```{r}
+RSS_1  <-  with(df_nls_vonB, sum((length-fitted)^2))
+R2_1   <- RSS_1 / with(df_nls_vonB, sum( (length- mean(length))^2) )
+```
+
+
+
+# Mise en oeuvre sur le jeu de données ``saumons``̀
+
+A partir de la table ``saumons``, explorer la variation de la densité en fonction des différents facteurs âge, année, habitat, secteurs, vitesse du courant 
+
+Indications :
+
+- Représenter graphiquement les données avant de se lancer dans toute analyse. 
+- NE PAS PRENDRE EN COMPTE la variable Lf comme variable explicative potentielle.
+- Pour la variable « water velocity », on pourra faire des classes.
+- Il faudra peut-être transformer la variable si les hypothèses de modélisation ne sont pas vérifiées.
+
+
+A rendre en binome sous forme de fichier RMarkdown pour le vendredi 14 septembre.

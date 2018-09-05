@@ -11,7 +11,7 @@
 
 
 
-<title>Rappels de statisique élémentaire</title>
+<title>Rappels de statistique élémentaire</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -359,24 +359,26 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Rappels de statisique élémentaire</h1>
+<h1 class="title toc-ignore">Rappels de statistique élémentaire</h1>
 
 </div>
 
 
-<div id="modele-de-regression-simple" class="section level1">
-<h1>Modèle de régression simple</h1>
+<div id="modeles-lineaires" class="section level1">
+<h1>Modèles linéaires</h1>
+<div id="modele-de-regression-simple" class="section level2">
+<h2>Modèle de régression simple</h2>
 <p>Le fichier <code>data/T_Oir_StHilaire_87_02.txt</code> contient des relevés journaliers de la température de l’eau et de la température de l’air dans l’Oir, un petit fleuve côtier de Basse Normandie. Données journalières. On se pose la question du lien entre la température de l’eau et la température de l’air.</p>
-<div id="visualisation-des-donnees-de-temperature" class="section level2">
-<h2>Visualisation des données de température</h2>
+<div id="visualisation-des-donnees-de-temperature" class="section level3">
+<h3>Visualisation des données de température</h3>
 <p>Une première étape essentielle consiste à visualiser les données. Proposer un code permettant de produire le graphique ci dessous~:</p>
-<p>Transformation d’e la date en jours calendaires’une chaîne de caractères en dates.</p>
+<p>Transformation de la date en jours calendaires’une chaîne de caractères en dates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp &lt;-<span class="st"> </span>df_temp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">date_posixct =</span> <span class="kw">as.POSIXct</span>(<span class="kw">strptime</span>(df_temp<span class="op">$</span>date,  <span class="dt">format =</span> <span class="st">&quot;%d/%m/%Y&quot;</span>))) </code></pre></div>
 <p><img src="intror_rappel_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p><img src="intror_rappel_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
-<div id="un-modele-de-regression-simple" class="section level2">
-<h2>Un modèle de régression simple</h2>
+<div id="le-modele-de-regression-simple" class="section level3">
+<h3>Le modèle de régression simple</h3>
 <p>Le modèle de la régression simple s’écrit mathématiquement sous la forme suivante :</p>
 <p><span class="math display">\[ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où</p>
 <ul>
@@ -387,15 +389,15 @@ div.tocify {
 <li><span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien entre température de l’air et température de l’eau.</li>
 </ul>
 </div>
-<div id="estimation-des-parametres" class="section level2">
-<h2>Estimation des paramètres</h2>
+<div id="estimation-des-parametres" class="section level3">
+<h3>Estimation des paramètres</h3>
 <p>L’estimation consiste à déterminer le choix des paramètre <span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span> les plus pertinents. Une méthode générique d’estimation des paramètres d’un modèle statistique, consiste à optimiser une fonction nommée la vraisemblance, on le verra plus tard.</p>
 <p>Dans un premier temps, on cherche à trouver la droite d’équation <span class="math inline">\(y=a +bx\)</span> qui résume au mieux les données, i.e on cherche à minimiser l’écart entre nos observations <span class="math inline">\(y_i\)</span> et la prédiction par le modèle <span class="math inline">\(\alpha + \beta x_i\)</span>, ce qui revient à trouver le minimum de la fonction</p>
 <p><span class="math display">\[MCO(\alpha, \beta;  \boldsymbol{y},\boldsymbol{x}) = \sum_{i=1}^{n} \{y_i - (\alpha + \beta x_i) \}^2. \]</span></p>
 <p>La commande <code>lm</code> de <code>R</code> fait le travail, dans la commande suivante :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air &lt;-<span class="st">  </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>T_air, <span class="dt">data=</span>df_temp)</code></pre></div>
 <p>Avant toute analyse, il est indispensable de discuter les hypothèses du modèle. Il est pour cela utile de regarder les graphiques de diagnostic</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(lm_eau_air, <span class="dt">data=</span>df_temp, <span class="dt">colour=</span><span class="st">&#39;annee&#39;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(lm_eau_air, <span class="dt">data=</span>df_temp)</code></pre></div>
 <p><img src="intror_rappel_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>On peut obtenir les coefficients estimés du modèle grâce à la commande :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_eau_air)</code></pre></div>
@@ -434,8 +436,14 @@ div.tocify {
 <p><img src="intror_rappel_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>La question se pose également de savoir si la température moyenne annuelle de l’eau change d’une année sur l’autre, c’est à dire peut on mettre en évidence une tendance climatique. Pour cela, on chercher à explorer un lien entre la température de l’eau et l’année. On cherche donc à explorer le lien entre une variable quantitative (la température) et une variable qualitative (l’année). C’est un modèle d’analyse de la variance.</p>
 </div>
+</div>
 <div id="analyse-de-la-variance" class="section level2">
 <h2>Analyse de la variance</h2>
+<div id="analyse-de-la-variance-a-1-facteur" class="section level3">
+<h3>Analyse de la variance à 1 facteur</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(annee), <span class="dt">y =</span> T_eau)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Il ne semble pas y avoir d’effet année, on peut néanmoins le vérifier.</p>
 <p>Le modèle s’écrit sous la forme suivante:</p>
 <p><span class="math display">\[ Y_{ik} = \mu + \alpha_i   + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
 <p>où</p>
@@ -464,7 +472,208 @@ div.tocify {
 ## Multiple R-squared:  0.0002953,  Adjusted R-squared:  -0.0001614 
 ## F-statistic: 0.6466 on 1 and 2189 DF,  p-value: 0.4214</code></pre>
 <p>On constate qu’un seul paramètre est estimé pour l’année or nous en attendions un par année. C’est le comportement objet de R qui lui indique de faire une régression linéaire et non une analyse de la variance. La variable année est en effet de classe <code>numeric</code>. Il faut indique que l’année doit être traitée comme une variable qualitative, pour faire la différence on peut créer une nouvelle variable <code>annee_fact</code></p>
-<p>On a constaté un lien entre température de l’air et température l’eau. On peut se demander si ce lien est le même quelle que soit l’année. Ce qui nous amène à examiner le lien entre une variable quantitative (la température de l’eau) et deux variables dont l’une est quantitative (tempéraiture de l’autre ) et l’autre qualitative. C’est le modèle d’analysed ela covariance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>annee_fact &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>annee)
+lm_eau_annee       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span>annee, <span class="dt">data =</span> df_temp)
+<span class="kw">summary</span>(lm_eau_annee)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ annee, data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.9724 -2.5404 -0.1151  2.7758  9.8849 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 33.32906   26.46860   1.259    0.208
+## annee       -0.01067    0.01327  -0.804    0.421
+## 
+## Residual standard error: 3.564 on 2189 degrees of freedom
+## Multiple R-squared:  0.0002953,  Adjusted R-squared:  -0.0001614 
+## F-statistic: 0.6466 on 1 and 2189 DF,  p-value: 0.4214</code></pre>
+<p>Discutons ici de la contrainte d’identifiabilité sur les <span class="math inline">\(\alpha\)</span>.</p>
+<p>Avant toute chose, vérifions la validité des hypothèses sur les résidus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(lm_eau_annee, <span class="dt">data =</span> df_temp)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>On peut tester l’effet année:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm_eau_annee)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: T_eau
+##             Df  Sum Sq Mean Sq F value Pr(&gt;F)
+## annee        1     8.2  8.2134  0.6466 0.4214
+## Residuals 2189 27806.8 12.7030</code></pre>
+<p>Sans grande surprise, on ne met pas en évidence d’effet années, mais on constate également que la variance est très grande.</p>
+<p>Néanmoins il est possible que cette absence d’effet année soit du à une trop grande variabilité du fait de la variabilité annuelle de la température au cours de l’année.</p>
+</div>
+<div id="analyse-de-la-variance-a-2-facteurs" class="section level3">
+<h3>Analyse de la variance à 2 facteurs</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(mois), <span class="dt">y =</span> T_eau)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>On veut donc expliquer la température en fonction de l’année et du mois. Le modèle s’écrit sous la forme suivante:</p>
+<p><span class="math display">\[ Y_{ijk} = \mu + \alpha_i +\beta_j +\gamma_{ij}  + E_{ijk}, \quad E_{ijk} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
+<p>où</p>
+<ul>
+<li><span class="math inline">\(Y_{ik}\)</span> désigne la température de l’eau de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(E_{ik}\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span> de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années,</li>
+<li><span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\beta_j\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle du mois <span class="math inline">\(j\)</span>,</li>
+<li><span class="math inline">\(\gamma_{ij}\)</span> est le paramètre inconnu qui quantifie l’interaction entre l’année <span class="math inline">\(i\)</span> et le mois <span class="math inline">\(j\)</span>.</li>
+</ul>
+<p>Il est important de regarder le plan d’expérience pour détecter des potentiels déséquilibres dans le dispositif expérimental.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(df_temp, <span class="kw">table</span>(mois, annee_fact))</code></pre></div>
+<pre><code>##     annee_fact
+## mois 1987 1988 1994 1995 2001 2002
+##   1    31   31   31   31   31   31
+##   2    28   29   28   28   28   28
+##   3    31   31   31   31   31   31
+##   4    30   30   30   30   30   30
+##   5    31   31   31   31   31   31
+##   6    30   30   30   30   30   30
+##   7    31   31   31   31   31   31
+##   8    31   31   31   31   31   31
+##   9    30   30   30   30   30   30
+##   10   31   31   31   31   31   31
+##   11   30   30   30   30   30   30
+##   12   31   31   31   31   31   31</code></pre>
+<p>Le plan d’expérience est quasimment équilibré.</p>
+<p>On peut par ailleurs suspecterl’effet d’une interaction entre les facteurs, on peut visualiser cette potentielle interaction en regardant le graphique d’interaction.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>mois_fact &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>mois)
+<span class="kw">with</span>( df_temp, 
+     <span class="kw">interaction.plot</span>(<span class="dt">trace.factor =</span> annee_fact, <span class="dt">x.factor =</span> mois, <span class="dt">response =</span> T_eau) )</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Ou en plus joli</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> mois_fact, <span class="dt">color =</span> annee_fact, <span class="dt">group =</span> annee_fact, <span class="dt">y =</span> T_eau) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Ce graphique semble indiquer l’existence d’interactions entre les deux facteurs.</p>
+<p>On peut maintenant auster un modèle d’anlyse de la variance à 2 facteurs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_annee_mois &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>annee_fact <span class="op">+</span><span class="st"> </span>mois_fact <span class="op">+</span><span class="st"> </span>annee_fact<span class="op">:</span>mois_fact, <span class="dt">data =</span> df_temp)
+
+<span class="kw">autoplot</span>(lm_eau_annee_mois, <span class="dt">data =</span> df_temp)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/anova2-1.png" width="672" /></p>
+<p>Les tests des différents effets sont testés dans la table d’anlayse de la variance suivante</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm_eau_annee_mois)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: T_eau
+##                        Df  Sum Sq Mean Sq  F value    Pr(&gt;F)    
+## annee_fact              5    35.3    7.06   3.0262  0.009993 ** 
+## mois_fact              11 19871.0 1806.45 774.4020 &lt; 2.2e-16 ***
+## annee_fact:mois_fact   55  2965.8   53.92  23.1162 &lt; 2.2e-16 ***
+## Residuals            2119  4943.0    2.33                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Anova</span>(lm_eau_annee_mois)</code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: T_eau
+##                       Sum Sq   Df F value    Pr(&gt;F)    
+## annee_fact              36.2    5   3.103  0.008535 ** 
+## mois_fact            19871.0   11 774.402 &lt; 2.2e-16 ***
+## annee_fact:mois_fact  2965.8   55  23.116 &lt; 2.2e-16 ***
+## Residuals             4943.0 2119                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Les estimations des différents paramètres sont données dans la table</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lm_eau_annee_mois)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ annee_fact + mois_fact + annee_fact:mois_fact, 
+##     data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.4996 -0.9342  0.0132  0.9145  5.1837 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                  5.6203     0.2743  20.488  &lt; 2e-16 ***
+## annee_fact1988               4.3423     0.3879  11.193  &lt; 2e-16 ***
+## annee_fact1994               3.1264     0.3879   8.059 1.27e-15 ***
+## annee_fact1995               3.0773     0.3879   7.932 3.45e-15 ***
+## annee_fact2001               3.0036     0.3879   7.743 1.50e-14 ***
+## annee_fact2002               2.3832     0.3879   6.143 9.64e-10 ***
+## mois_fact2                   1.3787     0.3982   3.462 0.000546 ***
+## mois_fact3                   1.6765     0.3879   4.322 1.62e-05 ***
+## mois_fact4                   6.6453     0.3912  16.989  &lt; 2e-16 ***
+## mois_fact5                   6.2974     0.3879  16.233  &lt; 2e-16 ***
+## mois_fact6                   8.9500     0.3912  22.881  &lt; 2e-16 ***
+## mois_fact7                  11.2285     0.3879  28.944  &lt; 2e-16 ***
+## mois_fact8                  11.0140     0.3879  28.391  &lt; 2e-16 ***
+## mois_fact9                  10.4897     0.3912  26.817  &lt; 2e-16 ***
+## mois_fact10                  7.3733     0.3879  19.006  &lt; 2e-16 ***
+## mois_fact11                  7.3231     0.3912  18.721  &lt; 2e-16 ***
+## mois_fact12                  5.3894     0.3879  13.892  &lt; 2e-16 ***
+## annee_fact1988:mois_fact2   -4.0516     0.5606  -7.228 6.83e-13 ***
+## annee_fact1994:mois_fact2   -1.7543     0.5631  -3.115 0.001862 ** 
+## annee_fact1995:mois_fact2    0.2425     0.5631   0.431 0.666739    
+## annee_fact2001:mois_fact2   -1.1041     0.5631  -1.961 0.050050 .  
+## annee_fact2002:mois_fact2   -0.1957     0.5631  -0.348 0.728192    
+## annee_fact1988:mois_fact3   -2.8026     0.5486  -5.108 3.54e-07 ***
+## annee_fact1994:mois_fact3   -0.3220     0.5486  -0.587 0.557361    
+## annee_fact1995:mois_fact3   -0.7324     0.5486  -1.335 0.182039    
+## annee_fact2001:mois_fact3   -0.1352     0.5486  -0.246 0.805426    
+## annee_fact2002:mois_fact3    0.3628     0.5486   0.661 0.508457    
+## annee_fact1988:mois_fact4   -5.1722     0.5532  -9.350  &lt; 2e-16 ***
+## annee_fact1994:mois_fact4   -4.7281     0.5532  -8.547  &lt; 2e-16 ***
+## annee_fact1995:mois_fact4   -4.8114     0.5532  -8.698  &lt; 2e-16 ***
+## annee_fact2001:mois_fact4   -4.5324     0.5532  -8.193 4.34e-16 ***
+## annee_fact2002:mois_fact4   -3.4490     0.5532  -6.235 5.44e-10 ***
+## annee_fact1988:mois_fact5   -1.5115     0.5486  -2.755 0.005918 ** 
+## annee_fact1994:mois_fact5   -2.1747     0.5486  -3.964 7.62e-05 ***
+## annee_fact1995:mois_fact5   -2.0810     0.5486  -3.793 0.000153 ***
+## annee_fact2001:mois_fact5   -1.6853     0.5486  -3.072 0.002155 ** 
+## annee_fact2002:mois_fact5   -1.2585     0.5486  -2.294 0.021889 *  
+## annee_fact1988:mois_fact6   -1.9736     0.5532  -3.568 0.000368 ***
+## annee_fact1994:mois_fact6   -3.3070     0.5532  -5.978 2.64e-09 ***
+## annee_fact1995:mois_fact6   -3.2450     0.5532  -5.866 5.17e-09 ***
+## annee_fact2001:mois_fact6   -2.8349     0.5532  -5.125 3.25e-07 ***
+## annee_fact2002:mois_fact6   -1.8789     0.5532  -3.397 0.000695 ***
+## annee_fact1988:mois_fact7   -3.7042     0.5486  -6.752 1.88e-11 ***
+## annee_fact1994:mois_fact7   -3.5223     0.5486  -6.420 1.68e-10 ***
+## annee_fact1995:mois_fact7   -2.7542     0.5486  -5.020 5.59e-07 ***
+## annee_fact2001:mois_fact7   -3.4201     0.5486  -6.234 5.48e-10 ***
+## annee_fact2002:mois_fact7   -3.4814     0.5486  -6.346 2.70e-10 ***
+## annee_fact1988:mois_fact8   -5.2149     0.5486  -9.505  &lt; 2e-16 ***
+## annee_fact1994:mois_fact8   -3.6863     0.5486  -6.719 2.34e-11 ***
+## annee_fact1995:mois_fact8   -2.4703     0.5486  -4.503 7.08e-06 ***
+## annee_fact2001:mois_fact8   -2.7532     0.5486  -5.018 5.65e-07 ***
+## annee_fact2002:mois_fact8   -2.6881     0.5486  -4.900 1.03e-06 ***
+## annee_fact1988:mois_fact9   -5.6136     0.5532 -10.148  &lt; 2e-16 ***
+## annee_fact1994:mois_fact9   -5.5482     0.5532 -10.030  &lt; 2e-16 ***
+## annee_fact1995:mois_fact9   -5.3089     0.5532  -9.597  &lt; 2e-16 ***
+## annee_fact2001:mois_fact9   -5.2808     0.5532  -9.546  &lt; 2e-16 ***
+## annee_fact2002:mois_fact9   -4.1629     0.5532  -7.525 7.73e-14 ***
+## annee_fact1988:mois_fact10  -4.8903     0.5486  -8.914  &lt; 2e-16 ***
+## annee_fact1994:mois_fact10  -4.4639     0.5486  -8.136 6.86e-16 ***
+## annee_fact1995:mois_fact10  -2.7359     0.5486  -4.987 6.64e-07 ***
+## annee_fact2001:mois_fact10  -2.0763     0.5486  -3.785 0.000158 ***
+## annee_fact2002:mois_fact10  -3.4396     0.5486  -6.269 4.38e-10 ***
+## annee_fact1988:mois_fact11 -10.4693     0.5532 -18.926  &lt; 2e-16 ***
+## annee_fact1994:mois_fact11  -4.1008     0.5532  -7.413 1.77e-13 ***
+## annee_fact1995:mois_fact11  -7.5866     0.5532 -13.714  &lt; 2e-16 ***
+## annee_fact2001:mois_fact11  -7.2710     0.5532 -13.144  &lt; 2e-16 ***
+## annee_fact2002:mois_fact11  -4.4173     0.5532  -7.985 2.28e-15 ***
+## annee_fact1988:mois_fact12  -6.1670     0.5486 -11.241  &lt; 2e-16 ***
+## annee_fact1994:mois_fact12  -4.1336     0.5486  -7.534 7.22e-14 ***
+## annee_fact1995:mois_fact12  -8.0365     0.5486 -14.648  &lt; 2e-16 ***
+## annee_fact2001:mois_fact12  -8.3319     0.5486 -15.187  &lt; 2e-16 ***
+## annee_fact2002:mois_fact12  -3.7257     0.5486  -6.791 1.44e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.527 on 2119 degrees of freedom
+## Multiple R-squared:  0.8223, Adjusted R-squared:  0.8163 
+## F-statistic: 138.1 on 71 and 2119 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>On a constaté un lien entre température de l’air et température l’eau et un effet de l’année et une effet du mois.</p>
+<p>Supposons que la température de l’air contient déjà le signal des variations saisonnières. (il faudrait le vérifier).</p>
+<p>On peut se demander si le lien liant température de l’air et température de l’eau est le même quelle que soit l’année. Ce qui nous amène à examiner le lien entre une variable quantitative (la température de l’eau) et deux variables dont l’une est quantitative (tempéraiture de l’autre ) et l’autre qualitative. C’est le modèle d’analyse de la covariance.</p>
+</div>
 </div>
 <div id="analyse-de-la-covariance" class="section level2">
 <h2>Analyse de la covariance</h2>
@@ -481,9 +690,9 @@ div.tocify {
 <li><p><span class="math inline">\(\gamma_i\)</span> est le paramètre inconnu qui règle la différence entre la pente commune à toutes les années et la pente de l’année <span class="math inline">\(i\)</span>.</p></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>annee_fact  &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>annee)
-<span class="kw">ggplot</span>(<span class="dt">data=</span>df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> T_air, <span class="dt">y =</span>  T_eau, <span class="dt">col =</span> annee_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">col=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Année&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> T_air, <span class="dt">y =</span>  T_eau, <span class="dt">col =</span> annee_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">col=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Année&quot;</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="intror_rappel_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air_annee &lt;-<span class="st"> </span><span class="kw">lm</span>( T_eau <span class="op">~</span><span class="st"> </span>annee <span class="op">+</span><span class="st"> </span>T_air <span class="op">+</span><span class="st"> </span>annee<span class="op">:</span><span class="st"> </span>T_air, <span class="dt">data =</span> df_temp)
 <span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
 <pre><code>## 
@@ -508,7 +717,32 @@ div.tocify {
 ## F-statistic:  3331 on 3 and 2187 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Pourquoi n’a t on pas une pente par année ?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air_annee &lt;-<span class="st"> </span><span class="kw">lm</span>( T_eau <span class="op">~</span><span class="st"> </span>annee_fact <span class="op">+</span><span class="st"> </span>T_air <span class="op">+</span><span class="st"> </span>annee_fact<span class="op">:</span>T_air, <span class="dt">data =</span> df_temp)
-<span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
+<span class="kw">autoplot</span>(lm_eau_air_annee, <span class="dt">data=</span>df_temp)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>L’analyse des résidus ne contredit pas les hypothèses du modèle.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm_eau_air_annee)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: T_eau
+##                    Df  Sum Sq Mean Sq    F value    Pr(&gt;F)    
+## annee_fact          5    35.3     7.1     3.4692  0.003983 ** 
+## T_air               1 22967.3 22967.3 11287.1529 &lt; 2.2e-16 ***
+## annee_fact:T_air    5   378.6    75.7    37.2124 &lt; 2.2e-16 ***
+## Residuals        2179  4433.9     2.0                         
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Anova</span>(lm_eau_air_annee)</code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: T_eau
+##                   Sum Sq   Df   F value    Pr(&gt;F)    
+## annee_fact         374.3    5    36.790 &lt; 2.2e-16 ***
+## T_air            22967.3    1 11287.153 &lt; 2.2e-16 ***
+## annee_fact:T_air   378.6    5    37.212 &lt; 2.2e-16 ***
+## Residuals         4433.9 2179                        
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = T_eau ~ annee_fact + T_air + annee_fact:T_air, data = df_temp)
@@ -537,28 +771,84 @@ div.tocify {
 ## Residual standard error: 1.426 on 2179 degrees of freedom
 ## Multiple R-squared:  0.8406, Adjusted R-squared:  0.8398 
 ## F-statistic:  1045 on 11 and 2179 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm_eau_air)</code></pre></div>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: T_eau
-##             Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-## T_air        1 22628.3 22628.3  9549.9 &lt; 2.2e-16 ***
-## Residuals 2189  5186.8     2.4                      
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-</div>
-<div id="modele-lineaire" class="section level1">
-<h1>Modèle linéaire</h1>
+<div id="la-famille-des-modeles-lineaires" class="section level2">
+<h2>La famille des modèles linéaires</h2>
+<p>Tous les modèles étudiés dans cet exemple font partie de la famille des modèles linéaires.</p>
 <p>Le modèle linéaire regroupe tous les modèles pour lesquels le comportement moyen de la variable réponse, i.e. ce qui est prédit par le modèle, est une fonction <b>linéaire</b> des paramètres inconnus. On note souvent <span class="math inline">\(\hat{y_k}\)</span> la prédiction par le modèle de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure, dans ce cas un modèle linéaire est un modèle tel que <span class="math inline">\(\hat{y_k}\)</span> est une fonction linéaire des paramètres. Avec cette définition, le modèle <span class="math display">\[ Y_k = \alpha  + \beta x_k+ \delta x^2_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
 <p>est toujours un modèle linéaire, bien que le lien entre <span class="math inline">\(y\)</span> et <span class="math inline">\(x\)</span> ne soit pas linéaire.</p>
 <p>Tous les modèles linéaires peuvent être ajustés avec la fonction <code>lm</code>.</p>
 </div>
+</div>
 <div id="ajustement-dun-modele-non-lineaire" class="section level1">
 <h1>Ajustement d’un modèle non linéaire</h1>
+<p>On s’intéresse maintenant aux données de croissance du fichier <code>data/growth_data.txt</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_growth &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&#39;data/growth_data.txt&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39; &#39;</span>)
+<span class="kw">head</span>(df_growth)</code></pre></div>
+<pre><code>##   age   length
+## 1  19 36.29889
+## 2  12 31.84360
+## 3   1 15.77166
+## 4  17 33.56730
+## 5  38 39.41566
+## 6  11 30.48877</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>df_growth, <span class="kw">aes</span>(<span class="dt">y=</span>length, <span class="dt">x=</span>age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Ajustement d’un modèle linéaire</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_length_age &lt;-<span class="st"> </span><span class="kw">lm</span>( length <span class="op">~</span><span class="st"> </span>age, <span class="dt">data=</span> df_growth)
+<span class="kw">autoplot</span>(lm_length_age, <span class="dt">data=</span>df_growth)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>On constate une tendance forte dans les résidus. Le modèle n’est pas adapté; S’agissant de données de croissance, on peut tenter d’ajuster un modèle de von Bertalanffy. Dans ce cas le modèle s’écrit</p>
+<p><span class="math display">\[ Y_k = g(x_k) + E_{k}, \quad E_{k} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
+<p>avec - <span class="math inline">\(Y_k\)</span> la longueur de l’individu <span class="math inline">\(k\)</span>, - <span class="math inline">\(x_k\)</span> l’âge de lindividu <span class="math inline">\(k\)</span> - <span class="math inline">\(g\)</span> la fonction de von Bertalanffy : <span class="math inline">\(g(x)= L_{\infty} (1-exp(-K*(x-x_0))).\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">func_VonB &lt;-<span class="st"> </span><span class="cf">function</span>(x, K, Linf, x0){
+  res &lt;-<span class="st">  </span>Linf<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>K<span class="op">*</span>(x<span class="op">-</span>x0))) 
+  <span class="kw">return</span>(res)
+  }</code></pre></div>
+<div id="ajustement-en-utilisant-la-fonction-nls" class="section level2">
+<h2>Ajustement en utilisant la fonction <code>nls</code></h2>
+<p>Pour ajuster cette relation on peut utiliser la fonction <code>nls</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## definir des valeurs initiales de parametres
+nls_vonB &lt;-<span class="st"> </span><span class="kw">nls</span>(length <span class="op">~</span><span class="st"> </span><span class="kw">func_VonB</span>(age, K, Linf, x0), <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">Linf=</span><span class="dv">40</span>,<span class="dt">K=</span><span class="dv">1</span>, <span class="dt">x0=</span><span class="dv">10</span>), <span class="dt">data =</span> df_growth)
+<span class="kw">summary</span>(nls_vonB)</code></pre></div>
+<pre><code>## 
+## Formula: length ~ func_VonB(age, K, Linf, x0)
+## 
+## Parameters:
+##      Estimate Std. Error t value Pr(&gt;|t|)    
+## Linf 38.92930    1.15156  33.806  &lt; 2e-16 ***
+## K     0.09638    0.01377   6.999 2.14e-06 ***
+## x0   -4.15486    0.84659  -4.908 0.000133 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.701 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 15 
+## Achieved convergence tolerance: 9.989e-07</code></pre>
+<p>Les hypothèses sur les résidus étant les mêmes, il faut les vérifier ‘à la main’.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_nls_vonB &lt;-<span class="st"> </span>df_growth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+  <span class="dt">fitted =</span> <span class="kw">nlsResiduals</span>(nls_vonB)<span class="op">$</span>resi2[,<span class="dv">1</span>],
+  <span class="dt">res_stand =</span> <span class="kw">nlsResiduals</span>(nls_vonB)<span class="op">$</span>resi2[,<span class="dv">2</span>])
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df_nls_vonB, <span class="kw">aes</span>(<span class="dt">x =</span> fitted, <span class="dt">y =</span> res_stand)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;loess&#39;</span>)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>On peut calculer une somme des carrés résiduelle</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RSS_<span class="dv">1</span>  &lt;-<span class="st">  </span><span class="kw">with</span>(df_nls_vonB, <span class="kw">sum</span>((length<span class="op">-</span>fitted)<span class="op">^</span><span class="dv">2</span>))
+R2_<span class="dv">1</span>   &lt;-<span class="st"> </span>RSS_<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">with</span>(df_nls_vonB, <span class="kw">sum</span>( (length<span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(length))<span class="op">^</span><span class="dv">2</span>) )</code></pre></div>
 </div>
-<div id="analyse-en-composantes-principales" class="section level1">
-<h1>Analyse en composantes principales</h1>
+</div>
+<div id="mise-en-oeuvre-sur-le-jeu-de-donnees-saumons" class="section level1">
+<h1>Mise en oeuvre sur le jeu de données <code>saumons</code>̀</h1>
+<p>A partir de la table <code>saumons</code>, explorer la variation de la densité en fonction des différents facteurs âge, année, habitat, secteurs, vitesse du courant</p>
+<p>Indications :</p>
+<ul>
+<li>Représenter graphiquement les données avant de se lancer dans toute analyse.</li>
+<li>NE PAS PRENDRE EN COMPTE la variable Lf comme variable explicative potentielle.</li>
+<li>Pour la variable « water velocity », on pourra faire des classes.</li>
+<li>Il faudra peut-être transformer la variable si les hypothèses de modélisation ne sont pas vérifiées.</li>
+</ul>
+<p>A rendre en binome sous forme de fichier RMarkdown pour le vendredi 14 septembre.</p>
 </div>
 
 
