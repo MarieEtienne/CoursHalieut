@@ -23,6 +23,9 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -301,12 +304,19 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Statistique halieutique</a>
+      <a class="navbar-brand" href="index.html"><div><img src="LogoAgrocampusOuest.gif" heigth="63" width="63"></img>Stat 4 Halieutes</div></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">Organisation</a>
+</li>
+<li>
+  <a href="https://github.com/MarieEtienne/CoursHalieut">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -360,12 +370,22 @@ div.tocify {
 <div id="visualisation-des-donnees-de-temperature" class="section level2">
 <h2>Visualisation des données de température</h2>
 <p>Une première étape essentielle consiste à visualiser les données. Proposer un code permettant de produire le graphique ci dessous~:</p>
-<p><img src="intror_rappel_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Transformation d’e la date en jours calendaires’une chaîne de caractères en dates.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp &lt;-<span class="st"> </span>df_temp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">date_posixct =</span> <span class="kw">as.POSIXct</span>(<span class="kw">strptime</span>(df_temp<span class="op">$</span>date,  <span class="dt">format =</span> <span class="st">&quot;%d/%m/%Y&quot;</span>))) </code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="un-modele-de-regression-simple" class="section level2">
 <h2>Un modèle de régression simple</h2>
 <p>Le modèle de la régression simple s’écrit mathématiquement sous la forme suivante :</p>
-<p><span class="math display">\[ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où - <span class="math inline">\(Y_k\)</span> désigne la température de l’eau de la k$^{} mesure, - <span class="math inline">\(x_k\)</span> désigne la température de l’air de la k$^{} mesure, - <span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span>, on suppose qu’il suit une loi normale centrée de variance inconnue <span class="math inline">\(\sigma^2\)</span>, - <span class="math inline">\(\alpha\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine, - <span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien entre température de l’air et température de l’eau.</p>
+<p><span class="math display">\[ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où</p>
+<ul>
+<li><span class="math inline">\(Y_k\)</span> désigne la température de l’eau de la k$^{} mesure,</li>
+<li><span class="math inline">\(x_k\)</span> désigne la température de l’air de la k$^{} mesure,</li>
+<li><span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span>, on suppose qu’il suit une loi normale centrée de variance inconnue <span class="math inline">\(\sigma^2\)</span>,</li>
+<li><span class="math inline">\(\alpha\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine,</li>
+<li><span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien entre température de l’air et température de l’eau.</li>
+</ul>
 </div>
 <div id="estimation-des-parametres" class="section level2">
 <h2>Estimation des paramètres</h2>
@@ -373,11 +393,15 @@ div.tocify {
 <p>Dans un premier temps, on cherche à trouver la droite d’équation <span class="math inline">\(y=a +bx\)</span> qui résume au mieux les données, i.e on cherche à minimiser l’écart entre nos observations <span class="math inline">\(y_i\)</span> et la prédiction par le modèle <span class="math inline">\(\alpha + \beta x_i\)</span>, ce qui revient à trouver le minimum de la fonction</p>
 <p><span class="math display">\[MCO(\alpha, \beta;  \boldsymbol{y},\boldsymbol{x}) = \sum_{i=1}^{n} \{y_i - (\alpha + \beta x_i) \}^2. \]</span></p>
 <p>La commande <code>lm</code> de <code>R</code> fait le travail, dans la commande suivante :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air &lt;-<span class="st">  </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>T_air, <span class="dt">data=</span>df_temp)
-<span class="kw">coef</span>(lm_eau_air)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air &lt;-<span class="st">  </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>T_air, <span class="dt">data=</span>df_temp)</code></pre></div>
+<p>Avant toute analyse, il est indispensable de discuter les hypothèses du modèle. Il est pour cela utile de regarder les graphiques de diagnostic</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(lm_eau_air, <span class="dt">data=</span>df_temp, <span class="dt">colour=</span><span class="st">&#39;annee&#39;</span>)</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>On peut obtenir les coefficients estimés du modèle grâce à la commande :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(lm_eau_air)</code></pre></div>
 <pre><code>## (Intercept)       T_air 
 ##   5.4149067   0.5976255</code></pre>
-<p>On a davantage de résultats dans la fonction <code>lm</code> :</p>
+<p>On a non seulement ces valeurs mais les tests de nullité des paramètre associés grâce à la commande :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lm_eau_air)</code></pre></div>
 <pre><code>## 
 ## Call:
@@ -397,13 +421,69 @@ div.tocify {
 ## Residual standard error: 1.539 on 2189 degrees of freedom
 ## Multiple R-squared:  0.8135, Adjusted R-squared:  0.8134 
 ## F-statistic:  9550 on 1 and 2189 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>On peut se demander si la relation qui lie température de l’air et température de l’eau est la même chaque année. Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :</p>
-<p><span class="math display">\[ Y_{ik} = \mu + \alpha_i  + \beta x_{ik} + \gamma x_{ik} + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span> où</p>
-<p>où - <span class="math inline">\(Y_{ik}\)</span> désigne la température de l’eau de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(x_k\)</span> désigne la température de l’air de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span> de l’année <span class="math inline">\(i\)</span>, - <span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années, - <span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span> , - <span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien, commun à toutes les années, entre température de l’air et température de l’eau, - <span class="math inline">\(\gamma_i\)</span> est le paramètre inconnu qui règle la différence entre la pente commune à toutes les années et la pente de l’année <span class="math inline">\(i\)</span>.</p>
+<p>Le test nous indique l’existence d’un lien entre la température de l’eau et la température de l’air. On peut utiliser ce modèle pour prédire la température de l’eau à partir de la température de l’air. Il faut faire attention à ce que l’on veut prédire.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> df_pred &lt;-<span class="st"> </span><span class="kw">as.tibble</span>(<span class="kw">predict</span>(lm_eau_air, <span class="dt">interval=</span><span class="st">&quot;confidence&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="dt">fit =</span>fit, <span class="dt">lwr_conf =</span> lwr, <span class="dt">upr_conf =</span> upr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(<span class="kw">as.tibble</span>(<span class="kw">predict</span>(lm_eau_air, <span class="dt">interval=</span><span class="st">&quot;prediction&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>fit1, <span class="dt">lwr_predict =</span>lwr, <span class="dt">upr_predict =</span> upr)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">bind_cols</span>(df_temp)</code></pre></div>
+<pre><code>## Warning in predict.lm(lm_eau_air, interval = &quot;prediction&quot;): predictions on current data refer to _future_ responses</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df_pred, <span class="kw">aes</span>(<span class="dt">x =</span> T_air, <span class="dt">y =</span> T_eau)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>df_pred, <span class="kw">aes</span>(<span class="dt">y=</span>lwr_conf), <span class="dt">col=</span><span class="st">&#39;red&#39;</span>, <span class="dt">linetype=</span><span class="st">&#39;dotted&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>df_pred, <span class="kw">aes</span>(<span class="dt">y=</span>upr_conf), <span class="dt">col=</span><span class="st">&#39;red&#39;</span>, <span class="dt">linetype=</span><span class="st">&#39;dotted&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>df_pred, <span class="kw">aes</span>(<span class="dt">y=</span>lwr_predict), <span class="dt">col=</span><span class="st">&#39;green&#39;</span>, <span class="dt">linetype=</span><span class="st">&#39;dashed&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>df_pred, <span class="kw">aes</span>(<span class="dt">y=</span>upr_predict), <span class="dt">col=</span><span class="st">&#39;green&#39;</span>, <span class="dt">linetype=</span><span class="st">&#39;dashed&#39;</span>) </code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>La question se pose également de savoir si la température moyenne annuelle de l’eau change d’une année sur l’autre, c’est à dire peut on mettre en évidence une tendance climatique. Pour cela, on chercher à explorer un lien entre la température de l’eau et l’année. On cherche donc à explorer le lien entre une variable quantitative (la température) et une variable qualitative (l’année). C’est un modèle d’analyse de la variance.</p>
+</div>
+<div id="analyse-de-la-variance" class="section level2">
+<h2>Analyse de la variance</h2>
+<p>Le modèle s’écrit sous la forme suivante:</p>
+<p><span class="math display">\[ Y_{ik} = \mu + \alpha_i   + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
+<p>où</p>
+<ul>
+<li><span class="math inline">\(Y_{ik}\)</span> désigne la température de l’eau de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(E_{ik}\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span> de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années,</li>
+<li><span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span>.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span>annee, <span class="dt">data=</span>df_temp)
+<span class="kw">summary</span>(lm1)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = T_eau ~ annee, data = df_temp)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.9724 -2.5404 -0.1151  2.7758  9.8849 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 33.32906   26.46860   1.259    0.208
+## annee       -0.01067    0.01327  -0.804    0.421
+## 
+## Residual standard error: 3.564 on 2189 degrees of freedom
+## Multiple R-squared:  0.0002953,  Adjusted R-squared:  -0.0001614 
+## F-statistic: 0.6466 on 1 and 2189 DF,  p-value: 0.4214</code></pre>
+<p>On constate qu’un seul paramètre est estimé pour l’année or nous en attendions un par année. C’est le comportement objet de R qui lui indique de faire une régression linéaire et non une analyse de la variance. La variable année est en effet de classe <code>numeric</code>. Il faut indique que l’année doit être traitée comme une variable qualitative, pour faire la différence on peut créer une nouvelle variable <code>annee_fact</code></p>
+<p>On a constaté un lien entre température de l’air et température l’eau. On peut se demander si ce lien est le même quelle que soit l’année. Ce qui nous amène à examiner le lien entre une variable quantitative (la température de l’eau) et deux variables dont l’une est quantitative (tempéraiture de l’autre ) et l’autre qualitative. C’est le modèle d’analysed ela covariance.</p>
+</div>
+<div id="analyse-de-la-covariance" class="section level2">
+<h2>Analyse de la covariance</h2>
+<p>Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :</p>
+<p><span class="math display">\[ Y_{ik} = \mu + \alpha_i  + \beta x_{ik} + \gamma x_{ik} + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
+<p>où</p>
+<ul>
+<li><p><span class="math inline">\(Y_{ik}\)</span> désigne la température de l’eau de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>,</p></li>
+<li><span class="math inline">\(x_k\)</span> désigne la température de l’air de la k<span class="math inline">\(^{\mbox{ème}}\)</span> mesure de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(E_k\)</span> est un terme d’écart au modèle pour la mesure <span class="math inline">\(k\)</span> de l’année <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années,</li>
+<li><span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span> ,</li>
+<li><span class="math inline">\(\beta\)</span> est le paramètre inconnu qui règle le lien, commun à toutes les années, entre température de l’air et température de l’eau,</li>
+<li><p><span class="math inline">\(\gamma_i\)</span> est le paramètre inconnu qui règle la différence entre la pente commune à toutes les années et la pente de l’année <span class="math inline">\(i\)</span>.</p></li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>annee_fact  &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>annee)
 <span class="kw">ggplot</span>(<span class="dt">data=</span>df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> T_air, <span class="dt">y =</span>  T_eau, <span class="dt">col =</span> annee_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">col=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Année&quot;</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="intror_rappel_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_eau_air_annee &lt;-<span class="st"> </span><span class="kw">lm</span>( T_eau <span class="op">~</span><span class="st"> </span>annee <span class="op">+</span><span class="st"> </span>T_air <span class="op">+</span><span class="st"> </span>annee<span class="op">:</span><span class="st"> </span>T_air, <span class="dt">data =</span> df_temp)
 <span class="kw">summary</span>(lm_eau_air_annee)</code></pre></div>
 <pre><code>## 

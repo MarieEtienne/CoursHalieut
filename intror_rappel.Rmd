@@ -12,6 +12,9 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(ggplot2)
+library(ggfortify)
+library(car)
 ```
 
 # Modèle de régression simple
@@ -27,10 +30,22 @@ df_temp <- read.table(file = "data/T_Oir_StHilaire_87_02.txt", header = TRUE, se
 ```
 
 
+Transformation d'e la date en jours calendaires'une chaîne de caractères en dates. 
+
+```{r}
+df_temp <- df_temp %>% mutate(date_posixct = as.POSIXct(strptime(df_temp$date,  format = "%d/%m/%Y"))) 
+
+```
+
+
+```{r, echo=FALSE}
+p <- ggplot(data = gather(df_temp, source, temp, -date, -jour, -mois, -annee, -date_posixct) , aes( x = date_posixct, y = temp, col=source)) +  geom_point() + xlab('date')
+print(p) 
+```
 
 ```{r, echo=FALSE}
 
-p <- ggplot(data = df_temp, aes(x = T_air, y = T_eau, col = as.factor(annee))) + geom_point() + guides(col=guide_legend(title = "Année"))
+p <- ggplot(data = df_temp, aes(x = T_air, y = T_eau)) + geom_point()
 print(p)
 ```
 
@@ -40,6 +55,7 @@ Le modèle de la régression simple s'écrit mathématiquement sous la forme sui
 
 $$ Y_k = \alpha  + \beta x_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
 où 
+
 - $Y_k$ désigne la température de l'eau de la k$^{\mbox{ème}} mesure,
 - $x_k$ désigne la température de l'air de la k$^{\mbox{ème}} mesure,
 - $E_k$ est un terme d'écart au modèle pour la mesure $k$, on suppose qu'il suit une loi normale centrée de variance inconnue $\sigma^2$,
@@ -58,21 +74,185 @@ $$MCO(\alpha, \beta;  \boldsymbol{y},\boldsymbol{x}) = \sum_{i=1}^{n} \{y_i - (\
 La commande `lm` de `R` fait le travail, dans la commande suivante :
 ```{r}
 lm_eau_air <-  lm(T_eau ~ T_air, data=df_temp)
+```
+
+Avant toute analyse, il est indispensable de discuter les hypothèses du modèle. Il est pour cela utile de regarder les graphiques de diagnostic
+
+```{r}
+autoplot(lm_eau_air, data=df_temp)
+```
+
+On peut obtenir les coefficients estimés du modèle grâce à la commande :
+```{r}
 coef(lm_eau_air)
 ```
 
-On a davantage de résultats dans la fonction `lm` :
+
+On a non seulement ces valeurs mais les tests de nullité des paramètre associés grâce à la commande :
 ```{r}
 summary(lm_eau_air)
 ```
 
-On peut se demander si la relation qui lie température de l'air et température de l'eau est la même chaque année. Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :
+
+Le test nous indique l'existence d'un lien entre la température de l'eau et la température de l'air. On peut utiliser ce modèle pour prédire la température de l'eau à partir de la température de l'air.  Il faut faire attention à ce que l'on veut prédire.
+
+```{r}
+
+  
+ df_pred <- as.tibble(predict(lm_eau_air, interval="confidence")) %>% dplyr::select(fit =fit, lwr_conf = lwr, upr_conf = upr) %>% bind_cols(as.tibble(predict(lm_eau_air, interval="prediction"))) %>% select(-fit1, lwr_predict =lwr, upr_predict = upr)  %>% bind_cols(df_temp)
+
+
+ggplot(data = df_pred, aes(x = T_air, y = T_eau)) + 
+  geom_point(alpha=0.2) + 
+  geom_smooth(method = 'lm', se = TRUE) +
+  geom_line(data=df_pred, aes(y=lwr_conf), col='red', linetype='dotted') +
+  geom_line(data=df_pred, aes(y=upr_conf), col='red', linetype='dotted') +
+  geom_line(data=df_pred, aes(y=lwr_predict), col='green', linetype='dashed') +
+  geom_line(data=df_pred, aes(y=upr_predict), col='green', linetype='dashed') 
+```
+
+
+La question se pose également de savoir si la température moyenne annuelle de l'eau change d'une année sur l'autre, c'est à dire peut on mettre en évidence une tendance climatique. Pour cela, on chercher à explorer un lien entre la température de l'eau et l'année. On cherche donc à explorer le lien entre une variable quantitative (la température) et une variable qualitative (l'année).
+C'est un modèle d'analyse de la variance.
+
+## Analyse de la variance
+
+```{r}
+ggplot(data=df_temp, aes(x = as.factor(annee), y = T_eau)) + geom_boxplot()
+```
+
+Il ne semble pas y avoir d'effet année, on peut néanmoins le vérifier.
+
+Le modèle s'écrit sous la forme suivante:
+
+
+$$ Y_{ik} = \mu + \alpha_i   + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+
+où 
+
+- $Y_{ik}$ désigne la température de l'eau de la k$^{\mbox{ème}}$ mesure de l'année $i$,
+- $E_{ik}$ est un terme d'écart au modèle pour la mesure $k$ de l'année $i$,
+- $\mu$ est le paramètre inconnu qui ajuste l'ordonnée à l'origine commune à toutes les années,
+- $\alpha_i$ est le paramètre inconnu qui ajuste la différence entre l'ordonnée à l'origine commune à toutes les années et celle de l'année $i$.
+
+```{r}
+lm1 <- lm(T_eau~annee, data=df_temp)
+summary(lm1)
+```
+
+On constate qu'un seul paramètre est estimé pour l'année or nous en attendions un par année. C'est le comportement objet de R qui lui indique de faire une régression linéaire et non une analyse de la variance. La variable année est en effet de classe  ``r class(df_temp$T_eau)``. Il faut indique que l'année doit être traitée comme une variable qualitative, pour faire la différence on peut créer une nouvelle variable `` annee_fact``
+
+```{r}
+df_temp$annee_fact <- as.factor(df_temp$annee)
+lm_eau_annee       <- lm(T_eau~annee, data = df_temp)
+summary(lm_eau_annee)
+```
+
+Discutons ici de la contrainte d'identifiabilité sur les $\alpha$.
+
+
+Avant toute chose, vérifions la validité des hypothèses sur les résidus.
+```{r}
+autoplot(lm_eau_annee, data = df_temp)
+```
+
+On peut tester l'effet année:
+
+```{r}
+anova(lm_eau_annee)
+```
+
+Sans grande surprise, on ne met pas en évidence d'effet années, mais on constate également que la variance est très grande.
+
+Néanmoins il est possible que cette absence d'effet année soit du à une trop grande variabilité du fait de la variabilité annuelle de la température au cours de l'année.
+
+```{r}
+ggplot(data = df_temp, aes(x = as.factor(mois), y = T_eau)) + geom_boxplot()
+```
+
+
+On veut donc expliquer la température en fonction de l'année et du mois. 
+Le modèle s'écrit sous la forme suivante:
+
+
+$$ Y_{ijk} = \mu + \alpha_i +\beta_j +\gamma_{ij}  + E_{ijk}, \quad E_{ijk} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
+
+où 
+
+- $Y_{ik}$ désigne la température de l'eau de la k$^{\mbox{ème}}$ mesure de l'année $i$,
+- $E_{ik}$ est un terme d'écart au modèle pour la mesure $k$ de l'année $i$,
+- $\mu$ est le paramètre inconnu qui ajuste l'ordonnée à l'origine commune à toutes les années,
+- $\alpha_i$ est le paramètre inconnu qui ajuste la différence entre l'ordonnée à l'origine commune à toutes les années et celle de l'année $i$,
+- $\beta_j$ est le paramètre inconnu qui ajuste la différence entre l'ordonnée à l'origine commune à toutes les années et celle du mois $j$,
+- $\gamma_{ij}$ est le paramètre inconnu qui quantifie l'interaction entre l'année $i$ et le mois $j$.
+
+
+Il est important de regarder le plan d'expérience pour détecter des potentiels déséquilibres dans le dispositif expérimental.
+
+```{r plan_exp}
+with(df_temp, table(mois_fact, annee_fact))
+```
+
+Le plan d'expérience est quasimment équilibré.
+
+
+On peut par ailleurs suspecterl'effet d'une interaction entre les facteurs, on peut visualiser cette potentielle interaction en regardant le graphique d'interaction.
+```{r}
+df_temp$mois_fact <- as.factor(df_temp$mois)
+with( df_temp, 
+     interaction.plot(trace.factor = annee_fact, x.factor = mois, response = T_eau) )
+```
+
+Ou en plus joli
+```{r}
+df_temp %>% 
+  ggplot() +
+  aes(x = mois_fact, color = annee_fact, group = annee_fact, y = T_eau) +
+  stat_summary(fun.y = mean, geom = "point") +
+  stat_summary(fun.y = mean, geom = "line")
+```
+
+
+Ce graphique semble indiquer l'existence d'interactions entre les deux facteurs. 
+
+
+On peut maintenant auster un modèle d'anlyse de la variance à 2 facteurs.
+```{r anova2}
+lm_eau_annee_mois <- lm(T_eau ~ annee_fact + mois_fact + annee_fact:mois_fact, data = df_temp)
+
+autoplot(lm_eau_annee_mois, data = df_temp)
+```
+
+Les tests des différents effets sont testés dans la table d'anlayse de la variance suivante 
+
+```{r}
+anova(lm_eau_annee_mois)
+Anova(lm_eau_annee_mois)
+```
+
+Les estimations des différents paramètres sont données dans la table 
+```{r}
+summary(lm_eau_annee_mois)
+```
+
+
+On a constaté un lien entre température de l'air et température l'eau et un effet de l'année et une effet du mois. 
+
+
+Supposons  que la température de l'air contient déjà le signal des variations saisonnières. (il faudrait le vérifier).
+
+
+On peut se demander si le lien liant température de l'air et température de l'eau est le même quelle que soit l'année. Ce qui nous amène à examiner le lien entre une variable quantitative (la température de l'eau) et deux variables dont l'une est quantitative (tempéraiture de l'autre ) et l'autre qualitative. C'est le modèle d'analyse de la covariance.
+
+## Analyse de la covariance
+Pour tester cette hypothèse, on écrit un modèle dans lequel on autorise une relation différente chaque année :
 
 $$ Y_{ik} = \mu + \alpha_i  + \beta x_{ik} + \gamma x_{ik} + E_{ik}, \quad E_{ik} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
-où 
 
 où 
+
 - $Y_{ik}$ désigne la température de l'eau de la k$^{\mbox{ème}}$ mesure de l'année $i$,
+
 - $x_k$ désigne la température de l'air de la k$^{\mbox{ème}}$ mesure de l'année $i$,
 - $E_k$ est un terme d'écart au modèle pour la mesure $k$ de l'année $i$,
 - $\mu$ est le paramètre inconnu qui ajuste l'ordonnée à l'origine commune à toutes les années,
@@ -83,7 +263,7 @@ où
 
 ```{r}
 df_temp$annee_fact  <- as.factor(df_temp$annee)
-ggplot(data=df_temp, aes(x = T_air, y =  T_eau, col = annee_fact)) + geom_point() + guides(col=guide_legend(title = "Année")) + 
+ggplot(data=df_temp, aes(x = T_air, y =  T_eau, col = annee_fact)) + geom_point(alpha=0.1) + guides(col=guide_legend(title = "Année")) + 
   geom_smooth(method = "lm", se = FALSE)
 ```
 
@@ -97,12 +277,19 @@ Pourquoi n'a t on pas une pente par année ?
 
 ```{r}
 lm_eau_air_annee <- lm( T_eau ~ annee_fact + T_air + annee_fact:T_air, data = df_temp)
+autoplot(lm_eau_air_annee, data=df_temp)
+```
+
+L'analyse des résidus ne contredit pas les hypothèses du modèle.
+```{r}
+anova(lm_eau_air_annee)
+Anova(lm_eau_air_annee)
 summary(lm_eau_air_annee)
-anova(lm_eau_air)
 ```
 
 
 # Modèle linéaire 
+Tous les modèles étudiés dans cet exemple font partie de la famille des modèles linéaires.
 
 Le modèle linéaire regroupe tous les modèles pour lesquels le comportement moyen de la variable réponse, i.e. ce qui est prédit par le modèle, est une fonction <b>linéaire</b> des paramètres inconnus. On note souvent $\hat{y_k}$ la prédiction par le modèle de la k$^{\mbox{ème}}$ mesure, dans ce cas un modèle linéaire est un modèle tel que $\hat{y_k}$ est une fonction linéaire des paramètres. Avec cette définition, le modèle 
 $$ Y_k = \alpha  + \beta x_k+ \delta x^2_k + E_k, \quad E_k \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),$$
@@ -112,5 +299,3 @@ est toujours un modèle linéaire, bien que le lien entre $y$ et $x$ ne soit pas
 Tous les modèles linéaires peuvent être ajustés avec la fonction `lm`.
 
 # Ajustement d'un modèle non linéaire
-
-# Analyse en composantes principales
