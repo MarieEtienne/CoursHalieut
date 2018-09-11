@@ -304,7 +304,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html"><div><img src="LogoAgrocampusOuest.gif" heigth="63" width="63"></img>Stat 4 Halieutes</div></a>
+      <a class="navbar-brand" href="index.html">Stat 4 Halieutes</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -322,6 +322,8 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-child"></span>
+     
     Introduction à R
      
     <span class="caret"></span>
@@ -344,11 +346,42 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="echant.html">Echantillonnage</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-adjust"></span>
+     
+    Echantillonnage
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="echant_variabilite.html">Variabilité d'échantillonnage</a>
+    </li>
+    <li>
+      <a href="echant_strategie.html">Stratégie d'échantillonnage</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="model.html">Ajustement de modèles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-tilde"></span>
+     
+    Ajustement de modèles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ajust_mco.html">Moindre carrés</a>
+    </li>
+    <li>
+      <a href="ajust_vrais.html">Vraisemblance de modèles usuels</a>
+    </li>
+    <li>
+      <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -453,7 +486,7 @@ div.tocify {
 <li><span class="math inline">\(\mu\)</span> est le paramètre inconnu qui ajuste l’ordonnée à l’origine commune à toutes les années,</li>
 <li><span class="math inline">\(\alpha_i\)</span> est le paramètre inconnu qui ajuste la différence entre l’ordonnée à l’origine commune à toutes les années et celle de l’année <span class="math inline">\(i\)</span>.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span>annee, <span class="dt">data=</span>df_temp)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau <span class="op">~</span><span class="st"> </span>annee, <span class="dt">data =</span> df_temp)
 <span class="kw">summary</span>(lm1)</code></pre></div>
 <pre><code>## 
 ## Call:
@@ -473,24 +506,40 @@ div.tocify {
 ## F-statistic: 0.6466 on 1 and 2189 DF,  p-value: 0.4214</code></pre>
 <p>On constate qu’un seul paramètre est estimé pour l’année or nous en attendions un par année. C’est le comportement objet de R qui lui indique de faire une régression linéaire et non une analyse de la variance. La variable année est en effet de classe <code>numeric</code>. Il faut indique que l’année doit être traitée comme une variable qualitative, pour faire la différence on peut créer une nouvelle variable <code>annee_fact</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_temp<span class="op">$</span>annee_fact &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df_temp<span class="op">$</span>annee)
-lm_eau_annee       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span>annee, <span class="dt">data =</span> df_temp)
+lm_eau_annee       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span>annee_fact, <span class="dt">data =</span> df_temp)
 <span class="kw">summary</span>(lm_eau_annee)</code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = T_eau ~ annee, data = df_temp)
+## lm(formula = T_eau ~ annee_fact, data = df_temp)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -9.9724 -2.5404 -0.1151  2.7758  9.8849 
+## -9.8304 -2.5093 -0.1222  2.7800  9.8319 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) 33.32906   26.46860   1.259    0.208
-## annee       -0.01067    0.01327  -0.804    0.421
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    12.12217    0.18663  64.951   &lt;2e-16 ***
+## annee_fact1988  0.04589    0.26376   0.174    0.862    
+## annee_fact1994 -0.01615    0.26394  -0.061    0.951    
+## annee_fact1995 -0.22373    0.26394  -0.848    0.397    
+## annee_fact2001 -0.28115    0.26394  -1.065    0.287    
+## annee_fact2002  0.01639    0.26394   0.062    0.950    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 3.564 on 2189 degrees of freedom
-## Multiple R-squared:  0.0002953,  Adjusted R-squared:  -0.0001614 
-## F-statistic: 0.6466 on 1 and 2189 DF,  p-value: 0.4214</code></pre>
+## Residual standard error: 3.566 on 2185 degrees of freedom
+## Multiple R-squared:  0.001269,   Adjusted R-squared:  -0.001016 
+## F-statistic: 0.5552 on 5 and 2185 DF,  p-value: 0.7344</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_<span class="dv">0</span>       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_eau<span class="op">~</span><span class="dv">1</span>, <span class="dt">data =</span> df_temp)
+
+<span class="kw">anova</span>(lm_<span class="dv">0</span>, lm_eau_annee)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: T_eau ~ 1
+## Model 2: T_eau ~ annee_fact
+##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
+## 1   2190 27815                           
+## 2   2185 27780  5    35.296 0.5552 0.7344</code></pre>
 <p>Discutons ici de la contrainte d’identifiabilité sur les <span class="math inline">\(\alpha\)</span>.</p>
 <p>Avant toute chose, vérifions la validité des hypothèses sur les résidus.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(lm_eau_annee, <span class="dt">data =</span> df_temp)</code></pre></div>
@@ -510,6 +559,8 @@ lm_eau_annee       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_ea
 <h3>Analyse de la variance à 2 facteurs</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(mois), <span class="dt">y =</span> T_eau)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
 <p><img src="intror_rappel_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df_temp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(mois), <span class="dt">y =</span> T_eau, <span class="dt">col=</span>annee_fact)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="intror_rappel_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
 <p>On veut donc expliquer la température en fonction de l’année et du mois. Le modèle s’écrit sous la forme suivante:</p>
 <p><span class="math display">\[ Y_{ijk} = \mu + \alpha_i +\beta_j +\gamma_{ij}  + E_{ijk}, \quad E_{ijk} \overset{i.i.d}{\sim}\mathcal{N}(0, \sigma^2),\]</span></p>
 <p>où</p>
@@ -851,6 +902,7 @@ R2_<span class="dv">1</span>   &lt;-<span class="st"> </span>RSS_<span class="dv
 <p>A rendre en binome sous forme de fichier RMarkdown pour le vendredi 14 septembre.</p>
 </div>
 
+<p><img src="LogoAgrocampusOuest.gif" heigth="84" width="84"></img>  <a href="https://www.agrocampus-ouest.fr/">Visit Agrocampus Ouest</a>  </p>
 
 
 </div>

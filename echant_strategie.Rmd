@@ -1,0 +1,50 @@
+---
+title: "Variabilité d'échantillonnage"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(ggplot2) ## pour de beaux graphiques
+library(ggfortify) ## pour de beaux graphiques
+library(car) # pour les modèles linéaires
+library(nlstools) # pour la régression non linéaire
+```
+
+
+
+# Qu'attend on d'un bon échantillonnage ?
+
+# Différentes stratégies d'échantillonnage
+
+## Echantillonnage aléatoire simple
+
+### Présentation
+
+### Propriétes
+
+### Intérêts et limites
+
+## Echantillonnage stratifié
+
+### Présentation
+
+### Propriétes
+
+### Intérêts et limites
+
+## Echantillonnage en grappes
+
+### Présentation
+
+### Propriétes
+
+### Intérêts et limites
+
+## Plan d'expérience

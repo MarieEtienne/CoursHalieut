@@ -41,7 +41,7 @@ df_temp <- df_temp %>% mutate(date_posixct = as.POSIXct(strptime(df_temp$date,  
 
 
 ```{r, echo=FALSE}
-p <- ggplot(data = gather(df_temp, source, temp, -date, -jour, -mois, -annee, -date_posixct) , aes( x = date_posixct, y = temp, col=source)) +  geom_point() + xlab('date')
+p <- ggplot(data = gather(df_temp, source, temp, -date, -jour, -mois, -annee, -date_posixct) , aes( x = date_posixct, y = temp, col=source)) +  geom_point(alpha = 0.2) + xlab('date')
 print(p) 
 ```
 
@@ -139,7 +139,7 @@ où
 - $\alpha_i$ est le paramètre inconnu qui ajuste la différence entre l'ordonnée à l'origine commune à toutes les années et celle de l'année $i$.
 
 ```{r}
-lm1 <- lm(T_eau~annee, data=df_temp)
+lm1 <- lm(T_eau ~ annee, data = df_temp)
 summary(lm1)
 ```
 
@@ -147,8 +147,11 @@ On constate qu'un seul paramètre est estimé pour l'année or nous en attendion
 
 ```{r}
 df_temp$annee_fact <- as.factor(df_temp$annee)
-lm_eau_annee       <- lm(T_eau~annee, data = df_temp)
+lm_eau_annee       <- lm(T_eau~annee_fact, data = df_temp)
 summary(lm_eau_annee)
+lm_0       <- lm(T_eau~1, data = df_temp)
+
+anova(lm_0, lm_eau_annee)
 ```
 
 Discutons ici de la contrainte d'identifiabilité sur les $\alpha$.
@@ -174,6 +177,8 @@ Néanmoins il est possible que cette absence d'effet année soit du à une trop 
 
 ```{r}
 ggplot(data = df_temp, aes(x = as.factor(mois), y = T_eau)) + geom_boxplot()
+
+ggplot(data = df_temp, aes(x = as.factor(mois), y = T_eau, col=annee_fact)) + geom_boxplot()
 ```
 
 

@@ -2,7 +2,7 @@ name: "Statistique pour l'halieutique"
 output_dir: "docs"
 navbar:
   logo:
-  title: '<div><img src="LogoAgrocampusOuest.gif" heigth="63" width="63"></img>Stat 4 Halieutes</div>'
+  title: 'Stat 4 Halieutes'
   left:
   - text: "Organisation"
     href: index.html
@@ -11,7 +11,7 @@ navbar:
     href: https://github.com/MarieEtienne/CoursHalieut
   right:
   - text: "Introduction à R"
-    href: introR.html
+    icon: fa-child
     menu:
       - text: "Présentation du logiciel R"
         href: intror_presentation.html
@@ -24,12 +24,26 @@ navbar:
       - text: "Rappels de statistique"
         href: intror_rappel.html
   - text: "Echantillonnage"
-    href: echant.html
+    icon: fa-adjust
     menu:
+      - text: "Variabilité d'échantillonnage"
+        href: echant_variabilite.html
+      - text: "Stratégie d'échantillonnage"
+        href: echant_strategie.html
   - text: "Ajustement de modèles"
-    href: model.html
+    icon: fa-tilde
     menu:
+      - text: "Moindre carrés"
+        href: ajust_mco.html
+      - text: "Vraisemblance de modèles usuels"
+        href: ajust_vrais.html
+      - text: "Estimation par maximum de vraisemblance"
+        href: ajust_estim.html
+    
 output:
   html_document:
     theme: lumen
-    highlight: textmate
+    highlight: haddock
+    include:
+      after_body: footer.html
+    

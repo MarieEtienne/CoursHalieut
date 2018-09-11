@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Variabilité d’échantillonnage</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Stat 4 Halieutes</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+<li>
+  <a href="https://github.com/MarieEtienne/CoursHalieut">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-child"></span>
+     
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intror_visu.html">Visualisation</a>
+    </li>
+    <li>
+      <a href="intror_rappel.html">Rappels de statistique</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-adjust"></span>
+     
+    Echantillonnage
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="echant_variabilite.html">Variabilité d'échantillonnage</a>
+    </li>
+    <li>
+      <a href="echant_strategie.html">Stratégie d'échantillonnage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-tilde"></span>
+     
+    Ajustement de modèles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ajust_mco.html">Moindre carrés</a>
+    </li>
+    <li>
+      <a href="ajust_vrais.html">Vraisemblance de modèles usuels</a>
+    </li>
+    <li>
+      <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Variabilité d’échantillonnage</h1>
+
+</div>
+
+
+<div id="statistique-inferentielle-de-lechantillon-a-la-population" class="section level1">
+<h1>Statistique inférentielle : de l’échantillon à la population</h1>
+<p>En statistique, un objectif classique consiste à inférer des propriétés sur une population à partir d’une vision partielle de celle-ci : un échantillon</p>
+<div id="un-exemple-central" class="section level2">
+<h2>Un exemple central</h2>
+<p>Une population extra Terrestre réside sur la planète <i> Halieutik </i>. Cette population est inconnue des habitants de la planête <i> Statistik </i> mais très avancée technologiquement, les habitants d’Halieutik ont construit un vaisseau pour rendre visite à la planète Statistik. Ce vaisseau ne contient que 10 individus.</p>
+<center>
+<img src="img/Soucoupe.png" alt="sample" style="width:30.0%" />
+</center>
+<p>La population de Statistik ne connaît pas les motivations des habitants d’Halieutik et souhaite faire progresser sa connaissance de la morphologie sur cette nouvelle espèce (pour se préparer à toutes éventualités).</p>
+<p>A partir des 10 individus qui descendent du vaisseau que peut-on raisonnablement affirmer sur la population générale d’Halieutik ?</p>
+<center>
+<img src="img/sample1.png" alt="sample" style="width:30.0%" />
+</center>
+<p>C’est un problème de statistique</p>
+</div>
+<div id="plus-generalement" class="section level2">
+<h2>Plus généralement</h2>
+<p>Contrairement à ce qu’on pourrait croire, c’est un problème très classique en statistique dans tous les domaines d’applications :</p>
+<ul>
+<li>Intentions de vote de la population à partir d’un échantillon de la population,</li>
+<li>Evaluation du rendement de la parcelle à partir de quelques prélévements,</li>
+<li>Evaluation de la préférence des consommateurs à partir d’un panel,</li>
+<li>Evaluation de la structure des tailles de captures à partir des débarquements</li>
+</ul>
+<center>
+<img src="img/criee.jpg" alt="Debarquement criée, source E. Rivot" style="width:50.0%" />
+</center>
+</div>
+<div id="formaliser-le-passage-de-lechantillon-a-la-population" class="section level2">
+<h2>Formaliser le passage de l’échantillon à la population</h2>
+<p>Il faut poser des hypothèses. Par exemple si l’on s’intéresse à la taille moyenne des habitatnts d’Halieutik.</p>
+<p>On peut imaginer un modèle de la répartition des tailles dans la population.</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-1-1.png" width="768" /></p>
+<p>Si on choisit complètement au hasard 10 individus dans cette population quelle est la situation la plus probable ?</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-1.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-2.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-3.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-4.png" width="768" /></p>
+<p>Puisque la répartition des tailles au sein de la population suit une loi normale, la taille d’un individu choisi uniformément parmi tous les individus d’une grande population suit également une loi normale. L’aléa vient du choix de l’individu parmi tous les individus possibles.</p>
+</div>
+<div id="estimateur-versus-estimation" class="section level2">
+<h2>Estimateur versus Estimation</h2>
+<p>En situation réelle, on peut contrôler (un peu) comment on choisit les individus au sein d’une population et à partir de notre échantillon on va chercher à construire de l’information sur <span class="math inline">\(\mu\)</span> le paramètre qui règle la moyenne de la population.</p>
+<p>Comment approcher <span class="math inline">\(\mu\)</span> ?</p>
+<p>On peut construire un estimateur : une variable aléatoire qui essaie de s’appricher de la quantité inconnue <span class="math inline">\(\mu\)</span>.</p>
+<p><span class="math inline">\(\mu\)</span> désignant la moyenne de la population on peut construire la variable aléatoire, appelée moyenne empirique<br />
+<span class="math display">\[\bar{X} = \frac{1}{n} \sum_{k=1}^{n} X_k,\]</span> où <span class="math inline">\(X_k\)</span> désigne la taille du k<span class="math inline">\(^{\mbox{ème}}\)</span> individu choisi au hasard (par conséquent la taille de cette individu est bien une variable aléatoire) et <span class="math inline">\(n\)</span>désignant la taille de l’échantillon.</p>
+<p>Une fois qu’on a effectivement sélectionné nos individus, la taille n’est plus aléatoire, on a une réalisation de notre estimateur, c’est une estimation.</p>
+<p>Si on s’intéresse à la taille de notre population venant d’Halieutik, l’estimateur est la moyenne empirique et sa réalisation, i.e. l’estimation la moyenne de l’échantillon.</p>
+<p>20 vaisseaux sont arrivés sur Statistik, chacun contenant 10 individus dont on a mesuré la tailleéchantillons de taille provenant de la même population ont été relevés (<code>data/height_sample_i.Rdata</code>).</p>
+<p>Construire une estimation de la taille de la population pour chaque échantillon et représenter les 20 obtenus sous forme d’histogramme.</p>
+<p>Que constatez-vous ?</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<p>Et avec davantage d’échantillons</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<p>Ainsi on montre que la loi de <span class="math display">\[\bar{X}_n \sim \mathcal{N}(0, \sigma^2/n)\]</span> ### Distribution des tailles dans la population</p>
+<p>Que se passe t il si, au sein de la population la distribution des tailles ne suit pas une loi normale ?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, df, mean){
+  mean <span class="op">+</span><span class="st"> </span><span class="kw">dt</span>(x<span class="op">-</span>mean, <span class="dt">df =</span> df)
+}
+p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">height =</span> <span class="kw">c</span>(mu <span class="op">-</span><span class="st"> </span><span class="dv">20</span> <span class="op">*</span><span class="st"> </span>s, mu <span class="op">+</span><span class="st"> </span><span class="dv">20</span> <span class="op">*</span><span class="st"> </span>s)), <span class="kw">aes</span>(height))  <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dgamma, <span class="dt">n =</span> <span class="dv">201</span>, <span class="dt">args =</span> <span class="kw">list</span>( <span class="dt">shape =</span> mu <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span>, <span class="dt">rate =</span> <span class="fl">0.1</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.text.x=</span><span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mu, <span class="dt">col =</span> <span class="st">&quot;darkgreen&quot;</span>) 
+<span class="kw">suppressWarnings</span>(<span class="kw">print</span>(p2))</code></pre></div>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+</div>
+<div id="effet-du-choix-de-lechantillon" class="section level2">
+<h2>Effet du choix de l’échantillon</h2>
+<p>Le vaisseau spatial est petit donc au lieu de choisir uniformément dans la population des habitants à envoyer on va privilégier les petits.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fonction de selectivité
+selectivity &lt;-<span class="st"> </span><span class="cf">function</span>(x, a, b){
+  t_x &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>a <span class="op">*</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>b))
+  <span class="kw">return</span>(t_x <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>t_x))
+}
+
+## les candidats choisis preferentiellement selon leur taille 
+## probabilité qu&#39;un individe de taille x soit dans l&#39;échantillon
+pref_height_sampling &lt;-<span class="st"> </span><span class="cf">function</span>(mean, sd, a, b){
+  iter_max &lt;-<span class="st"> </span><span class="dv">100</span>
+  
+  x_prop &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean =</span> mean, <span class="dt">sd =</span> sd)
+  keep   &lt;-<span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw">selectivity</span>(x_prop, <span class="dt">a =</span> a, <span class="dt">b =</span> b))
+  
+  iter &lt;-<span class="st"> </span><span class="dv">1</span>
+  
+  <span class="cf">while</span>((<span class="op">!</span>keep) <span class="op">&amp;</span><span class="st"> </span>(iter <span class="op">&lt;</span>iter_max)){
+    iter  &lt;-<span class="st"> </span>iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    x_prop &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean =</span> mean, <span class="dt">sd =</span> sd)
+    keep   &lt;-<span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw">selectivity</span>(x_prop, <span class="dt">a =</span> a, <span class="dt">b =</span> b))
+  }
+  <span class="cf">if</span>(iter <span class="op">&gt;=</span><span class="st"> </span>iter_max){
+    <span class="kw">cat</span>(<span class="st">&quot;Nombre maximun d&#39;itérations atteint&quot;</span>)
+    <span class="kw">return</span>(<span class="ot">NULL</span>)
+  } <span class="cf">else</span> {
+    <span class="kw">return</span>(<span class="kw">round</span>(x_prop,<span class="dv">2</span>))
+  }
+}
+
+
+## echantillonner n individus
+pref_n_sample &lt;-<span class="st"> </span><span class="cf">function</span>(n , mean, sd, a , b){
+  <span class="kw">round</span>(
+    <span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="cf">function</span>(s_){
+    <span class="kw">pref_height_sampling</span>(<span class="dt">mean =</span> mean, <span class="dt">sd =</span> sd, <span class="dt">a =</span>  a, <span class="dt">b =</span> b) } ), <span class="dv">2</span>)
+}
+
+
+## les tailles observées
+height &lt;-<span class="st"> </span><span class="kw">pref_n_sample</span>(n, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> s, <span class="dt">a =</span> <span class="fl">0.5</span>, <span class="dt">b =</span> mu <span class="op">+</span><span class="st"> </span><span class="dv">10</span>)
+<span class="kw">mean</span>(height)</code></pre></div>
+<pre><code>## [1] 108.818</code></pre>
+<p>Distribution de l’estimateur</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_dataset &lt;-<span class="st"> </span><span class="dv">10000</span>
+height_100_rep &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>n_dataset, <span class="cf">function</span>(s_){
+  <span class="kw">pref_n_sample</span>(n, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> s, <span class="dt">a =</span> <span class="fl">0.5</span>, <span class="dt">b =</span> mu <span class="op">+</span><span class="st"> </span><span class="dv">10</span>)
+})
+
+<span class="kw">dim</span>(height_100_rep)</code></pre></div>
+<pre><code>## [1]    10 10000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">estim =</span> <span class="kw">apply</span>(height_100_rep, <span class="dv">2</span>, mean)), <span class="kw">aes</span>(<span class="dt">x =</span> estim)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="kw">sqrt</span>(n_dataset)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mu, <span class="dt">col =</span> <span class="st">&#39;darkred&#39;</span>)</code></pre></div>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+<p>L’estimateur est <i> biaisé</i>.</p>
+</div>
+</div>
+<div id="la-statistique-inferentielle" class="section level1">
+<h1>La statistique inférentielle</h1>
+<div id="loi-dun-estimateur" class="section level2">
+<h2>Loi d’un estimateur</h2>
+</div>
+<div id="proprietes-dun-estimateur" class="section level2">
+<h2>Propriétés d’un estimateur</h2>
+</div>
+<div id="intervalles-de-confiance" class="section level2">
+<h2>Intervalles de confiance</h2>
+</div>
+<div id="les-tests-statistiques" class="section level2">
+<h2>Les tests statistiques</h2>
+</div>
+</div>
+
+<p><img src="LogoAgrocampusOuest.gif" heigth="84" width="84"></img>  <a href="https://www.agrocampus-ouest.fr/">Visit Agrocampus Ouest</a>  </p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
