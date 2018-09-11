@@ -430,14 +430,14 @@ div.tocify {
 <h2>Formaliser le passage de l’échantillon à la population</h2>
 <p>Il faut poser des hypothèses. Par exemple si l’on s’intéresse à la taille moyenne des habitatnts d’Halieutik.</p>
 <p>On peut imaginer un modèle de la répartition des tailles dans la population.</p>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-1-1.png" width="768" /></p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-1-1.png" width="480" /></p>
 <p>Si on choisit complètement au hasard 10 individus dans cette population quelle est la situation la plus probable ?</p>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-1.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-2.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-3.png" width="768" /><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-4.png" width="768" /></p>
-<p>Puisque la répartition des tailles au sein de la population suit une loi normale, la taille d’un individu choisi uniformément parmi tous les individus d’une grande population suit également une loi normale. L’aléa vient du choix de l’individu parmi tous les individus possibles.</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-2-1.png" width="480" /></p>
+<p>Puisque la répartition des tailles au sein de la population suit une loi normale, la taille d’un individu choisi uniformément parmi tous les individus d’une grande population suit également une loi normale. <i> L’aléa vient du choix de l’individu parmi tous les individus possibles. </i></p>
 </div>
 <div id="estimateur-versus-estimation" class="section level2">
 <h2>Estimateur versus Estimation</h2>
-<p>En situation réelle, on peut contrôler (un peu) comment on choisit les individus au sein d’une population et à partir de notre échantillon on va chercher à construire de l’information sur <span class="math inline">\(\mu\)</span> le paramètre qui règle la moyenne de la population.</p>
+<p>En situation réelle, on peut contrôler (un peu, cf <a href="echant_strategie.html">strategie</a> ) comment on choisit les individus au sein d’une population et à partir de notre échantillon on va chercher à construire de l’information sur <span class="math inline">\(\mu\)</span> le paramètre qui règle la moyenne de la population.</p>
 <p>Comment approcher <span class="math inline">\(\mu\)</span> ?</p>
 <p>On peut construire un estimateur : une variable aléatoire qui essaie de s’appricher de la quantité inconnue <span class="math inline">\(\mu\)</span>.</p>
 <p><span class="math inline">\(\mu\)</span> désignant la moyenne de la population on peut construire la variable aléatoire, appelée moyenne empirique<br />
@@ -447,10 +447,12 @@ div.tocify {
 <p>20 vaisseaux sont arrivés sur Statistik, chacun contenant 10 individus dont on a mesuré la tailleéchantillons de taille provenant de la même population ont été relevés (<code>data/height_sample_i.Rdata</code>).</p>
 <p>Construire une estimation de la taille de la population pour chaque échantillon et représenter les 20 obtenus sous forme d’histogramme.</p>
 <p>Que constatez-vous ?</p>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
 <p>Et avec davantage d’échantillons</p>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
-<p>Ainsi on montre que la loi de <span class="math display">\[\bar{X}_n \sim \mathcal{N}(0, \sigma^2/n)\]</span> ### Distribution des tailles dans la population</p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
+<p>Ainsi on montre que la loi de <span class="math display">\[\bar{X}_n \sim \mathcal{N}(0, \sigma^2/n)\]</span></p>
+<div id="distribution-des-tailles-dans-la-population" class="section level3">
+<h3>Distribution des tailles dans la population</h3>
 <p>Que se passe t il si, au sein de la population la distribution des tailles ne suit pas une loi normale ?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, df, mean){
   mean <span class="op">+</span><span class="st"> </span><span class="kw">dt</span>(x<span class="op">-</span>mean, <span class="dt">df =</span> df)
@@ -461,7 +463,9 @@ p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt"
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mu, <span class="dt">col =</span> <span class="st">&quot;darkgreen&quot;</span>) 
 <span class="kw">suppressWarnings</span>(<span class="kw">print</span>(p2))</code></pre></div>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
+<p>Représenter graphiquement la loi de l’estimateur de la moyenne, pour des échantillons de taille 10 et de taille 100.</p>
+</div>
 </div>
 <div id="effet-du-choix-de-lechantillon" class="section level2">
 <h2>Effet du choix de l’échantillon</h2>
@@ -510,19 +514,26 @@ height &lt;-<span class="st"> </span><span class="kw">pref_n_sample</span>(n, <s
 <pre><code>## [1] 108.818</code></pre>
 <p>Distribution de l’estimateur</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_dataset &lt;-<span class="st"> </span><span class="dv">10000</span>
-height_100_rep &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>n_dataset, <span class="cf">function</span>(s_){
+n         &lt;-<span class="st"> </span><span class="dv">30</span>
+height_10000_rep &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>n_dataset, <span class="cf">function</span>(s_){
   <span class="kw">pref_n_sample</span>(n, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> s, <span class="dt">a =</span> <span class="fl">0.5</span>, <span class="dt">b =</span> mu <span class="op">+</span><span class="st"> </span><span class="dv">10</span>)
 })
 
-<span class="kw">dim</span>(height_100_rep)</code></pre></div>
-<pre><code>## [1]    10 10000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">estim =</span> <span class="kw">apply</span>(height_100_rep, <span class="dv">2</span>, mean)), <span class="kw">aes</span>(<span class="dt">x =</span> estim)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="kw">sqrt</span>(n_dataset)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mu, <span class="dt">col =</span> <span class="st">&#39;darkred&#39;</span>)</code></pre></div>
-<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+<span class="kw">dim</span>(height_10000_rep)</code></pre></div>
+<pre><code>## [1]    30 10000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">estim =</span> <span class="kw">apply</span>(height_10000_rep, <span class="dv">2</span>, mean)), <span class="kw">aes</span>(<span class="dt">x =</span> estim)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="kw">sqrt</span>(n_dataset)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mu, <span class="dt">col =</span> <span class="st">&#39;darkred&#39;</span>)</code></pre></div>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-7-1.png" width="480" /></p>
 <p>L’estimateur est <i> biaisé</i>.</p>
+<p>On peut le débiaiser grâce à la théorie de l’échantillonnage et on apprendre à le faire dans le chapitre <a href="echant_strategie.html">strategie</a> pour certain type d’échantillonnage classique.</p>
+<pre><code>## Warning: Removed 159 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="echant_variabilite_files/figure-html/unnamed-chunk-8-1.png" width="480" /></p>
+<p>Adapter les scripts précédents pour créer un échantillonnage préférentiel crédible pour un chalut et visualiser l’effet de ce type d’échantillonnage sur l’estimation de la taille moyenne.</p>
 </div>
 </div>
 <div id="la-statistique-inferentielle" class="section level1">
 <h1>La statistique inférentielle</h1>
+<p>Ce qu’on vient de voir sur l’exemple de la moyenne de la population est l’exemple de base de la statistique inférentielle. Plus généralement, on s’intéresse à une quantité spécifique d’une population donnée. On n’a jamais accès à cette quantitté mais on peut en avoir une idée grâce à une sous partie de la population, un échantillon.</p>
+<p>A partir de cette échantillon, on peut construire une quantité qui va approcher la quantité d’intéêt dans la population. La façon de construire cette quantité repose sur la théorie de l’estimation que l’on verra dans le chapitre <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>.</p>
 <div id="loi-dun-estimateur" class="section level2">
 <h2>Loi d’un estimateur</h2>
 </div>

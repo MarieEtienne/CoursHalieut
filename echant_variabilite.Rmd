@@ -12,7 +12,7 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 6, fig.height = ')
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, fig.width = 5, fig.height = 3)
 library(ggplot2) ## pour de beaux graphiques
 library(ggfortify) ## pour de beaux graphiques
 library(car) # pour les modèles linéaires
@@ -68,15 +68,18 @@ On peut imaginer un modèle de la répartition des tailles dans la population.
 mu <- 110
 s <- 10
 
-p1 <- ggplot(data = data.frame(height = c(mu - 7 * s, mu + 5 * s)), aes(height)) +
-  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s)) + ylab("") + 
-  theme( axis.text.x=element_blank()) +
+p1 <- ggplot(data = data.frame(height = rnorm(50000, mean = mu, sd = s)), aes(height)) +
+  geom_histogram(alpha = 0.5, aes(y =..density..), bins = 30 ) +
+  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s), col='darkred') + ylab("") + 
+  theme( axis.text.x = element_blank()) +
   scale_y_continuous(breaks = NULL) + 
   geom_vline(xintercept = mu, col = "darkgreen") +  
     annotate("text",label = expression(mu), x = mu + 4, y =0.01, size = 8, colour = "darkgreen")
 
 suppressWarnings(print(p1))
 ```
+
+
 
 
 Si on choisit complètement au hasard 10 individus dans cette population quelle est la situation la plus probable ?
@@ -90,18 +93,15 @@ g3 <- p1 + geom_point(data = data.frame(x = rnorm(n, mean=mu, sd=2*s), y=rep(0, 
 g4 <- p1 + geom_point(data = data.frame(x = rnorm(n, mean=mu -20, sd=4*s), y=rep(0, n)), aes(x=x,y=y), col="red")
 # Show the 4 plots on the same page
 suppressWarnings(
-  grid.arrange(suppressWarnings(print(g1)),
-             suppressWarnings(print(g2)),
-             suppressWarnings(print(g3)),
-             suppressWarnings(print(g4)), ncol = 2, nrow = 2)
+  grid.arrange(g1, g2, g3, g4, ncol = 2, nrow = 2)
 )
 ```
 
-Puisque la répartition des tailles au sein de la population suit une loi normale, la taille d'un individu choisi uniformément parmi tous les individus d'une grande population  suit également une loi normale. L'aléa vient du choix de l'individu parmi tous les individus possibles. 
+Puisque la répartition des tailles au sein de la population suit une loi normale, la taille d'un individu choisi uniformément parmi tous les individus d'une grande population  suit également une loi normale. <i> L'aléa vient du choix de l'individu parmi tous les individus possibles. </i>
 
 ## Estimateur versus Estimation
 
-En situation réelle, on peut contrôler (un peu) comment on choisit les individus au sein d'une population et à partir de notre échantillon on va chercher à construire de l'information sur $\mu$ le paramètre qui règle la moyenne de la population.
+En situation réelle, on peut contrôler (un peu, cf [strategie](echant_strategie.html) ) comment on choisit les individus au sein d'une population et à partir de notre échantillon on va chercher à construire de l'information sur $\mu$ le paramètre qui règle la moyenne de la population.
 
 Comment approcher $\mu$ ? 
 
@@ -151,7 +151,9 @@ ggplot(df_sample, aes(x = height)) + geom_histogram( bins = sqrt(n_dataset) ) + 
 ```
 
 Ainsi on montre que la loi de 
-$$\bar{X}_n \sim \mathcal{N}(0, \sigma^2/n)$$ 
+$$\bar{X}_n \sim \mathcal{N}(\mu, \sigma^2/n)$$ 
+
+
 ### Distribution des tailles dans la population 
 
 Que se passe t il si, au sein de la population la distribution des tailles ne suit pas une loi normale ?
@@ -170,6 +172,7 @@ suppressWarnings(print(p2))
 ```
 
 
+Représenter graphiquement la loi de l'estimateur de la moyenne, pour des échantillons de taille 10 et de taille 100.
 
 
 
@@ -226,29 +229,133 @@ Distribution de l'estimateur
 
 ```{r}
 n_dataset <- 10000
-height_100_rep <- sapply(1:n_dataset, function(s_){
+n         <- 30
+height_10000_rep <- sapply(1:n_dataset, function(s_){
   pref_n_sample(n, mean = mu, sd = s, a = 0.5, b = mu + 10)
 })
 
-dim(height_100_rep)
+dim(height_10000_rep)
 
-ggplot(data.frame(estim = apply(height_100_rep, 2, mean)), aes(x = estim)) + geom_histogram(bins=sqrt(n_dataset)) + geom_vline(xintercept = mu, col = 'darkred')
+ggplot(data.frame(estim = apply(height_10000_rep, 2, mean)), aes(x = estim)) + geom_histogram(bins=sqrt(n_dataset)) + geom_vline(xintercept = mu, col = 'darkred')
 ```
 
 
 L'estimateur est <i> biaisé</i>.
 
+On peut le débiaiser grâce à la théorie de l'échantillonnage et on apprendre à le faire dans le chapitre [strategie](echant_strategie.html)  pour certain type d'échantillonnage classique.  
+
+```{r, echo = FALSE}
+const_norm     <- 0.8266904
+prob_inclusion <- selectivity(height_10000_rep, a = 0.5, b = mu + 10)/const_norm
+#prob_inclusion <- sweep(prob_inclusion, colSums(prob_inclusion), MARGIN = 2, FUN = '/')  
+dframe <- data.frame(estim = apply(height_10000_rep/prob_inclusion, 2, mean)) 
+ggplot(dframe, aes(x = estim)) +
+  geom_histogram(bins = sqrt(n_dataset), alpha= 0.3 ) + geom_vline(xintercept = mu, col = 'darkred') + 
+  xlim(c(0,200)) +
+  geom_vline(xintercept = mean(dframe$estim), col='darkgreen')
+```
+
+Adapter les scripts précédents pour créer un échantillonnage préférentiel crédible pour un chalut et visualiser l'effet de ce type d'échantillonnage sur l'estimation de la taille moyenne.
+
+## Intervalle de confiance 
+
+Dans le cas d'un échantillonnage uniforme, au sein d'une grande population, il est raisonnable de supposer que l'estimateur de la moyenne suit la loi suivante:
+$$X_n =\frac{1}{n} \sum_{k=1}^{n} X_i \sim \mathcal{N}(\mu,\sigma^2/n).$$
+
+Graphiquement, on peut représenter les différentes quiantités de la manière suivante
+```{r, echo = FALSE}
+mu <- 110
+s <- 10
+n <- 10
+
+p1 <- ggplot(data = data.frame(height = rnorm(50000, mean = mu, sd = s)), aes(height)) +
+  geom_histogram(alpha = 0.5, aes(y = ..density..), bins = 30, fill = "darkred", col = "darkred"  ) +
+  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s), col='darkred') + ylab("") + 
+  theme( axis.text.x = element_blank()) +
+  scale_y_continuous(breaks = NULL) + 
+  geom_vline(xintercept = mu, col = "darkred") +  
+  geom_histogram(data=data.frame(xbar = rnorm(10000, mean = mu, sd = s /sqrt(n))), aes(x = xbar, y = ..density..), alpha= 0.2, col='darkgreen', fill="darkgreen",linetype="dashed") + 
+  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s/sqrt(n)), col = 'darkgreen') 
+suppressWarnings(print(p1))
+```
+
+La distribution de l'estimateur est représenté en vert, la distribution des valeurs dans la population est représentée en rouge.
+
+Dans une situation réelle, on n'a pas accès à la population, en fait tout ce qu'on peut espérer avoir est résumé dans le graphique suivant
+
+```{r, echo = FALSE}
+mu <- 110
+s <- 10
+n <- 10
+
+sample_df <- data.frame(height = rnorm(n, mean = mu, sd = s), y=rep(0,n))
+p_sample <- ggplot(data = sample_df, aes(x=height, y=y)) +
+  geom_point(alpha = 0.5, fill = "darkblue", col = "darkblue"  ) + 
+  geom_vline(xintercept = mean(sample_df$height), col='darkblue') + ylim(c(0, dnorm(mu, mean=mu, sd=s/sqrt(n))))
+```
+
+et on veut en déduire des informations sur la population (en rouge) grâce à la distribution de l'estimateur (en vert).
+
+Comment s'y prendre ?
+
+- Grâce à l'échantillon on peut estimuer $mu$ par $\bar{x}_n$.
+- Grâce à l'échantillon on peut estimuer $\sigma$ par $\hat{\sigma}=\sqrt{\frac{1}{n-1} \sum_{k=1}^n (x_k-} \bar{x}_n)^2$.
+- On a montré que $\bar{X}_n \sim\mathcal{N}(0,\sigma^2/n)$, mais on ne connaît pas exactement $\sigma$. On peut construire la quantité $T=\frac{\bar{X}_n-\bar{x}_n}{ /\hat{\sigma}}$. Cette quantité ne pédent ni de $\mu$ ni de $\sigma$ et on peut montrer que 
+$$ T=\frac{\bar{X}_n-\mu}{ \hat{\sigma}/\sqrt{n}} \sim \mathcal{T}(n-1)$$
+
+On en déduit la relation suivante
+
+$$ P \left\lbrace \mu \in [-t_{n-1, 1-\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}} + \bar{X}_n, \ t_{n-1, 1-\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}} + \bar{X}_n   ]\right\rbrace = 1-\alpha$$
+On va donc affirmer que $\mu$ est dans l'intervalle $[-t_{n-1, 1-\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}} + \bar{x}_n, \ t_{n-1, 1-\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}} + \bar{x}_n   ],$
+avec un risque de se tromper de $\alpha$
+
+On peut visualiser cette idée
+```{r}
+n  <- 10
+n_dataset <- 100
+alpha <- 0.05
+
+Intervalle <- function(sample){
+  n <- length(sample)
+  x_bar <- mean(sample)
+  tn_1 <- qt(p = 1-alpha/2, df = n-1)
+  sigma_hat  <- sd(sample)
+  c(x_bar, tn_1* sigma_hat/sqrt(n), sigma_hat)
+} 
+
+int_whole <- data.frame(t(sapply(1:n_dataset, function(s_){
+  sample <- rnorm(n, mean = mu, sd = s)
+  Intervalle(sample)
+})))
+
+colnames(int_whole) <- c('x_bar', 'width', 'sigma_hat')
+int_whole$y  <- seq(0, 0.2, length.out = n_dataset)
 
 
-# La statistique inférentielle
+ggplot(data = int_whole) + geom_errorbarh( aes( y = y,  xmin = x_bar - width, xmax = x_bar + width, height = 0)) + geom_vline(xintercept = mu, col='darkred')
+```
 
+# La statistique inférentielle - résumé 
+
+Ce qu'on vient de voir sur l'exemple de la moyenne de la population est l'exemple de base de la statistique inférentielle. Plus généralement, on s'intéresse à une quantité spécifique d'une population donnée. On n'a jamais accès à cette quantitté mais on peut en avoir une idée grâce à une sous partie de la population, un échantillon.
+
+A partir de cette échantillon, on peut construire une quantité qui va approcher la quantité d'intéêt dans la population. La façon de construire cette quantité repose sur la théorie de l'estimation que l'on verra dans le chapitre [Estimation par maximum de vraisemblance](ajust_estim.html).
 
 ## Loi d'un estimateur
 
-## Propriétés d'un estimateur
+Un estimateur est une variable aléatoire. La loi de cette variable aléatoire repose sur des hyypothèses portant sur l'échantillonnage et sur la distribution de la quantité d'intérêt dans la population. Elle permet de construire des intervalles de confiance et des tests.
+
+Une réalisation de l'estimateur est une estimation. C'est la valeur que prend l'estimateur dans l'échantillon observé.
+
 
 ## Intervalles de confiance
 
+A partir des estimation et des hypothèses de distribution on peut construire un intervalle de confiance pour la quantité d'intérêt. C'set un intervalle pour lequel on peut affirmer qu'il contient la valeur de la quantité d'intérêt avec un risque de se tromper contrôlé.
+
+
 ## Les tests statistiques
 
+Grâce à la loi de l'estimteur on peut construire des tests statistiques qui vont permettre de tester des hypothèses sur la quantité d'intérêt. Est ce que la quantité d'intérêt est inférieur  ou égale à une certaine valeur par exemple. 
+
+La mise en oeuvre du test permet de réfuter (ou non) l'hypothèse, avec un risque de réfuter à tort qui est controlé.
 
