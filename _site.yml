@@ -24,6 +24,7 @@ navbar:
       - text: "Rappels de statistique"
         href: intror_rappel.html
   - text: "Echantillonnage"
+    href: echant.html
     icon: fa-adjust
     menu:
       - text: "Variabilité d'échantillonnage"
