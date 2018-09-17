@@ -70,8 +70,7 @@ s <- 10
 
 p1 <- ggplot(data = data.frame(height = rnorm(50000, mean = mu, sd = s)), aes(height)) +
   geom_histogram(alpha = 0.5, aes(y =..density..), bins = 30 ) +
-  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s), col='darkred') + ylab("") + 
-  theme( axis.text.x = element_blank()) +
+  stat_function(fun = dnorm, n = 201, args = list(mean = mu, sd = s), col='darkred') + ylab("")  +
   scale_y_continuous(breaks = NULL) + 
   geom_vline(xintercept = mu, col = "darkgreen") +  
     annotate("text",label = expression(mu), x = mu + 4, y =0.01, size = 8, colour = "darkgreen")
@@ -117,7 +116,7 @@ set.seed(1)
 n_dataset <- 20
 write_file <- lapply(1:n_dataset, function(i){
   df_sample <- data.frame(height = rnorm(n, mean=mu, sd=s))
-  write.csv(x=df_sample, file = file.path('data', paste0('height_sample_', i, '.Rdata')), row.names = FALSE)
+  save(df_sample, file = file.path('data', paste0('height_sample_', i, '.RData')))
 })
 ```
 
@@ -170,6 +169,24 @@ p2 <- ggplot(data = data.frame(height = c(mu - 20 * s, mu + 20 * s)), aes(height
   geom_vline(xintercept = mu, col = "darkgreen") 
 suppressWarnings(print(p2))
 ```
+
+
+```{r}
+mu <- 110
+
+n <- 20
+n_dataset <- 10000
+sample_gamma <- sapply(1:n_dataset, function(s_){
+    rgamma(n, shape = mu * 0.1, rate = 0.1)
+}
+)
+## calcul la moyenne colonne par colonne
+x <- apply(sample_gamma, 2, mean)
+
+df1 <- data.frame(estim_mu = x)
+ggplot(data = df1, aes(x=estim_mu)) + geom_histogram(bins=sqrt(n_dataset))
+```
+
 
 
 Représenter graphiquement la loi de l'estimateur de la moyenne, pour des échantillons de taille 10 et de taille 100.
@@ -312,7 +329,7 @@ avec un risque de se tromper de $\alpha$
 On peut visualiser cette idée
 ```{r}
 n  <- 10
-n_dataset <- 100
+n_dataset <- 50
 alpha <- 0.05
 
 Intervalle <- function(sample){

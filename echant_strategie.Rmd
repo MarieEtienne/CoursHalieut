@@ -14,7 +14,9 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 library(ggplot2) ## pour de beaux graphiques
 library(ggfortify) ## pour de beaux graphiques
 library(car) # pour les modèles linéaires
+library(dplyr)
 library(nlstools) # pour la régression non linéaire
+library(fishdata)
 ```
 
 
@@ -23,28 +25,160 @@ library(nlstools) # pour la régression non linéaire
 
 # Différentes stratégies d'échantillonnage
 
-## Echantillonnage aléatoire simple
+## Echantillonnage aléatoire simple (EAS)
 
 ### Présentation
+Définition
+L’EAS consiste à prélever (sans remise) n éléments dans une population de taille N, au hasard et de façon indépendante.
+Chaque élément possède la même probabilité d’être échantillonné et chacun des échantillons possibles de taille n possède la même probabilité d’être constitué.
 
-### Propriétes
+### Exemple
+
+On s'intéresse aux captures dans une population de $N=36$ pêcheurs.
+On choisit au hasard 18 pêcheurs, soit un effort d'échantillonnage $f=0.5$.
+
+[Echantillonnage Débarquement - cours E. Rivot](echant_exampleER.pdf)
+
+
+[Méthodologie - cours E.Rivot](echant_schémaER.pdf)
+
+
+```{r}
+N <- 36
+n <- 18
+pecheur_echant <- sample(1:N, size = n, replace =FALSE)
+```
+
+### Propriétés de l'estimateur de la moyenne
+Chaque individu a la même probabilité d'être dans l'échantillon. par exemple pour l'individu $i=5$.
+
+Expliquer le code suivant :
+```{r}
+i <- 5 
+res <- replicate(400, i %in% sample(1:N, size= n, replace = FALSE))
+sum(res) / length(res)
+```
+
+
+L'estimateur de la moyenne est  $\bar{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}, $ et l'estimateur de la variance est 
+$S^2 =\frac{1}{n-1} \sum_{i=1}^n(X_i -\bar{X}_n)^2$. 
+
+Alors
+$$Var(\bar{X}_n)= (1-f) \frac{\hat{\sigma}^2}{n}$$
+
+La variance vient du fait qu'on n'échantillonne pas complètement la population. 
+
+- Que se passe t il si $n\to N$ ?
+- Que peut-on dire de $f$ si la population est très grande ?
+
+### Propriétés de l'estimateur de la somme
+L'estimateur de la somme est  ${X}_n^+= \frac{N}{n}\sum_{i=1}^n {X_i} = N \bar{X}_n, $
+Alors
+$$Var({X}_n^+)= \frac{N^2}{n} (1-f) {\hat{\sigma}^2}$$
+
+- Que se passe t il si $n\to N$ ?
+
+### Exemple : Estimation de la population totale de poissons
+
+Sur une zone de 10 km$^2$, 30 traits de chalut sont réalisés.
+
+
+Chacun balaie une surface de 20m x 5000m = 100 000 m$^2$ = 1/10 de km$^2$ soit 1/100 de la surface totale.
+
+- Que vaut $f$ ?
+<!-- 30 traits de chalut réalisés = 3/10 de la surface totale balayée (f = 3/10 ; N = 100). -->
+- Estimer la population totale à partir de l’estimation de la population moyenne par traits de chalut ? 
+
+
+
+Données :
+$\bar{x} = 1000$,$\hat{\sigma}^2  = 10000,$
+
+<!-- V̂ ( x ) = ( 1 − f ) ⋅ nb = 233 -->
+<!-- n -->
+<!-- Σ ˆ = N ⋅ x = 100 000 -->
+
+
+### Optimisation de la taille de l'échantillon
+
+Il est souhaitable d'avoir une bonne précision mais pas à n'importe quel prix !! et l'échantillonnage coute cher !
+
+Si on veut une précision de 10$\%$ quel taille d'achnatillon faut il choisir ?
+
+Le coefficient de variation est défini par 
+$$CV_{\bar{X}_n} =\frac{\sqrt{Var(\bar{X}_n)}}{E(\bar{X}_n)}$$
+En déduire la valeur de $n$ minimale pour avoir un CV estimé de 10$\%$.
+
+## Exercice sur la relation age - taille
+
+```{r, echo =FALSE}
+load('data/large_growthdataset.Rdata')
+summary(large_growth_data)
+```
+
+Supposons que le jeu de données `large_growth_data` contiennent l'ensemble d'une population d'intérêt.
+
+Echantillonner avec $f= 0.2$ et estimer la taille moyenne.
+
+Repliquer cette oppération plusieurs fois et représenter la loi de l'estimateur de la moyenne ainsi que la vraie valeur.
 
 ### Intérêts et limites
+
+- L'échantillonnage est simple (quoique ....)
+- Les propriétés des estimateurs sont sympathiques
+
+- peu efficace pour estimer des différences au sein d'une population, 
 
 ## Echantillonnage stratifié
 
 ### Présentation
+L’échantillonnage stratifié du 1er niveau consiste à subdiviser une population
+hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.
+
+La population hétérogène de taille N est ainsi divisée en k strates (h=1,...,k)
+plus homogènes d’effectif $N_i$ telles que $N = N_1 + ... + N_k$.
+Un échantillon indépendant est prélevé dans chacune des strates en
+appliquant un plan d’échantillonnage.
+La solution la plus simple et la plus classique est d’appliquer un EAS dans
+chaque strate (mais on peut appliquer un autre plan).
+
+### Exemple
+
+[Echantillonnage Débarquement - cours E. Rivot](echant_exampleER_2.pdf)
+
 
 ### Propriétes
 
+La variance provient uniquement de l'échantillonnage intre strate, pas de variance d'estimation inter strate puisque toutes les strates sont vues !
+
+Plus efficace qu'un EAS 
+
+
+### Example 
+
+Re prendre le jeu de données `large_growth_data`et proposer un échantillonnage stratifié.
+
+Estimer la taille moyenne de la population.
+
+- Réfléchir sur les strates pertinentes.
+- Représenter la variabilité de l'estimateur.
+
+Attention dans la réalité, on ne connait pas le poids de chaque strate.
+
+- Que se passe t il si on se trompe dans le poids des strates ?
+- Comment avoir une idée du poids des strates ?
+
 ### Intérêts et limites
 
-## Echantillonnage en grappes
+L’ES est d’autant plus intéressant que :
+- La variance inter-strates est grande (pas de var. inter-strates dans la variance d’estimation) ;
+- La variance intra-strate est réduite (seule source de variance d’estimation).
 
-### Présentation
 
-### Propriétes
+ A condition que les strates soient bien définies, en rapport avec la variable d’intérêt dans la population. 
+ 
+l’ES fournit des estimateurs sans biais et procure un gain de précision important par rapport à l’EAS.
 
-### Intérêts et limites
 
-## Plan d'expérience
+ Une erreur d’appréciation du poids des strates ω h peut entraîner un biais important dans les estimateurs de la
+moyenne μ et du total Σ .

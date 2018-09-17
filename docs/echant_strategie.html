@@ -28,6 +28,49 @@
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -359,44 +402,122 @@ div.tocify {
 </div>
 <div id="differentes-strategies-dechantillonnage" class="section level1">
 <h1>Différentes stratégies d’échantillonnage</h1>
-<div id="echantillonnage-aleatoire-simple" class="section level2">
-<h2>Echantillonnage aléatoire simple</h2>
+<div id="echantillonnage-aleatoire-simple-eas" class="section level2">
+<h2>Echantillonnage aléatoire simple (EAS)</h2>
 <div id="presentation" class="section level3">
 <h3>Présentation</h3>
+<p>Définition L’EAS consiste à prélever (sans remise) n éléments dans une population de taille N, au hasard et de façon indépendante. Chaque élément possède la même probabilité d’être échantillonné et chacun des échantillons possibles de taille n possède la même probabilité d’être constitué.</p>
 </div>
-<div id="proprietes" class="section level3">
-<h3>Propriétes</h3>
+<div id="exemple" class="section level3">
+<h3>Exemple</h3>
+<p>On s’intéresse aux captures dans une population de <span class="math inline">\(N=36\)</span> pêcheurs. On choisit au hasard 18 pêcheurs, soit un effort d’échantillonnage <span class="math inline">\(f=0.5\)</span>.</p>
+<p><a href="echant_exampleER.pdf">Echantillonnage Débarquement - cours E. Rivot</a></p>
+<p><a href="echant_schémaER.pdf">Méthodologie - cours E.Rivot</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="dv">36</span>
+n &lt;-<span class="st"> </span><span class="dv">18</span>
+pecheur_echant &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>N, <span class="dt">size =</span> n, <span class="dt">replace =</span><span class="ot">FALSE</span>)</code></pre></div>
 </div>
+<div id="proprietes-de-lestimateur-de-la-moyenne" class="section level3">
+<h3>Propriétés de l’estimateur de la moyenne</h3>
+<p>Chaque individu a la même probabilité d’être dans l’échantillon. par exemple pour l’individu <span class="math inline">\(i=5\)</span>.</p>
+<p>Expliquer le code suivant :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="dv">5</span> 
+res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">400</span>, i <span class="op">%in%</span><span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>N, <span class="dt">size=</span> n, <span class="dt">replace =</span> <span class="ot">FALSE</span>))
+<span class="kw">sum</span>(res) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(res)</code></pre></div>
+<pre><code>## [1] 0.5025</code></pre>
+<p>L’estimateur de la moyenne est ${X}<em>n=</em>{i=1}^n{X_i}, $ et l’estimateur de la variance est <span class="math inline">\(S^2 =\frac{1}{n-1} \sum_{i=1}^n(X_i -\bar{X}_n)^2\)</span>.</p>
+<p>Alors <span class="math display">\[Var(\bar{X}_n)= (1-f) \frac{\hat{\sigma}^2}{n}\]</span></p>
+<p>La variance vient du fait qu’on n’échantillonne pas complètement la population.</p>
+<ul>
+<li>Que se passe t il si <span class="math inline">\(n\to N\)</span> ?</li>
+<li>Que peut-on dire de <span class="math inline">\(f\)</span> si la population est très grande ?</li>
+</ul>
+</div>
+<div id="proprietes-de-lestimateur-de-la-somme" class="section level3">
+<h3>Propriétés de l’estimateur de la somme</h3>
+<p>L’estimateur de la somme est ${X}<em>n^+= </em>{i=1}^n {X_i} = N {X}_n, $ Alors <span class="math display">\[Var({X}_n^+)= \frac{N^2}{n} (1-f) {\hat{\sigma}^2}\]</span></p>
+<ul>
+<li>Que se passe t il si <span class="math inline">\(n\to N\)</span> ?</li>
+</ul>
+</div>
+<div id="exemple-estimation-de-la-population-totale-de-poissons" class="section level3">
+<h3>Exemple : Estimation de la population totale de poissons</h3>
+<p>Sur une zone de 10 km<span class="math inline">\(^2\)</span>, 30 traits de chalut sont réalisés.</p>
+<p>Chacun balaie une surface de 20m x 5000m = 100 000 m<span class="math inline">\(^2\)</span> = 1/10 de km<span class="math inline">\(^2\)</span> soit 1/100 de la surface totale.</p>
+<ul>
+<li>Que vaut <span class="math inline">\(f\)</span> ? <!-- 30 traits de chalut réalisés = 3/10 de la surface totale balayée (f = 3/10 ; N = 100). --></li>
+<li>Estimer la population totale à partir de l’estimation de la population moyenne par traits de chalut ?</li>
+</ul>
+<p>Données : <span class="math inline">\(\bar{x} = 1000\)</span>,<span class="math inline">\(\hat{\sigma}^2 = 10000,\)</span></p>
+<!-- V̂ ( x ) = ( 1 − f ) ⋅ nb = 233 -->
+<!-- n -->
+<!-- Σ ˆ = N ⋅ x = 100 000 -->
+</div>
+<div id="optimisation-de-la-taille-de-lechantillon" class="section level3">
+<h3>Optimisation de la taille de l’échantillon</h3>
+<p>Il est souhaitable d’avoir une bonne précision mais pas à n’importe quel prix !! et l’échantillonnage coute cher !</p>
+<p>Si on veut une précision de 10<span class="math inline">\(\%\)</span> quel taille d’achnatillon faut il choisir ?</p>
+<p>Le coefficient de variation est défini par <span class="math display">\[CV_{\bar{X}_n} =\frac{\sqrt{Var(\bar{X}_n)}}{E(\bar{X}_n)}\]</span> En déduire la valeur de <span class="math inline">\(n\)</span> minimale pour avoir un CV estimé de 10<span class="math inline">\(\%\)</span>.</p>
+</div>
+</div>
+<div id="exercice-sur-la-relation-age---taille" class="section level2">
+<h2>Exercice sur la relation age - taille</h2>
+<pre><code>##       age            length      sexe   
+##  Min.   : 1.00   Min.   :12.11   f:244  
+##  1st Qu.: 6.00   1st Qu.:21.73   m:256  
+##  Median :12.00   Median :26.01          
+##  Mean   :13.95   Mean   :25.52          
+##  3rd Qu.:20.00   3rd Qu.:29.33          
+##  Max.   :40.00   Max.   :40.98</code></pre>
+<p>Supposons que le jeu de données <code>large_growth_data</code> contiennent l’ensemble d’une population d’intérêt.</p>
+<p>Echantillonner avec <span class="math inline">\(f= 0.2\)</span> et estimer la taille moyenne.</p>
+<p>Repliquer cette oppération plusieurs fois et représenter la loi de l’estimateur de la moyenne ainsi que la vraie valeur.</p>
 <div id="interets-et-limites" class="section level3">
 <h3>Intérêts et limites</h3>
+<ul>
+<li>L’échantillonnage est simple (quoique ….)</li>
+<li><p>Les propriétés des estimateurs sont sympathiques</p></li>
+<li><p>peu efficace pour estimer des différences au sein d’une population,</p></li>
+</ul>
 </div>
 </div>
 <div id="echantillonnage-stratifie" class="section level2">
 <h2>Echantillonnage stratifié</h2>
 <div id="presentation-1" class="section level3">
 <h3>Présentation</h3>
+<p>L’échantillonnage stratifié du 1er niveau consiste à subdiviser une population hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.</p>
+<p>La population hétérogène de taille N est ainsi divisée en k strates (h=1,…,k) plus homogènes d’effectif <span class="math inline">\(N_i\)</span> telles que <span class="math inline">\(N = N_1 + ... + N_k\)</span>. Un échantillon indépendant est prélevé dans chacune des strates en appliquant un plan d’échantillonnage. La solution la plus simple et la plus classique est d’appliquer un EAS dans chaque strate (mais on peut appliquer un autre plan).</p>
 </div>
-<div id="proprietes-1" class="section level3">
+<div id="exemple-1" class="section level3">
+<h3>Exemple</h3>
+<p><a href="echant_exampleER_2.pdf">Echantillonnage Débarquement - cours E. Rivot</a></p>
+</div>
+<div id="proprietes" class="section level3">
 <h3>Propriétes</h3>
+<p>La variance provient uniquement de l’échantillonnage intre strate, pas de variance d’estimation inter strate puisque toutes les strates sont vues !</p>
+<p>Plus efficace qu’un EAS</p>
+</div>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<p>Re prendre le jeu de données <code>large_growth_data</code>et proposer un échantillonnage stratifié.</p>
+<p>Estimer la taille moyenne de la population.</p>
+<ul>
+<li>Réfléchir sur les strates pertinentes.</li>
+<li>Représenter la variabilité de l’estimateur.</li>
+</ul>
+<p>Attention dans la réalité, on ne connait pas le poids de chaque strate.</p>
+<ul>
+<li>Que se passe t il si on se trompe dans le poids des strates ?</li>
+<li>Comment avoir une idée du poids des strates ?</li>
+</ul>
 </div>
 <div id="interets-et-limites-1" class="section level3">
 <h3>Intérêts et limites</h3>
+<p>L’ES est d’autant plus intéressant que : - La variance inter-strates est grande (pas de var. inter-strates dans la variance d’estimation) ; - La variance intra-strate est réduite (seule source de variance d’estimation).</p>
+<p>A condition que les strates soient bien définies, en rapport avec la variable d’intérêt dans la population.</p>
+<p>l’ES fournit des estimateurs sans biais et procure un gain de précision important par rapport à l’EAS.</p>
+<p>Une erreur d’appréciation du poids des strates ω h peut entraîner un biais important dans les estimateurs de la moyenne μ et du total Σ .</p>
 </div>
-</div>
-<div id="echantillonnage-en-grappes" class="section level2">
-<h2>Echantillonnage en grappes</h2>
-<div id="presentation-2" class="section level3">
-<h3>Présentation</h3>
-</div>
-<div id="proprietes-2" class="section level3">
-<h3>Propriétes</h3>
-</div>
-<div id="interets-et-limites-2" class="section level3">
-<h3>Intérêts et limites</h3>
-</div>
-</div>
-<div id="plan-dexperience" class="section level2">
-<h2>Plan d’expérience</h2>
 </div>
 </div>
 

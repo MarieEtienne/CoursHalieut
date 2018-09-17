@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Marie-Pierre Etienne" />
+
+<meta name="date" content="2018-09-16" />
+
+<title>Simulation données Growth</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Stat 4 Halieutes</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+<li>
+  <a href="https://github.com/MarieEtienne/CoursHalieut">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-child"></span>
+     
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intror_visu.html">Visualisation</a>
+    </li>
+    <li>
+      <a href="intror_rappel.html">Rappels de statistique</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-adjust"></span>
+     
+    Echantillonnage
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="echant_variabilite.html">Variabilité d'échantillonnage</a>
+    </li>
+    <li>
+      <a href="echant_strategie.html">Stratégie d'échantillonnage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-tilde"></span>
+     
+    Ajustement de modèles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ajust_mco.html">Moindre carrés</a>
+    </li>
+    <li>
+      <a href="ajust_vrais.html">Vraisemblance de modèles usuels</a>
+    </li>
+    <li>
+      <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Simulation données Growth</h1>
+<h4 class="author"><em>Marie-Pierre Etienne</em></h4>
+<h4 class="date"><em>September 16, 2018</em></h4>
+
+</div>
+
+
+<div id="simulation-donnees-age-taille-par-sexe" class="section level2">
+<h2>simulation données age taille par sexe</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">K    &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.11</span>)
+Linf &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">30</span>,<span class="dv">32</span>) 
+t0   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="op">-</span><span class="dv">7</span>)
+## age range
+age_max &lt;-<span class="st"> </span><span class="dv">40</span>
+age &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">:</span><span class="st"> </span>age_max
+## von B 
+<span class="kw">plot</span>(age, Linf[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>K[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>(age <span class="op">-</span><span class="st"> </span>t0[<span class="dv">1</span>]) )), <span class="st">&#39;l&#39;</span>, <span class="dt">col=</span><span class="dv">2</span> ) 
+<span class="kw">lines</span>(age, Linf[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>K[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>(age <span class="op">-</span><span class="st"> </span>t0[<span class="dv">2</span>]) )), <span class="st">&#39;l&#39;</span>, <span class="dt">col=</span><span class="dv">3</span> )</code></pre></div>
+<p><img src="simu_growth_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">500</span>
+
+proba &lt;-<span class="st">  </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="fl">0.1</span><span class="op">*</span>(age<span class="op">-</span><span class="dv">20</span>))) 
+<span class="kw">plot</span>(age, proba <span class="op">/</span><span class="kw">sum</span>(proba))</code></pre></div>
+<p><img src="simu_growth_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">age &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>age_max, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> proba<span class="op">/</span><span class="kw">sum</span>(proba))
+<span class="kw">hist</span>(age)</code></pre></div>
+<p><img src="simu_growth_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sexe &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span> <span class="op">:</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">size =</span> n,  <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span><span class="kw">c</span>(.<span class="dv">4</span>, .<span class="dv">6</span>))
+
+##
+s &lt;-<span class="st"> </span><span class="fl">0.1</span>
+data_length &lt;-<span class="st">  </span>Linf[sexe] <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>K[sexe] <span class="op">*</span><span class="st"> </span>(age <span class="op">-</span><span class="st"> </span>t0[sexe]) )) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(<span class="kw">length</span>(age), <span class="dt">mean =</span> <span class="op">-</span>s<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span> s))
+<span class="kw">plot</span>(age, data_length, <span class="dt">col =</span> sexe)</code></pre></div>
+<p><img src="simu_growth_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">site &lt;-<span class="st"> </span><span class="kw">sample</span>( <span class="kw">c</span>(<span class="st">&#39;Site1&#39;</span>, <span class="st">&#39;Site2&#39;</span>), <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>))
+large_growth_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age =</span> age, <span class="dt">length =</span> data_length, <span class="dt">sexe =</span> dplyr<span class="op">::</span><span class="kw">recode</span>(sexe, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> &#39;m&#39;</span>, <span class="st">`</span><span class="dt">2</span><span class="st">`</span> =<span class="st"> &#39;f&#39;</span> ), <span class="dt">site =</span> site )
+
+<span class="kw">save</span>(large_growth_data, <span class="dt">file=</span><span class="st">&#39;large_growthdataset.Rdata&#39;</span>)</code></pre></div>
+</div>
+
+<p><img src="LogoAgrocampusOuest.gif" heigth="84" width="84"></img>  <a href="https://www.agrocampus-ouest.fr/">Visit Agrocampus Ouest</a>  </p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
