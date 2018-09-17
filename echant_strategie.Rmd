@@ -116,11 +116,30 @@ load('data/large_growthdataset.Rdata')
 summary(large_growth_data)
 ```
 
-Supposons que le jeu de données `large_growth_data` contiennent l'ensemble d'une population d'intérêt.
+Supposons que le jeu de données `large_growth_data` contient l'ensemble d'une population d'intérêt.
 
 Echantillonner avec $f= 0.2$ et estimer la taille moyenne.
 
-Repliquer cette oppération plusieurs fois et représenter la loi de l'estimateur de la moyenne ainsi que la vraie valeur.
+Repliquer cette opération plusieurs fois et représenter la loi de l'estimateur de la moyenne ainsi que la vraie valeur.
+
+
+```{r}
+load('data/large_growthdataset.Rdata')
+N <- nrow(large_growth_data)
+f <- 0.2
+n <- round( f * N )
+
+L <- 50
+
+estimates_EAS <-replicate(L, {
+  echant <- sample(1 : N, size = n, replace = FALSE)
+  dplyr::slice(large_growth_data, echant) %>% dplyr::select(length) %>% colMeans()
+}) %>% as.data.frame() %>% select(mean = '.')
+
+ggplot(estimates_EAS, aes(x=mean)) + geom_histogram(fill = 'darkgreen', alpha = 0.6, bins = 10) + 
+  geom_vline(xintercept = mean(large_growth_data$length)) + xlim(c(24, 28))
+
+```
 
 ### Intérêts et limites
 
@@ -132,15 +151,11 @@ Repliquer cette oppération plusieurs fois et représenter la loi de l'estimateu
 ## Echantillonnage stratifié (ES)
 
 ### Présentation
-L’échantillonnage stratifié du 1er niveau consiste à subdiviser une population
-hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.
+L’échantillonnage stratifié à subdiviser une population hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.
 
-La population hétérogène de taille N est ainsi divisée en k strates (h=1,...,k)
-plus homogènes d’effectif $N_i$ telles que $N = N_1 + ... + N_k$.
-Un échantillon indépendant est prélevé dans chacune des strates en
-appliquant un plan d’échantillonnage.
-La solution la plus simple et la plus classique est d’appliquer un EAS dans
-chaque strate (mais on peut appliquer un autre plan).
+La population hétérogène de taille N est ainsi divisée en S strates ($s = 1,\ldots, S$) plus homogènes d’effectif $N_s$ telles que $N = \sum_{s=1}^{S}N_s$.
+
+Un échantillon est prélevé dans chacune des strates en appliquant un plan d’échantillonnage. La solution la plus simple et la plus classique est d’appliquer un EAS dans chaque strate (mais on peut appliquer un autre plan).
 
 ### Exemple
 
@@ -154,6 +169,7 @@ La variance provient uniquement de l'échantillonnage intre strate, pas de varia
 Plus efficace qu'un EAS 
 
 
+
 ### Example 
 
 Re prendre le jeu de données `large_growth_data`et proposer un échantillonnage stratifié.
@@ -163,10 +179,60 @@ Estimer la taille moyenne de la population.
 - Réfléchir sur les strates pertinentes.
 - Représenter la variabilité de l'estimateur.
 
+On peut choisir de stratifier par couple (sexe x site). On imagine connu les effectifs de chaque classe et on veut échantillonner avec un taux $f_h=0.2$ comme dans le cas de l'EAS.
+
+Le code qui suit propose une solution utilisant largement le potentiel du package `dplyr`.
+
+```{r}
+
+fh <- 0.2
+
+strates <- large_growth_data %>% 
+  group_by(sexe, site) %>%  
+  summarise(no_rows = length(length))
+```
+Il est possible de calculer els moyennes au sein de chaque strate et de les combiner dans une moyenne pondérée 
+
+```{r}
+estimated_pop_mean_1 <- large_growth_data %>% 
+  group_by(sexe, site) %>% sample_frac(size = fh) %>%  # on groupe par sexe x site et on échantillonne
+  group_by(sexe, site) %>% summarise(estimated_means = mean(length)) %>%  # groupe par sexe x site et calcule de moyenne 
+  inner_join(strates) %>% ungroup() %>% # concatenation avec la table strate et on degroupe
+  summarise( p_mean = weighted.mean(estimated_means, w=no_rows) ) # calcul de la moyenne pondérée
+
+```
+
+Ou plus directement on calcule la moeyenne des individus échantillonnés
+```{r}
+estimated_pop_mean_2 <- large_growth_data %>% 
+  group_by(sexe, site) %>% sample_frac(size = fh) %>%  # on groupe par sexe x site et on échantillonne
+  group_by(sexe, site) %>% ungroup() %>% summarise(p_mean = mean(length)) 
+```
+
+
+Pour visualiser la distribution de l'échantillonnage
+
+```{r}
+estimates_ES <- data.frame( mean = 
+             replicate(L, {
+            estimated_pop_mean_2 <- large_growth_data %>% 
+  group_by(sexe, site) %>% sample_frac(size = fh) %>%  # on groupe par sexe x site et on échantillonne
+  group_by(sexe, site) %>% ungroup() %>% summarise(p_mean = mean(length)) %>% as.numeric()
+          }) )
+ggplot(estimates_ES, aes(x=mean)) + geom_histogram(fill = 'darkgreen', alpha = 0.6, bins = 10) + 
+  geom_vline(xintercept = mean(large_growth_data$length))+ xlim(c(24, 28))
+```
+
+
 Attention dans la réalité, on ne connait pas le poids de chaque strate.
 
 - Que se passe t il si on se trompe dans le poids des strates ?
+
+On va sur échantillonner une strate. Cele ci sera donc sur représentée dans l'échantillon et l'estimateur ainsi construit sera biaisé.
+
 - Comment avoir une idée du poids des strates ?
+
+On peut utiliser des données d'années précédentes, la littérature ou construire un EAS pour estimer le poids de chaque strate.
 
 ### Intérêts et limites
 
@@ -180,5 +246,25 @@ L’ES est d’autant plus intéressant que :
 l’ES fournit des estimateurs sans biais et procure un gain de précision important par rapport à l’EAS.
 
 
- Une erreur d’appréciation du poids des strates ω h peut entraîner un biais important dans les estimateurs de la
-moyenne μ et du total Σ .
+ Une erreur d’appréciation du poids des strates $w_s$ peut entraîner un biais important dans les estimateurs de la moyenne $\mu$ et du total $\Sigma$.
+
+
+
+
+# Pour aller plus loin
+
+## A lire 
+[Le polyciopié rédigé par Etienne Rivot](files/Echantillonnage_poly_2017.pdf)
+
+## A rendre pour le 24 septembre 2018
+
+Le [CCAMLR](https://www.ccamlr.org/en/organisation/home-page) est en charge entre autre du suivi des stocks de légine en Antarctique. De nombreuses sources de données sont utilisées mais une information clé repose sur la déterminaition d'une relation de von Bertalanffy entre age et longueur. 
+
+Les individus jeunes sont plus nombreux dans la population mais l'ajustement de la courbe requiert aussi des observations sur des dinvidus plus âgés. 
+
+Décrire le protocole d'écahntillonnage utilisé dans le papier de [Candy, S.G., A.J. Constable, T. Lamb and R. Williams](files/Candy et al 2007 CCAMLR Science 03 Growth_devoirEchantillonnage.pdf)
+
+
+
+
+ 

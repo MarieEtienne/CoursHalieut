@@ -469,9 +469,25 @@ res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class=
 ##  Mean   :13.95   Mean   :25.52          
 ##  3rd Qu.:20.00   3rd Qu.:29.33          
 ##  Max.   :40.00   Max.   :40.98</code></pre>
-<p>Supposons que le jeu de données <code>large_growth_data</code> contiennent l’ensemble d’une population d’intérêt.</p>
+<p>Supposons que le jeu de données <code>large_growth_data</code> contient l’ensemble d’une population d’intérêt.</p>
 <p>Echantillonner avec <span class="math inline">\(f= 0.2\)</span> et estimer la taille moyenne.</p>
-<p>Repliquer cette oppération plusieurs fois et représenter la loi de l’estimateur de la moyenne ainsi que la vraie valeur.</p>
+<p>Repliquer cette opération plusieurs fois et représenter la loi de l’estimateur de la moyenne ainsi que la vraie valeur.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&#39;data/large_growthdataset.Rdata&#39;</span>)
+N &lt;-<span class="st"> </span><span class="kw">nrow</span>(large_growth_data)
+f &lt;-<span class="st"> </span><span class="fl">0.2</span>
+n &lt;-<span class="st"> </span><span class="kw">round</span>( f <span class="op">*</span><span class="st"> </span>N )
+
+L &lt;-<span class="st"> </span><span class="dv">50</span>
+
+estimates_EAS &lt;-<span class="kw">replicate</span>(L, {
+  echant &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span> <span class="op">:</span><span class="st"> </span>N, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+  dplyr<span class="op">::</span><span class="kw">slice</span>(large_growth_data, echant) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(length) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()
+}) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dt">mean =</span> <span class="st">&#39;.&#39;</span>)
+
+<span class="kw">ggplot</span>(estimates_EAS, <span class="kw">aes</span>(<span class="dt">x=</span>mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&#39;darkgreen&#39;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(large_growth_data<span class="op">$</span>length)) <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">28</span>))</code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
+<p><img src="echant_strategie_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div id="interets-et-limites" class="section level3">
 <h3>Intérêts et limites</h3>
 <ul>
@@ -485,8 +501,9 @@ res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class=
 <h2>Echantillonnage stratifié (ES)</h2>
 <div id="presentation-1" class="section level3">
 <h3>Présentation</h3>
-<p>L’échantillonnage stratifié du 1er niveau consiste à subdiviser une population hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.</p>
-<p>La population hétérogène de taille N est ainsi divisée en k strates (h=1,…,k) plus homogènes d’effectif <span class="math inline">\(N_i\)</span> telles que <span class="math inline">\(N = N_1 + ... + N_k\)</span>. Un échantillon indépendant est prélevé dans chacune des strates en appliquant un plan d’échantillonnage. La solution la plus simple et la plus classique est d’appliquer un EAS dans chaque strate (mais on peut appliquer un autre plan).</p>
+<p>L’échantillonnage stratifié à subdiviser une population hétérogène en sous populations ou « strates » plus homogènes, mutuellement exclusives et collectivement exhaustives.</p>
+<p>La population hétérogène de taille N est ainsi divisée en S strates (<span class="math inline">\(s = 1,\ldots, S\)</span>) plus homogènes d’effectif <span class="math inline">\(N_s\)</span> telles que <span class="math inline">\(N = \sum_{s=1}^{S}N_s\)</span>.</p>
+<p>Un échantillon est prélevé dans chacune des strates en appliquant un plan d’échantillonnage. La solution la plus simple et la plus classique est d’appliquer un EAS dans chaque strate (mais on peut appliquer un autre plan).</p>
 </div>
 <div id="exemple-1" class="section level3">
 <h3>Exemple</h3>
@@ -505,19 +522,65 @@ res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class=
 <li>Réfléchir sur les strates pertinentes.</li>
 <li>Représenter la variabilité de l’estimateur.</li>
 </ul>
+<p>On peut choisir de stratifier par couple (sexe x site). On imagine connu les effectifs de chaque classe et on veut échantillonner avec un taux <span class="math inline">\(f_h=0.2\)</span> comme dans le cas de l’EAS.</p>
+<p>Le code qui suit propose une solution utilisant largement le potentiel du package <code>dplyr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fh &lt;-<span class="st"> </span><span class="fl">0.2</span>
+
+strates &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">no_rows =</span> <span class="kw">length</span>(length))</code></pre></div>
+<p>Il est possible de calculer els moyennes au sein de chaque strate et de les combiner dans une moyenne pondérée</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimated_pop_mean_<span class="dv">1</span> &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> fh) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># on groupe par sexe x site et on échantillonne</span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">estimated_means =</span> <span class="kw">mean</span>(length)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># groupe par sexe x site et calcule de moyenne </span>
+<span class="st">  </span><span class="kw">inner_join</span>(strates) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># concatenation avec la table strate et on degroupe</span>
+<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">p_mean =</span> <span class="kw">weighted.mean</span>(estimated_means, <span class="dt">w=</span>no_rows) ) <span class="co"># calcul de la moyenne pondérée</span></code></pre></div>
+<pre><code>## Joining, by = c(&quot;sexe&quot;, &quot;site&quot;)</code></pre>
+<p>Ou plus directement on calcule la moeyenne des individus échantillonnés</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimated_pop_mean_<span class="dv">2</span> &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> fh) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># on groupe par sexe x site et on échantillonne</span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_mean =</span> <span class="kw">mean</span>(length)) </code></pre></div>
+<p>Pour visualiser la distribution de l’échantillonnage</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimates_ES &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">mean =</span> 
+             <span class="kw">replicate</span>(L, {
+            estimated_pop_mean_<span class="dv">2</span> &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> fh) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># on groupe par sexe x site et on échantillonne</span>
+<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_mean =</span> <span class="kw">mean</span>(length)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+          }) )
+<span class="kw">ggplot</span>(estimates_ES, <span class="kw">aes</span>(<span class="dt">x=</span>mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&#39;darkgreen&#39;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(large_growth_data<span class="op">$</span>length))<span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">28</span>))</code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
+<p><img src="echant_strategie_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Attention dans la réalité, on ne connait pas le poids de chaque strate.</p>
 <ul>
 <li>Que se passe t il si on se trompe dans le poids des strates ?</li>
+</ul>
+<p>On va sur échantillonner une strate. Cele ci sera donc sur représentée dans l’échantillon et l’estimateur ainsi construit sera biaisé.</p>
+<ul>
 <li>Comment avoir une idée du poids des strates ?</li>
 </ul>
+<p>On peut utiliser des données d’années précédentes, la littérature ou construire un EAS pour estimer le poids de chaque strate.</p>
 </div>
 <div id="interets-et-limites-1" class="section level3">
 <h3>Intérêts et limites</h3>
 <p>L’ES est d’autant plus intéressant que : - La variance inter-strates est grande (pas de var. inter-strates dans la variance d’estimation) ; - La variance intra-strate est réduite (seule source de variance d’estimation).</p>
 <p>A condition que les strates soient bien définies, en rapport avec la variable d’intérêt dans la population.</p>
 <p>l’ES fournit des estimateurs sans biais et procure un gain de précision important par rapport à l’EAS.</p>
-<p>Une erreur d’appréciation du poids des strates ω h peut entraîner un biais important dans les estimateurs de la moyenne μ et du total Σ .</p>
+<p>Une erreur d’appréciation du poids des strates <span class="math inline">\(w_s\)</span> peut entraîner un biais important dans les estimateurs de la moyenne <span class="math inline">\(\mu\)</span> et du total <span class="math inline">\(\Sigma\)</span>.</p>
 </div>
+</div>
+</div>
+<div id="pour-aller-plus-loin" class="section level1">
+<h1>Pour aller plus loin</h1>
+<div id="a-lire" class="section level2">
+<h2>A lire</h2>
+<p><a href="files/Echantillonnage_poly_2017.pdf">Le polyciopié rédigé par Etienne Rivot</a></p>
+</div>
+<div id="a-rendre-pour-le-24-septembre-2018" class="section level2">
+<h2>A rendre pour le 24 septembre 2018</h2>
+<p>Le <a href="https://www.ccamlr.org/en/organisation/home-page">CCAMLR</a> est en charge entre autre du suivi des stocks de légine en Antarctique. De nombreuses sources de données sont utilisées mais une information clé repose sur la déterminaition d’une relation de von Bertalanffy entre age et longueur.</p>
+<p>Les individus jeunes sont plus nombreux dans la population mais l’ajustement de la courbe requiert aussi des observations sur des dinvidus plus âgés.</p>
+<p>Décrire le protocole d’écahntillonnage utilisé dans le papier de <a href="files/Candy%20et%20al%202007%20CCAMLR%20Science%2003%20Growth_devoirEchantillonnage.pdf">Candy, S.G., A.J. Constable, T. Lamb and R. Williams</a></p>
 </div>
 </div>
 
