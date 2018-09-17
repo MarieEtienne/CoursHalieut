@@ -103,7 +103,7 @@ $\bar{x} = 1000$,$\hat{\sigma}^2  = 10000,$
 
 Il est souhaitable d'avoir une bonne précision mais pas à n'importe quel prix !! et l'échantillonnage coute cher !
 
-Si on veut une précision de 10$\%$ quel taille d'achnatillon faut il choisir ?
+Si on veut une précision de 10$\%$ quelle taille d'echantillon faut-il choisir ?
 
 Le coefficient de variation est défini par 
 $$CV_{\bar{X}_n} =\frac{\sqrt{Var(\bar{X}_n)}}{E(\bar{X}_n)}$$
