@@ -13,7 +13,7 @@ library(dplyr)
 ## simulation données age taille par sexe
 ```{r}
 K    <- c(0.1, 0.11)
-Linf <- c(30,32) 
+Linf <- c(30,33) 
 t0   <- c(-6, -7)
 ## age range
 age_max <- 40

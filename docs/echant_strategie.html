@@ -462,32 +462,35 @@ res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class=
 </div>
 <div id="exercice-sur-la-relation-age---taille" class="section level2">
 <h2>Exercice sur la relation age - taille</h2>
-<pre><code>##       age            length      sexe   
-##  Min.   : 1.00   Min.   :12.11   f:244  
-##  1st Qu.: 6.00   1st Qu.:21.73   m:256  
-##  Median :12.00   Median :26.01          
-##  Mean   :13.95   Mean   :25.52          
-##  3rd Qu.:20.00   3rd Qu.:29.33          
-##  Max.   :40.00   Max.   :40.98</code></pre>
+<pre><code>##       age            length      sexe       site    
+##  Min.   : 1.00   Min.   :12.73   f:292   Site1:181  
+##  1st Qu.: 6.00   1st Qu.:22.72   m:208   Site2:319  
+##  Median :11.00   Median :26.51                      
+##  Mean   :13.78   Mean   :26.19                      
+##  3rd Qu.:20.00   3rd Qu.:29.68                      
+##  Max.   :40.00   Max.   :40.32</code></pre>
+<p><img src="echant_strategie_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Supposons que le jeu de données <code>large_growth_data</code> contient l’ensemble d’une population d’intérêt.</p>
-<p>Echantillonner avec <span class="math inline">\(f= 0.2\)</span> et estimer la taille moyenne.</p>
+<p>Echantillonner avec <span class="math inline">\(f = 0.2\)</span> et estimer la taille moyenne.</p>
 <p>Repliquer cette opération plusieurs fois et représenter la loi de l’estimateur de la moyenne ainsi que la vraie valeur.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&#39;data/large_growthdataset.Rdata&#39;</span>)
 N &lt;-<span class="st"> </span><span class="kw">nrow</span>(large_growth_data)
 f &lt;-<span class="st"> </span><span class="fl">0.2</span>
 n &lt;-<span class="st"> </span><span class="kw">round</span>( f <span class="op">*</span><span class="st"> </span>N )
 
-L &lt;-<span class="st"> </span><span class="dv">50</span>
+L &lt;-<span class="st"> </span><span class="dv">100</span>
 
 estimates_EAS &lt;-<span class="kw">replicate</span>(L, {
   echant &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span> <span class="op">:</span><span class="st"> </span>N, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
   dplyr<span class="op">::</span><span class="kw">slice</span>(large_growth_data, echant) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(length) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colMeans</span>()
 }) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dt">mean =</span> <span class="st">&#39;.&#39;</span>)
 
+
 <span class="kw">ggplot</span>(estimates_EAS, <span class="kw">aes</span>(<span class="dt">x=</span>mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&#39;darkgreen&#39;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(large_growth_data<span class="op">$</span>length)) <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">28</span>))</code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
 <p><img src="echant_strategie_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>La variance de l’estimateur calculé sur 100 réalisations vaut 0.4542696.</p>
 <div id="interets-et-limites" class="section level3">
 <h3>Intérêts et limites</h3>
 <ul>
@@ -542,15 +545,18 @@ strates &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%<
 <span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_mean =</span> <span class="kw">mean</span>(length)) </code></pre></div>
 <p>Pour visualiser la distribution de l’échantillonnage</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimates_ES &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">mean =</span> 
-             <span class="kw">replicate</span>(L, {
-            estimated_pop_mean_<span class="dv">2</span> &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> fh) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># on groupe par sexe x site et on échantillonne</span>
-<span class="st">  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_mean =</span> <span class="kw">mean</span>(length)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
-          }) )
+                              <span class="kw">replicate</span>(L, {
+                                estimated_pop_mean_<span class="dv">1</span> &lt;-<span class="st"> </span>large_growth_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                                  </span><span class="kw">group_by</span>(sexe, site) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> fh)  <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">pmean =</span> <span class="kw">mean</span>(length)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># groupe par sexe x site et calcule de moyenne </span>
+<span class="st">                                  </span><span class="kw">inner_join</span>(strates) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># concatenation avec la table strate et on degroupe</span>
+<span class="st">                                  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>( <span class="dt">p_mean =</span> <span class="kw">weighted.mean</span>(pmean, <span class="dt">w=</span>no_rows) ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># calcul de la moyenne pondérée</span>
+<span class="st">                                  </span><span class="kw">as.numeric</span>()
+                              }) ) 
+
 <span class="kw">ggplot</span>(estimates_ES, <span class="kw">aes</span>(<span class="dt">x=</span>mean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&#39;darkgreen&#39;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(large_growth_data<span class="op">$</span>length))<span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">28</span>))</code></pre></div>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
 <p><img src="echant_strategie_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>La variance de l’estimateur calculé sur 100 réalisations vaut 0.4187435.</p>
 <p>Attention dans la réalité, on ne connait pas le poids de chaque strate.</p>
 <ul>
 <li>Que se passe t il si on se trompe dans le poids des strates ?</li>

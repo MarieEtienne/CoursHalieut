@@ -114,11 +114,12 @@ En déduire la valeur de $n$ minimale pour avoir un CV estimé de 10$\%$.
 ```{r, echo =FALSE}
 load('data/large_growthdataset.Rdata')
 summary(large_growth_data)
+ggplot(large_growth_data, aes(x = age, y = length )) + geom_point(aes(shape = site, col = sexe))
 ```
 
 Supposons que le jeu de données `large_growth_data` contient l'ensemble d'une population d'intérêt.
 
-Echantillonner avec $f= 0.2$ et estimer la taille moyenne.
+Echantillonner avec $f = 0.2$ et estimer la taille moyenne.
 
 Repliquer cette opération plusieurs fois et représenter la loi de l'estimateur de la moyenne ainsi que la vraie valeur.
 
@@ -129,17 +130,20 @@ N <- nrow(large_growth_data)
 f <- 0.2
 n <- round( f * N )
 
-L <- 50
+L <- 100
 
 estimates_EAS <-replicate(L, {
   echant <- sample(1 : N, size = n, replace = FALSE)
   dplyr::slice(large_growth_data, echant) %>% dplyr::select(length) %>% colMeans()
 }) %>% as.data.frame() %>% select(mean = '.')
 
+
 ggplot(estimates_EAS, aes(x=mean)) + geom_histogram(fill = 'darkgreen', alpha = 0.6, bins = 10) + 
   geom_vline(xintercept = mean(large_growth_data$length)) + xlim(c(24, 28))
 
 ```
+
+La variance de l'estimateur calculé sur `r L` réalisations vaut  `r sd(estimates_EAS$mean)`. 
 
 ### Intérêts et limites
 
@@ -212,16 +216,22 @@ estimated_pop_mean_2 <- large_growth_data %>%
 
 Pour visualiser la distribution de l'échantillonnage
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 estimates_ES <- data.frame( mean = 
-             replicate(L, {
-            estimated_pop_mean_2 <- large_growth_data %>% 
-  group_by(sexe, site) %>% sample_frac(size = fh) %>%  # on groupe par sexe x site et on échantillonne
-  group_by(sexe, site) %>% ungroup() %>% summarise(p_mean = mean(length)) %>% as.numeric()
-          }) )
+                              replicate(L, {
+                                estimated_pop_mean_1 <- large_growth_data %>% 
+                                  group_by(sexe, site) %>% sample_frac(size = fh)  %>% dplyr::summarise(pmean = mean(length)) %>%  # groupe par sexe x site et calcule de moyenne 
+                                  inner_join(strates) %>% ungroup() %>% # concatenation avec la table strate et on degroupe
+                                  dplyr::summarise( p_mean = weighted.mean(pmean, w=no_rows) ) %>% # calcul de la moyenne pondérée
+                                  as.numeric()
+                              }) ) 
+
 ggplot(estimates_ES, aes(x=mean)) + geom_histogram(fill = 'darkgreen', alpha = 0.6, bins = 10) + 
   geom_vline(xintercept = mean(large_growth_data$length))+ xlim(c(24, 28))
 ```
+
+La variance de l'estimateur calculé sur `r L` réalisations vaut  `r sd(estimates_ES$mean)`.
+
 
 
 Attention dans la réalité, on ne connait pas le poids de chaque strate.
@@ -233,6 +243,7 @@ On va sur échantillonner une strate. Cele ci sera donc sur représentée dans l
 - Comment avoir une idée du poids des strates ?
 
 On peut utiliser des données d'années précédentes, la littérature ou construire un EAS pour estimer le poids de chaque strate.
+
 
 ### Intérêts et limites
 
