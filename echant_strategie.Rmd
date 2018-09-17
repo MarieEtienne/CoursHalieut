@@ -129,7 +129,7 @@ Repliquer cette oppération plusieurs fois et représenter la loi de l'estimateu
 
 - peu efficace pour estimer des différences au sein d'une population, 
 
-## Echantillonnage stratifié
+## Echantillonnage stratifié (ES)
 
 ### Présentation
 L’échantillonnage stratifié du 1er niveau consiste à subdiviser une population
