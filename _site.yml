@@ -34,12 +34,14 @@ navbar:
   - text: "Ajustement de modèles"
     icon: fa-tilde
     menu:
-      - text: "Moindre carrés"
-        href: ajust_mco.html
+      - text: "La modélisation"
+        href: ajust_modele.html
       - text: "Vraisemblance de modèles usuels"
         href: ajust_vrais.html
       - text: "Estimation par maximum de vraisemblance"
         href: ajust_estim.html
+      - text: "Intervalles de confiance et tests"
+        href: ajust_tests.html
     
 output:
   html_document:
