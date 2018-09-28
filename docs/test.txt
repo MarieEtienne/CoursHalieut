@@ -1,0 +1,660 @@
+"","Package","LibPath","Version","Priority","Depends","Imports","LinkingTo","Suggests","Enhances","License","License_is_FOSS","License_restricts_use","OS_type","MD5sum","NeedsCompilation","Built"
+"abind","abind","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4-5",NA,"R (>= 1.5.0)","methods, utils",NA,NA,NA,"LGPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"acepack","acepack","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.1",NA,NA,NA,NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"ada","ada","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0-5",NA,"R(>= 2.10),rpart",NA,NA,NA,NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"adabag","adabag","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.2",NA,"rpart, caret, foreach, doParallel",NA,NA,"mlbench",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"ade4","ade4","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.7-11",NA,"R (>= 2.10)","graphics, grDevices, methods, stats, utils, MASS",NA,"ade4TkGUI, adegraphics, adephylo, ape, CircStats, deldir,
+lattice, pixmap, sp, spdep, splancs, waveslim",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"adehabitatLT","adehabitatLT","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.23",NA,"R (>= 2.10.0), sp, methods, ade4, adehabitatMA, CircStats,
+stats","graphics, grDevices, utils",NA,"maptools, tkrplot, MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"adehabitatMA","adehabitatMA","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.12",NA,"R (>= 2.10.0), sp, methods","utils, graphics, grDevices, stats, filehash",NA,"maptools, tkrplot, MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"agridat","agridat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.16",NA,NA,NA,NA,"AER, agricolae, betareg, broom, car, coin, corrgram, desplot,
+dplyr, effects, equivalence, emmeans, FrF2, gam, gge, ggplot2,
+gnm, gstat, HH, knitr, lattice, latticeExtra, lme4, lucid,
+mapproj, maps, MASS, MCMCglmm, metafor, mgcv, NADA, nlme,
+nullabor, ordinal, pbkrtest, pls, pscl, reshape2, rgdal,
+qicharts, qtl, sp, SpATS, survival, vcd, testthat",NA,"CC BY-SA 4.0",NA,NA,NA,NA,"no","3.4.4"
+"akima","akima","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-2",NA,"R (>= 2.0.0)","sp",NA,NA,NA,"ACM | file LICENSE",NA,"yes",NA,NA,"yes","3.4.1"
+"animation","animation","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.5",NA,"R (>= 2.14.0)",NA,NA,"MASS, class, testit",NA,"GPL",NA,NA,NA,NA,"no","3.4.1"
+"aqp","aqp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.16",NA,"R (>= 3.0.0)","grDevices, graphics, stats, utils, methods, plyr, reshape,
+grid, lattice, cluster, sp, Hmisc, stringr, scales, plotrix,
+RColorBrewer, MASS, digest",NA,"colorspace, maptools, foreign, ape, soilDB, latticeExtra,
+maps, compositions, sharpshootR, markovchain, xtable",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"argosfilter","argosfilter","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.63",NA,NA,NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,NA,"3.4.1"
+"assertive","assertive","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3-5",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-4), assertive.properties (>= 0.0-2),
+assertive.types (>= 0.0-2), assertive.numbers,
+assertive.strings, assertive.datetimes, assertive.files,
+assertive.sets (>= 0.0-2), assertive.matrices,
+assertive.models, assertive.data, assertive.data.uk,
+assertive.data.us, assertive.reflection (>= 0.0-2),
+assertive.code, knitr",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.base","assertive.base","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-7",NA,"R (>= 3.0.0)","methods, utils",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.code","assertive.code","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.properties,
+assertive.types, methods",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.data","assertive.data","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.strings",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.data.uk","assertive.data.uk","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.strings",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.data.us","assertive.data.us","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.strings",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.datetimes","assertive.datetimes","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-2",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.types",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.files","assertive.files","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-2",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.numbers",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.matrices","assertive.matrices","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2)",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.models","assertive.models","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-1",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), stats",NA,"testthat, devtools",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.numbers","assertive.numbers","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-2",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2)",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.properties","assertive.properties","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-4",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-7), methods",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.reflection","assertive.reflection","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-4",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-7), utils",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.sets","assertive.sets","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-3",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-7)",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.strings","assertive.strings","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-3",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-2), assertive.types, stringi",NA,"testthat",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertive.types","assertive.types","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0-3",NA,"R (>= 3.0.0)","assertive.base (>= 0.0-7), assertive.properties, codetools,
+methods, stats",NA,"testthat, data.table, dplyr, xml2",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"assertthat","assertthat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.0",NA,NA,"tools",NA,"testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"backports","backports","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.2",NA,"R (>= 3.0.0)","utils",NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"base64enc","base64enc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-3",NA,"R (>= 2.9.0)",NA,NA,NA,"png","GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"BH","BH","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.66.0-1",NA,NA,NA,NA,NA,NA,"BSL-1.0",NA,NA,NA,NA,"no","3.4.4"
+"bindr","bindr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.1",NA,NA,NA,NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"bindrcpp","bindrcpp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.2",NA,NA,"bindr (>= 0.1.1), Rcpp (>= 0.12.16)","plogr, Rcpp","testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"bit","bit","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-14",NA,"R (>= 2.9.2)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"bit64","bit64","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-7",NA,"R (>= 3.0.1), bit (>= 1.1-12), utils, methods, stats",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"bitops","bitops","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-6",NA,NA,NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"blob","blob","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.1",NA,NA,"methods, prettyunits",NA,"covr, pillar (>= 1.2.1), testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"blogdown","blogdown","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,NA,"rmarkdown, bookdown (>= 0.5), knitr (>= 1.17), htmltools, yaml
+(>= 2.1.19), httpuv (>= 1.4.0), xfun (>= 0.3), servr (>= 0.8)",NA,"testit, shiny, miniUI, RcppTOML, stringr, rstudioapi, tools,
+processx, later",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"BNPdensity","BNPdensity","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2017.03",NA,"R(>= 3.3.0)",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"bookdown","bookdown","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,NA,"htmltools (>= 0.3.6), knitr (>= 1.16), rmarkdown (>= 1.5),
+xfun, tinytex, yaml (>= 2.1.14)",NA,"htmlwidgets, rstudioapi, miniUI, rsconnect (>= 0.4.3), servr
+(>= 0.3), shiny, testit (>= 0.5), tufte, webshot",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"brew","brew","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-6",NA,NA,NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,NA,"3.4.4"
+"Brobdingnag","Brobdingnag","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2-5",NA,"R (>= 2.13.0), methods",NA,NA,NA,NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"broom","broom","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.5",NA,NA,"dplyr, methods, nlme, plyr, psych, reshape2, stringr, tidyr",NA,"AER, akima, AUC, bbmle, betareg, biglm, binGroup, boot, brms,
+btergm, coda, covr, emmeans, ergm, gam, gamlss, gamlss.data,
+gamlss.dist, geepack, ggplot2, glmnet, gmm, Hmisc, knitr, ks,
+Lahman, lfe, lme4, lmodel2, lmtest, lsmeans, maps, maptools,
+MASS, Matrix, mclust, mgcv, muhaz, multcomp, network, nnet,
+orcutt, plm, poLCA, purrr, quantreg, rgeos, robust, rstan,
+rstanarm, sp, speedglm, statnet.common, survival, testthat,
+tibble, xergm, zoo",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"C50","C50","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.2",NA,"R (>= 2.10.0)","partykit, Cubist (>= 0.2.1)",NA,"recipes, knitr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"callr","callr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0.4",NA,NA,"processx (>= 3.1.0), R6, utils",NA,"covr, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"car","car","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.0-0",NA,"R (>= 3.2.0), carData (>= 3.0-0)","abind, MASS, mgcv, nnet, pbkrtest (>= 0.4-4), quantreg,
+grDevices, utils, stats, graphics, maptools, rio, lme4, nlme",NA,"alr4, boot, coxme, leaps, lmtest, Matrix, MatrixModels, rgl
+(>= 0.93.960), sandwich, SparseM, survival, survey",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"carData","carData","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.0-1",NA,"R (>= 3.0)",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"caret","caret","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","6.0-80",NA,"R (>= 2.10), lattice (>= 0.20), ggplot2","foreach, methods, plyr, ModelMetrics (>= 1.1.0), nlme,
+reshape2, stats, stats4, utils, grDevices, recipes (>= 0.0.1),
+withr (>= 2.0.0)",NA,"BradleyTerry2, e1071, earth (>= 2.2-3), fastICA, gam (>=
+1.15), ipred, kernlab, knitr, klaR, MASS, ellipse, mda, mgcv,
+mlbench, MLmetrics, nnet, party (>= 0.9-99992), pls, pROC,
+proxy, randomForest, RANN, spls, subselect, pamr, superpc,
+Cubist, testthat (>= 0.9.1), rpart, dplyr",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"casal","casal","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.30",NA,"R (>= 2.10.1)",NA,NA,NA,NA,"See the CASAL manual, or use 'casal -l' at the command line to view the CASAL license.",NA,NA,NA,NA,NA,"3.4.4"
+"caTools","caTools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.17.1",NA,"R (>= 2.2.0)","bitops",NA,"MASS, rpart",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"cellranger","cellranger","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,"R (>= 3.0.0)","rematch, tibble",NA,"covr, testthat (>= 1.0.0), knitr, rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"checkmate","checkmate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8.5",NA,"R (>= 3.0.0)","backports (>= 1.1.0), utils",NA,"R6, bit, fastmatch, data.table (>= 1.9.8), devtools, ggplot2,
+knitr, magrittr, microbenchmark, rmarkdown, testthat (>=
+0.11.0), tibble",NA,"BSD_3_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"chron","chron","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3-52",NA,"R (>= 2.12.0)","graphics, stats",NA,"scales, ggplot2","zoo","GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"CircStats","CircStats","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-6",NA,"MASS, boot",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"classInt","classInt","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-3",NA,"R (>= 2.2), spData (>= 0.2.6.2)","grDevices, stats, graphics, e1071, class",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"cli","cli","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,"R (>= 2.10)","assertthat, crayon, methods",NA,"covr, mockery, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"clipr","clipr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.1",NA,NA,"utils",NA,"rstudioapi (>= 0.5), testthat, covr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"clisymbols","clisymbols","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.0",NA,NA,NA,NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"coda","coda","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.19-1",NA,"R (>= 2.14.0)","lattice",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"colorRamps","colorRamps","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3",NA,NA,NA,NA,NA,NA,"GPL",NA,NA,NA,NA,NA,"3.4.1"
+"colorspace","colorspace","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-2",NA,"R (>= 2.13.0), methods","graphics, grDevices",NA,"datasets, stats, utils, KernSmooth, MASS, kernlab, mvtnorm,
+vcd, dichromat, tcltk, shiny, shinyjs",NA,"BSD_3_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"colourpicker","colourpicker","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0",NA,"R (>= 3.1.0)","ggplot2, htmltools, htmlwidgets (>= 0.7), jsonlite, miniUI (>=
+0.1.1), shiny (>= 0.11.1), shinyjs, utils",NA,"knitr (>= 1.7), rmarkdown, rstudioapi (>= 0.5)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"commonmark","commonmark","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5",NA,NA,NA,NA,"curl",NA,"BSD_2_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"config","config","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3",NA,NA,"yaml (>= 2.1.13)",NA,"testthat, knitr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"conicfit","conicfit","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.4",NA,"R (>= 2.7.0), pracma, geigen",NA,NA,NA,NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.1"
+"covr","covr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.1.0",NA,"R (>= 3.1.0), methods","digest, stats, utils, jsonlite, rex, httr, crayon, withr (>=
+1.0.2)",NA,"R6, knitr, rmarkdown, shiny (>= 0.11.1), htmltools,
+htmlwidgets (>= 0.7), DT (>= 0.2), testthat, rstudioapi (>=
+0.2), xml2 (>= 1.0.0), parallel, memoise, mockery",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"cowplot","cowplot","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9.2",NA,"R (>= 3.3.0), ggplot2 (>= 2.1.0),","grid (>= 3.0.0), gtable (>= 0.1.2), plyr (>= 1.8.2),
+grDevices, methods, scales, utils",NA,"covr, gridGraphics, knitr, magick, maps, dplyr, tidyr,
+testthat, vdiffr, viridis",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"crawl","crawl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.1",NA,"R (>= 2.10)","mvtnorm, Rcpp (>= 0.11.1), methods, shiny, dplyr, raster,
+gdistance, sp","Rcpp, RcppArmadillo","ggplot2, rgdal, argosfilter, tidyr, lubridate, xts, broom,
+sf, doParallel",NA,"CC0",NA,NA,NA,NA,"yes","3.4.1"
+"crayon","crayon","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3.4",NA,NA,"grDevices, methods, utils",NA,"mockery, rstudioapi, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"crosstalk","crosstalk","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,NA,"htmltools (>= 0.3.5), jsonlite, lazyeval, R6, shiny (>= 0.11),
+ggplot2",NA,NA,NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"Cubist","Cubist","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.2",NA,"lattice","reshape2",NA,"mlbench, caret, knitr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"curl","curl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.2",NA,"R (>= 3.0.0)",NA,NA,"spelling, testthat (>= 1.0.0), knitr, jsonlite, rmarkdown,
+magrittr, httpuv, webutils",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"CVST","CVST","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-2",NA,"kernlab,Matrix",NA,NA,NA,NA,"GPL (>= 2.0)",NA,NA,NA,NA,"no","3.4.4"
+"data.table","data.table","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.11.4",NA,"R (>= 3.1.0)","methods",NA,"bit64, curl, knitr, xts, nanotime, zoo, reshape2",NA,"MPL-2.0 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"DBI","DBI","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,"R (>= 3.0.0), methods",NA,NA,"blob, covr, hms, knitr, magrittr, rprojroot, rmarkdown,
+RSQLite (>= 1.1-2), testthat, xml2",NA,"LGPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"dbplyr","dbplyr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.1",NA,"R (>= 3.2)","assertthat (>= 0.2.0), DBI (>= 0.7), dplyr (>= 0.7.4), glue
+(>= 1.2.0), methods, purrr (>= 0.2.4), R6 (>= 2.2.2), rlang (>=
+0.1.6), tibble (>= 1.4.1), tidyselect (>= 0.2.2), utils",NA,"bit64, covr, knitr, Lahman (>= 5.0.0), nycflights13 (>=
+0.2.2), rmarkdown, RMariaDB (>= 1.0.2), RMySQL (>= 0.10.11),
+RPostgreSQL (>= 0.4.1), RSQLite (>= 2.0), testthat (>= 2.0.0)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"ddalpha","ddalpha","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3.4",NA,"R (>= 2.10), stats, utils, graphics, grDevices, MASS, class,
+robustbase, sfsmisc, geometry","Rcpp (>= 0.11.0)","BH, Rcpp",NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"deldir","deldir","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-15",NA,"R (>= 0.99)","graphics, grDevices",NA,"polyclip",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"DEoptimR","DEoptimR","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-8",NA,NA,"stats",NA,NA,"robustbase","GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"depmixS4","depmixS4","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-3",NA,"R (>= 3.0.1), nnet, MASS, Rsolnp","stats, stats4, methods",NA,"gamlss, gamlss.dist, Rdonlp2",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"desc","desc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.0",NA,"R (>= 3.1.0)","assertthat, utils, R6, crayon, rprojroot",NA,"covr, testthat, whoami, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"DescTools","DescTools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.99.24",NA,"base, stats, R (>= 3.3.0)","graphics, grDevices, methods, MASS, utils, boot, manipulate,
+mvtnorm, foreign, expm, Rcpp (>= 0.12.10)","Rcpp, BH","RDCOMClient, tcltk",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"devtools","devtools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.13.6",NA,"R (>= 3.0.2)","httr (>= 0.4), utils, tools, methods, memoise (>= 1.0.0),
+whisker, digest, rstudioapi (>= 0.2.0), jsonlite, stats, git2r
+(>= 0.11.0), withr",NA,"curl (>= 0.9), crayon, testthat (>= 1.0.2), BiocInstaller,
+Rcpp (>= 0.10.0), MASS, rmarkdown, knitr, hunspell (>= 2.0),
+lintr (>= 0.2.1), bitops, roxygen2 (>= 5.0.0), evaluate,
+rversions, covr, gmailr (> 0.7.0)",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"dichromat","dichromat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0-0",NA,"R (>= 2.10), stats",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,NA,"3.4.1"
+"digest","digest","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6.15",NA,"R (>= 2.4.1)",NA,NA,"knitr, rmarkdown",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"dimRed","dimRed","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,"R (>= 3.0.0), methods, DRR",NA,NA,"MASS, Matrix, RANN, RSpectra, Rtsne, coRanking, diffusionMap,
+energy, fastICA, ggplot2, graphics, igraph, kernlab, lle, loe,
+optimx, pcaPP, rgl, scales, scatterplot3d, stats, testthat,
+tidyr, vegan",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"dismo","dismo","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-4",NA,"R (>= 3.2.0), methods, raster (>= 2.5-2), sp (>= 1.2-0)",NA,NA,"rJava (>= 0.9-7), rgdal, rgeos, XML, ROCR, deldir, gstat,
+randomForest, kernlab, maptools, jsonlite, gbm (>= 2.1.1)",NA,"GPL (>= 3)",NA,NA,NA,NA,"yes","3.4.1"
+"doParallel","doParallel","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.11",NA,"R (>= 2.14.0), foreach(>= 1.2.0), iterators(>= 1.0.0),
+parallel, utils",NA,NA,"caret, mlbench, rpart","compiler, RUnit","GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"dotCall64","dotCall64","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-5.2",NA,"R (>= 3.1)",NA,NA,"microbenchmark, OpenMPController, RColorBrewer, roxygen2,
+spam, testthat,",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"dplyr","dplyr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7.6",NA,"R (>= 3.1.2)","assertthat (>= 0.2.0), bindrcpp (>= 0.2.0.9000), glue (>=
+1.1.1), magrittr (>= 1.5), methods, pkgconfig (>= 2.0.1), R6
+(>= 2.2.2), Rcpp (>= 0.12.15), rlang (>= 0.2.0), tibble (>=
+1.3.1), tidyselect (>= 0.2.3), utils","BH (>= 1.58.0-1), bindrcpp (>= 0.2.0.9000), plogr (>=
+0.1.10), Rcpp (>= 0.12.15)","bit64 (>= 0.9.7), callr, covr (>= 3.0.1), DBI (>= 0.7.14),
+dbplyr (>= 1.2.0), dtplyr (>= 0.0.2), ggplot2 (>= 2.2.1), hms
+(>= 0.4.1), knitr (>= 1.19), Lahman (>= 3.0-1), lubridate,
+MASS, mgcv (>= 1.8.23), microbenchmark (>= 1.4.4), nycflights13
+(>= 0.2.2), rmarkdown (>= 1.8), RMySQL (>= 0.10.13),
+RPostgreSQL (>= 0.6.2), RSQLite (>= 2.0), testthat (>= 2.0.0),
+withr (>= 2.1.1)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"DPpackage","DPpackage","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-7.4",NA,"R (>= 2.10)","MASS, nlme, survival, splines, methods",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"DRR","DRR","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0.3",NA,"kernlab, CVST, Matrix","stats, methods",NA,"knitr, rmarkdown",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"DT","DT","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4",NA,NA,"htmltools (>= 0.3.6), htmlwidgets (>= 1.0), magrittr,
+crosstalk",NA,"jsonlite (>= 0.9.16), knitr (>= 1.8), rmarkdown, shiny (>=
+0.12.1)",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"e1071","e1071","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.6-8",NA,NA,"graphics, grDevices, class, stats, methods, utils",NA,"cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable,
+Matrix, MASS",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"ecoMove","ecoMove","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,NA,NA,NA,"knitr,
+rmarkdown",NA,"What license is it under?",NA,NA,NA,NA,NA,"3.4.4"
+"ellipse","ellipse","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.1",NA,"R (>= 2.0.0),graphics,stats",NA,NA,"MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"emmeans","emmeans","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.2",NA,"R (>= 3.2)","estimability (>= 1.3), graphics, methods, stats, utils, plyr,
+mvtnorm, xtable (>= 1.8-2)",NA,"bayesplot, brms, car, coda (>= 0.17), ggplot2, lattice,
+mediation, multcomp, multcompView, nlme, ordinal, pbkrtest (>=
+0.4-1), lme4, lmerTest (>= 2.0.32), MASS, rsm, knitr,
+rmarkdown, testthat","CARBayes, coxme, gee, geepack, glmmADMB, MCMCglmm, MCMCpack,
+nnet, pscl, rstanarm, survival","GPL-2 | GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"enc","enc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.0",NA,"R (>= 3.1)","methods",NA,"digest, pillar, readr, rlang, testthat, withr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"estimability","estimability","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3",NA,"stats",NA,NA,NA,NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"evaluate","evaluate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.10.1",NA,"R (>= 3.0.2)","methods, stringr (>= 0.6.2)",NA,"testthat, lattice, ggplot2",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"expm","expm","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.999-2",NA,"Matrix","methods",NA,"RColorBrewer, sfsmisc, Rmpfr",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"FactoMineR","FactoMineR","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.41",NA,"R (>= 3.0.0)","car,cluster,ellipse,flashClust,graphics,grDevices,lattice,leaps,MASS,scatterplot3d,stats,utils",NA,"missMDA,knitr",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"fastAdaboost","fastAdaboost","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,"R (>= 3.1.2)","Rcpp, rpart","Rcpp (>= 0.12.0)","testthat, knitr, MASS",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"fcuk","fcuk","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.21",NA,NA,"stringdist, purrr, magrittr, tibble",NA,"testthat, knitr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"fields","fields","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","9.6",NA,"R (>= 3.0), methods, spam, maps",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"filehash","filehash","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.4-1",NA,"R (>= 3.0.0), methods",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"fishdata","fishdata","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.3",NA,"R (>= 2.10)",NA,NA,"knitr, rmarkdown, dplyr, magrittr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"flashClust","flashClust","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.01-2",NA,"R (>= 2.3.0)",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,NA,"3.4.1"
+"FNN","FNN","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1",NA,"R (>= 2.8.0)",NA,NA,"chemometrics, mvtnorm",NA,"GPL (>= 2.1)",NA,NA,NA,NA,"yes","3.4.1"
+"forcats","forcats","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.0",NA,"R (>= 3.1)","magrittr, rlang, tibble",NA,"covr, ggplot2, testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"foreach","foreach","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.4",NA,"R (>= 2.5.0)","codetools, utils, iterators",NA,"randomForest","compiler, doMC, RUnit, doParallel","Apache License (== 2.0)",NA,NA,NA,NA,"no","3.4.4"
+"formatR","formatR","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5",NA,"R (>= 3.0.2)",NA,NA,"codetools, shiny, testit, rmarkdown, knitr",NA,"GPL",NA,NA,NA,NA,"no","3.4.1"
+"Formula","Formula","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2-3",NA,"R (>= 2.0.0), stats",NA,NA,NA,NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"fs","fs","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.6",NA,"R (>= 3.1)","methods, Rcpp","Rcpp","testthat, covr, pillar (>= 1.0.0), crayon, withr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"fusedanova","fusedanova","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-2",NA,NA,"methods,
+parallel,
+grid,
+Rcpp","Rcpp","testthat",NA,"GPL (>=2)",NA,NA,NA,NA,NA,"3.4.1"
+"future","future","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8.1",NA,NA,"digest, globals (>= 0.11.0), listenv (>= 0.7.0), parallel,
+utils",NA,"R.rsp, markdown",NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.4"
+"gbm","gbm","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.3",NA,"R (>= 2.9.0), survival, lattice, splines, parallel",NA,NA,"RUnit",NA,"GPL (>= 2) | file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"gdata","gdata","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.18.0",NA,"R (>= 2.3.0)","gtools, stats, methods, utils",NA,"RUnit",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"gdistance","gdistance","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2-2",NA,"R (>= 3.2.0), raster (>= 1.9-19), methods, igraph (>= 0.7.0),
+Matrix","sp, stats",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"gdtools","gdtools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.7",NA,NA,"Rcpp (>= 0.12.12), withr","Rcpp","htmltools, testthat, fontquiver (>= 0.2.0), curl",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"geigen","geigen","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.2",NA,NA,NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"geometry","geometry","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3-6",NA,"R (>= 2.5.0), magic",NA,NA,"testthat, rgl, R.matlab, tripack",NA,"GPL (>= 3) + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"geosphere","geosphere","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5-7",NA,"R (>= 3.0.0)","sp",NA,"methods, raster",NA,"GPL (>= 3)",NA,NA,NA,NA,"yes","3.4.1"
+"GGally","GGally","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.0",NA,"R (>= 3.1), ggplot2 (> 2.2.0)","grDevices, grid, gtable (>= 0.2.0), plyr (>= 1.8.3), progress,
+RColorBrewer, reshape (>= 0.8.5), utils, rlang",NA,"broom (>= 0.4.0), chemometrics, geosphere (>= 1.5-1), igraph
+(>= 1.0.1), intergraph (>= 2.0-2), maps (>= 3.1.0), mapproj,
+network (>= 1.12.0), scagnostics, scales (>= 0.4.0), sna (>=
+2.3-2), survival, packagedocs (>= 0.4.0), rmarkdown, roxygen2,
+testthat, crosstalk",NA,"GPL (>= 2.0)",NA,NA,NA,NA,"no","3.4.4"
+"ggforce","ggforce","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.3",NA,"ggplot2 (>= 2.2.0), R (>= 3.3.0)","Rcpp (>= 0.12.2), grid, dplyr, scales, MASS, tweenr (>=
+0.1.5), units (>= 0.4), gtable, lazyeval","Rcpp","knitr, rmarkdown, devtools",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"ggfortify","ggfortify","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.5",NA,"methods, ggplot2 (>= 2.0.0)","dplyr (>= 0.3), tidyr, gridExtra, grid, scales, stringr,
+tibble",NA,"testthat, cluster, changepoint, dlm, fGarch, forecast,
+ggrepel, glmnet, grDevices, KFAS, knitr, lintr, mapdata, MASS,
+MSwM, nlme, raster, ROCR, sp, stats, strucchange, survival,
+timeSeries, tseries, utils, vars, xts, zoo, lfda",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"ggmap","ggmap","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.6.1",NA,"R (>= 2.14.0), ggplot2 (>= 2.0.0)","proto, RgoogleMaps, png, plyr, reshape2, rjson, mapproj, jpeg,
+geosphere, digest, scales",NA,"MASS, stringr, hexbin, dplyr",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"ggnetwork","ggnetwork","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.1",NA,"ggplot2 (>= 2.0.0), R (>= 3.1),","ggrepel (>= 0.5), network, sna",NA,"intergraph, knitr, testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"ggplot2","ggplot2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.0.0",NA,"R (>= 3.1)","digest, grid, gtable (>= 0.1.1), lazyeval, MASS, mgcv, plyr
+(>= 1.7.1), reshape2, rlang, scales (>= 0.5.0), stats, tibble,
+viridisLite, withr (>= 2.0.0)",NA,"covr, dplyr, ggplot2movies, hexbin, Hmisc, lattice, mapproj,
+maps, maptools, multcomp, munsell, nlme, testthat (>= 0.11.0),
+vdiffr, quantreg, knitr, rgeos, rpart, rmarkdown, sf (>=
+0.3-4), svglite (>= 1.2.0.9001)","sp","GPL-2 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"ggpubr","ggpubr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.7",NA,"R (>= 3.1.0), ggplot2, magrittr","ggrepel, grid, ggsci, stats, utils, tidyr, purrr, dplyr(>=
+0.7.1), cowplot, ggsignif, scales, gridExtra",NA,"grDevices, knitr, RColorBrewer, gtable",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"ggraph","ggraph","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.2",NA,"R (>= 2.10), ggplot2 (>= 2.0.0)","Rcpp (>= 0.12.2), dplyr, plyr, ggforce, grid, igraph (>=
+1.0.0), scales, MASS, digest, gtable, ggrepel, utils, stats,
+viridis","Rcpp","network, knitr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"ggrepel","ggrepel","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.0",NA,"R (>= 3.0.0), ggplot2 (>= 2.2.0)","grid, Rcpp, scales (>= 0.3.0)","Rcpp","knitr, rmarkdown, testthat, gridExtra, devtools, prettydoc",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"ggsci","ggsci","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.9",NA,"R (>= 3.0.2)","grDevices, scales, ggplot2 (>= 2.0.0)",NA,"knitr, rmarkdown, gridExtra, reshape2",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"ggsignif","ggsignif","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.0",NA,NA,"ggplot2 (>= 2.0.0)",NA,"testthat, knitr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"ggthemes","ggthemes","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.0.1",NA,"R (>= 3.0.0)","ggplot2 (>= 3.0.0), graphics, grid, methods, purrr, scales,
+stringr, tibble",NA,"dplyr, covr, extrafont, glue, knitr, lattice, lintr, maps,
+mapproj, pander, rlang, rmarkdown, spelling, testthat, tidyr,
+vdiffr, withr",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"gh","gh","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.1",NA,NA,"ini, jsonlite, httr",NA,"covr, pingr, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"git2r","git2r","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.21.0",NA,"R (>= 3.1), methods","graphics, utils",NA,"getPass",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"glmnet","glmnet","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0-16",NA,"Matrix (>= 1.0-6), utils, foreach","methods",NA,"survival, knitr, lars",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"globals","globals","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.12.1",NA,"R (>= 3.1.2)","codetools",NA,NA,NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.4"
+"glue","glue","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3.0",NA,"R (>= 3.1)","methods",NA,"testthat, covr, magrittr, crayon, knitr, rmarkdown, DBI,
+RSQLite, R.utils, forcats, microbenchmark, rprintf, stringr,
+ggplot2, dplyr, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"gower","gower","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.2",NA,NA,NA,NA,"testthat, knitr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"greta","greta","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.3",NA,"R (>= 3.0)","R6, tensorflow, reticulate, progress, coda",NA,"knitr, rmarkdown, DiagrammeR, bayesplot, lattice, testthat,
+mvtnorm, MCMCpack, rmutil, extraDistr, truncdist",NA,"Apache License 2.0",NA,NA,NA,NA,"no","3.4.4"
+"gridExtra","gridExtra","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3",NA,NA,"gtable, grid, grDevices, graphics, utils",NA,"ggplot2, egg, lattice, knitr, testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"gstat","gstat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-6",NA,"R (>= 2.10)","utils, stats, graphics, methods, lattice, sp (>= 0.9-72), zoo,
+spacetime (>= 1.0-0), FNN",NA,"rgdal (>= 0.5.2), rgeos, fields, maps, mapdata, maptools, xts",NA,"GPL (>= 2.0)",NA,NA,NA,NA,"yes","3.4.4"
+"gsubfn","gsubfn","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,"proto",NA,NA,"boot, chron, grid, lattice, quantreg, svUnit, tcltk, zoo",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"gtable","gtable","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.0",NA,"R (>= 2.14)","grid",NA,"testthat, covr",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"gtools","gtools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.8.1",NA,"methods, stats, utils",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"haven","haven","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.2",NA,"R (>= 3.1)","forcats (>= 0.2.0), hms, Rcpp (>= 0.11.4), readr (>= 0.1.0),
+tibble","Rcpp","covr, fs, knitr, rmarkdown, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"hexbin","hexbin","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.27.2",NA,"R (>= 2.0.1), methods","lattice, grid, graphics, grDevices, stats, utils",NA,"marray, affy, Biobase, limma",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"highlight","highlight","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.7.2",NA,"R (>= 3.1.3)","grDevices, tools",NA,NA,NA,"GPL (>= 3)",NA,NA,NA,NA,"yes","3.4.1"
+"highr","highr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,"R (>= 3.0.2)",NA,NA,"knitr, testit",NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"Hmisc","Hmisc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.1-1",NA,"lattice, survival (>= 2.40-1), Formula, ggplot2 (>= 2.2)","methods, latticeExtra, cluster, rpart, nnet, acepack, foreign,
+gtable, grid, gridExtra, data.table, htmlTable (>= 1.11.0),
+viridis, htmltools, base64enc",NA,"chron, rms, mice, tables, knitr, ff, ffbase, plotly (>=
+4.5.6)",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"hms","hms","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.2",NA,NA,"methods, pkgconfig, rlang",NA,"crayon, lubridate, pillar (>= 1.1.0), testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"htmlTable","htmlTable","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.12",NA,NA,"stringr, knitr (>= 1.6), magrittr (>= 1.5), methods,
+checkmate, htmlwidgets, htmltools, rstudioapi (>= 0.6)",NA,"testthat, XML, xtable, ztable, Hmisc, reshape, rmarkdown,
+pander, chron, lubridate, tibble, tidyr (>= 0.7.2), dplyr (>=
+0.7.4)",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.4"
+"htmltools","htmltools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.6",NA,"R (>= 2.14.1)","utils, digest, Rcpp","Rcpp","markdown, testthat","knitr","GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"htmlwidgets","htmlwidgets","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2",NA,NA,"grDevices, htmltools (>= 0.3), jsonlite (>= 0.9.16), yaml",NA,"knitr (>= 1.8)","shiny (>= 1.0.5)","MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"httpuv","httpuv","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.4.2",NA,"R (>= 2.15.1), methods","Rcpp (>= 0.11.0), utils, promises, later (>= 0.7.3)","Rcpp, BH, later","testthat, callr",NA,"GPL (>= 2) | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"httr","httr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3.1",NA,"R (>= 3.0.0)","jsonlite, mime, curl (>= 0.9.1), openssl (>= 0.8), R6",NA,"httpuv, jpeg, knitr, png, testthat (>= 0.8.0), readr, xml2,
+rmarkdown, covr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"igraph","igraph","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.1",NA,"methods","graphics, grDevices, magrittr, Matrix, pkgconfig (>= 2.0.0),
+stats, utils",NA,"ape, graph, igraphdata, rgl, scales, stats4, tcltk, testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"ini","ini","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.1",NA,NA,NA,NA,"testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"intergraph","intergraph","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0-2",NA,NA,"network (>= 1.4-1-1), igraph (>= 0.6-0), utils",NA,"testthat, roxygen2, knitr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"intervals","intervals","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.15.1",NA,"R (>= 2.9.0)","utils, graphics, methods",NA,NA,NA,"Artistic-2.0",NA,NA,NA,NA,"yes","3.4.1"
+"inum","inum","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-0",NA,"R (>= 3.3.0)","stats, libcoin (>= 1.0-0)",NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"ipred","ipred","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-6",NA,"R (>= 2.10)","rpart (>= 3.1-8), MASS, survival, nnet, class, prodlim",NA,"mvtnorm, mlbench, TH.data",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"irlba","irlba","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3.2",NA,"Matrix","stats, methods","Matrix","PMA",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"iterators","iterators","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.9",NA,"R (>= 2.5.0), utils",NA,NA,"RUnit",NA,"Apache License (== 2.0)",NA,NA,NA,NA,"no","3.4.4"
+"jpeg","jpeg","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-8",NA,"R (>= 2.9.0)",NA,NA,NA,NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"jsonlite","jsonlite","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5",NA,"methods",NA,NA,"httr, curl, plyr, testthat, knitr, rmarkdown, R.rsp, sp",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"keras","keras","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.6",NA,"R (>= 3.2)","reticulate (>= 1.5), tensorflow (>= 1.5), tfruns (>= 1.0),
+magrittr, zeallot, methods, R6",NA,"ggplot2, testthat, knitr, rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"kernlab","kernlab","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-26",NA,"R (>= 2.10)","methods, stats, grDevices, graphics",NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"knitr","knitr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.20",NA,"R (>= 3.1.0)","evaluate (>= 0.10), highr, markdown, stringr (>= 0.6), yaml,
+methods, tools",NA,"formatR, testit, digest, rgl (>= 0.95.1201), codetools,
+rmarkdown, htmlwidgets (>= 0.7), webshot, tikzDevice (>= 0.10),
+tinytex, xfun, reticulate (>= 1.4), JuliaCall (>= 0.11.1), png,
+jpeg, xml2, httr, DBI (>= 0.4-1), showtext, tibble",NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"labeling","labeling","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3",NA,NA,NA,NA,NA,NA,"MIT + file LICENSE | Unlimited",NA,NA,NA,NA,"no","3.4.1"
+"LaplacesDemon","LaplacesDemon","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","16.1.1",NA,"R (>= 3.0.0)","parallel, grDevices, graphics, stats, utils",NA,"KernSmooth",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"later","later","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7.3",NA,NA,"Rcpp (>= 0.12.9), rlang","Rcpp, BH","knitr, rmarkdown, testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"latex2exp","latex2exp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.0",NA,NA,"stringr, magrittr",NA,"testthat, knitr, ggplot2, plyr, rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"latticeExtra","latticeExtra","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-28",NA,"R (>= 2.10.0), lattice, RColorBrewer","grid, stats, utils, grDevices",NA,"maps, mapproj, deldir, tripack, zoo, MASS, quantreg, mgcv",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"lava","lava","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.6.2",NA,"R (>= 3.0)","grDevices, graphics, methods, numDeriv, stats, survival,
+SQUAREM, utils",NA,"KernSmooth, Matrix, Rgraphviz, ascii, data.table, ellipse,
+fields, foreach, geepack, gof (>= 0.9), graph, igraph (>= 0.6),
+lava.tobit (>= 0.4.7), lme4, mets (>= 1.1), nlme, optimx,
+polycor, quantreg, rgl, testthat (>= 0.11), visNetwork, zoo",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"lazyeval","lazyeval","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.1",NA,"R (>= 3.1.0)",NA,NA,"knitr, rmarkdown (>= 0.2.65), testthat, covr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"leaflet","leaflet","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0.1",NA,"R (>= 3.1.0)","base64enc, crosstalk, htmlwidgets, htmltools, magrittr,
+markdown, methods, png, RColorBrewer, raster, scales (>=
+0.2.5), sp, stats, viridis",NA,"knitr, maps, sf, shiny, testit (>= 0.4), rgdal, rgeos, R6,
+RJSONIO, purrr, testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"leaps","leaps","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.0",NA,"",NA,NA,"biglm",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"libcoin","libcoin","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-1",NA,"R (>= 3.4.0)","stats, mvtnorm","mvtnorm","coin",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"lintr","lintr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.2",NA,"R (>= 3.1.1)","rex, crayon, codetools, stringdist, testthat, digest, igraph,
+rstudioapi (>= 0.2), httr, jsonlite, knitr, stats, utils",NA,"rmarkdown, mockery",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"listenv","listenv","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7.0",NA,"R (>= 3.1.2)",NA,NA,"R.utils, R.rsp, markdown",NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.1"
+"lme4","lme4","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-17",NA,"R (>= 3.2.0), Matrix (>= 1.2-1), methods, stats","graphics, grid, splines, utils, parallel, MASS, lattice, nlme
+(>= 3.1-123), minqa (>= 1.1.15), nloptr (>= 1.0.4)","Rcpp (>= 0.10.5), RcppEigen","knitr, boot, PKPDmodels, MEMSS, testthat (>= 0.8.1), ggplot2,
+mlmRev, optimx (>= 2013.8.6), gamm4, pbkrtest, HSAUR2, numDeriv",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"longline","longline","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0",NA,"R (>= 2.13),
+rjags,
+ggplot2,
+scales",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,NA,"3.4.4"
+"lsmeans","lsmeans","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.27-62",NA,"methods, R (>= 3.2)","estimability, graphics, stats, utils, nlme, coda (>= 0.17),
+multcomp, plyr, mvtnorm, xtable (>= 1.8-2)",NA,"car, lattice, MCMCpack, mediation, multcompView, ordinal,
+pbkrtest (>= 0.4-1), CARBayes, coxme, gee, geepack, glmmADMB,
+lme4, lmerTest (>= 2.0.32), MASS, MCMCglmm, nnet, pscl, rsm,
+rstan, rstanarm, survival",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"lubridate","lubridate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.7.4",NA,"methods, R (>= 3.0.0)","stringr, Rcpp (>= 0.12.13),","Rcpp,","testthat, knitr, covr","chron, fts, timeSeries, timeDate, tis, tseries, xts, zoo","GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"magic","magic","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5-8",NA,"R (>= 2.10), abind",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"magick","magick","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.9",NA,NA,"Rcpp (>= 0.12.12), magrittr, knitr, curl","Rcpp","spelling, jsonlite, methods, rmarkdown, rsvg, webp, png,
+pdftools, ggplot2, raster, rgdal, gapminder, IRdisplay,
+tesseract (>= 2.0)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"magrittr","magrittr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5",NA,NA,NA,NA,"testthat, knitr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"manipulate","manipulate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.1",NA,"R (>= 2.11.1)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"manipulateWidget","manipulateWidget","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.10.0",NA,NA,"shiny (>= 1.0.3), miniUI, htmltools, htmlwidgets, knitr,
+methods, tools, base64enc, grDevices, codetools, webshot",NA,"dygraphs, leaflet, plotly, xts, rmarkdown, testthat, covr",NA,"GPL (>= 2) | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"mapdata","mapdata","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3.0",NA,"R (>= 2.14.0), maps (>= 2.0-7)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"mapproj","mapproj","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.6",NA,"R (>= 3.0.0), maps (>= 2.3-0)","stats, graphics",NA,NA,NA,"Lucent Public License",NA,NA,NA,NA,"yes","3.4.4"
+"maps","maps","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.3.0",NA,"R (>= 3.0.0)","graphics, utils",NA,"mapproj (>= 1.2-0), mapdata (>= 2.3.0), sp, maptools,
+rnaturalearth",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"maptools","maptools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-2",NA,"R (>= 2.10), sp (>= 1.0-11)","foreign (>= 0.8), methods, grid, lattice, stats, utils,
+grDevices",NA,"rgeos (>= 0.1-8), spatstat (>= 1.18), PBSmapping, maps,
+RColorBrewer, raster, polyclip, spatstat.utils","gpclib, RArcInfo","GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"markdown","markdown","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8",NA,"R (>= 2.11.1)","utils, mime (>= 0.3)",NA,"knitr, RCurl",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"MatrixModels","MatrixModels","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4-1",NA,"R (>= 3.0.1)","stats, methods, Matrix (>= 1.1-5)",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"mclust","mclust","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","5.4.1",NA,"R (>= 3.0)","stats, utils, graphics, grDevices",NA,"knitr (>= 1.12), rmarkdown (>= 0.9), mix (>= 1.0), geometry
+(>= 0.3-6), MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"memoise","memoise","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,NA,"digest (>= 0.6.3)",NA,"testthat, aws.s3, httr, covr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"microbenchmark","microbenchmark","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4-4",NA,NA,"graphics, stats",NA,"ggplot2, multcomp",NA,"BSD_2_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"mime","mime","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5",NA,NA,"tools",NA,NA,NA,"GPL",NA,NA,NA,NA,"yes","3.4.1"
+"miniUI","miniUI","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.1.1",NA,NA,"shiny (>= 0.13), htmltools (>= 0.3), utils",NA,NA,NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"minqa","minqa","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.4",NA,NA,"Rcpp (>= 0.9.10)","Rcpp",NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"mitools","mitools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3",NA,"R (>= 2.10)",NA,NA,"RODBC, DBI, foreign",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"mlbench","mlbench","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1-1",NA,"R (>= 2.10)",NA,NA,"lattice",NA,"GPL-2",NA,NA,NA,NA,NA,"3.4.1"
+"mnormt","mnormt","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5-5",NA,"R (>= 2.2.0)",NA,NA,NA,NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"ModelMetrics","ModelMetrics","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,"R (>= 3.2.2)","Rcpp","Rcpp","testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"modelr","modelr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.2",NA,"R (>= 3.1)","broom, dplyr, magrittr, purrr (>= 0.2.2), tibble, tidyr (>=
+0.8.0), rlang (>= 0.2.0)",NA,"compiler, covr, ggplot2, testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"momentuHMM","momentuHMM","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.2",NA,"R (>= 2.10)","Rcpp, doParallel, foreach, numDeriv, CircStats, crawl, ggmap,
+ggplot2, mitools, moveHMM, raster, argosfilter, car, mvtnorm,
+boot, sp, MASS, Brobdingnag, gstat, conicfit, nleqslv,
+survival, qdapRegex, geosphere, LaplacesDemon, prodlim, dplyr,
+magrittr","Rcpp, RcppArmadillo","testthat, setRNG, knitr, splines, splines2 (>= 0.2.8)",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"moveHMM","moveHMM","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.6",NA,"CircStats","Rcpp, boot, MASS, sp, geosphere, ggplot2, ggmap, numDeriv","Rcpp, RcppArmadillo","testthat, knitr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"multcomp","multcomp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4-8",NA,"stats, graphics, mvtnorm (>= 1.0-3), survival (>= 2.39-4),
+TH.data (>= 1.0-2)","sandwich (>= 2.3-0), codetools",NA,"lme4 (>= 0.999375-16), nlme, robustbase, coin, MASS, car,
+foreign, xtable, lmtest, coxme (>= 2.2-1), SimComp, ISwR",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"munsell","munsell","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.0",NA,NA,"colorspace, methods",NA,"ggplot2, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"mvtnorm","mvtnorm","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-8",NA,"R(>= 1.9.0)","stats, methods",NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"network","network","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.13.0.1",NA,"R (>= 2.10), utils",NA,NA,"sna, statnet.common, testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"NeuralNetTools","NeuralNetTools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.5.1",NA,"R (>= 3.1.1)","ggplot2 (>= 2.0.0), nnet, reshape2, scales, tidyr",NA,"caret, neuralnet, RSNNS",NA,"CC0",NA,NA,NA,NA,"no","3.4.4"
+"nimble","nimble","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-12",NA,"R (>= 3.1.2)","methods,igraph,coda,R6",NA,"testthat,R2WinBUGS,rjags,rstan,xtable,abind,ggplot2,tensorflow,reticulate",NA,"BSD_3_clause + file LICENSE | GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"nleqslv","nleqslv","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.3.2",NA,NA,NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"nloptr","nloptr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.4",NA,NA,NA,NA,"testthat (>= 0.8.1)",NA,"LGPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"nlstools","nlstools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-2",NA,"stats",NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"numDeriv","numDeriv","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2016.8-1",NA,"R (>= 2.11.1)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"odbc","odbc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.6",NA,"R (>= 3.2.0)","DBI (>= 1.0.0), methods, Rcpp (>= 0.12.11), blob (>= 1.1.0),
+bit64, hms","Rcpp, BH","tibble, DBItest, testthat, covr, magrittr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"officer","officer","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.1",NA,NA,"Rcpp (>= 0.12.12), R6, grDevices, base64enc, zip,
+digest,uuid,utils,stats, magrittr,htmltools, xml2 (>= 1.1.0)","Rcpp","testthat, devEMF, knitr,tibble,ggplot2, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"openssl","openssl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.1",NA,NA,NA,NA,"testthat, digest, knitr, rmarkdown, jsonlite, jose",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"openxlsx","openxlsx","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.1.0",NA,"R (>= 3.3.0)","methods, Rcpp, grDevices, stats, utils, zip","Rcpp","knitr, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"packrat","packrat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4.9-3",NA,"R (>= 3.0.0)","tools, utils",NA,"testthat (>= 0.7), devtools, httr, knitr, rmarkdown","BiocInstaller","GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"partykit","partykit","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2-2",NA,"R (>= 3.1.0), graphics, grid, libcoin (>= 1.0-0), mvtnorm","grDevices, stats, utils, survival, Formula (>= 1.2-1), inum
+(>= 1.0-0), rpart (>= 4.1-11)",NA,"XML, pmml, rJava, sandwich, strucchange, vcd, AER, mlbench,
+TH.data (>= 1.0-3), coin (>= 1.1-0), RWeka (>= 0.4-19),
+datasets, parallel, psychotools (>= 0.3-0), psychotree, party
+(>= 1.3-0)",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"pbkrtest","pbkrtest","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4-7",NA,"R (>= 3.2.3), lme4 (>= 1.1.10)","Matrix (>= 1.2.3), parallel, MASS, methods",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"pbmcapply","pbmcapply","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.5",NA,"utils, parallel, future",NA,NA,NA,NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"PBSmapping","PBSmapping","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.70.5",NA,"R (>= 3.0.0)",NA,NA,"foreign, maptools, deldir",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"pillar","pillar","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.3",NA,NA,"cli (>= 1.0.0), crayon (>= 1.3.4), methods, rlang (>= 0.2.0),
+utf8 (>= 1.1.3)",NA,"knitr (>= 1.19), lubridate, testthat (>= 2.0.0), withr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"pixmap","pixmap","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4-11",NA,"methods",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,NA,"3.4.1"
+"pkgbuild","pkgbuild","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,"R (>= 3.1)","callr (>= 2.0.0), crayon, desc, R6, rprojroot, withr (>=
+2.1.2)",NA,"Rcpp, testthat, covr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"pkgconfig","pkgconfig","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0.1",NA,NA,"utils",NA,"covr, testthat, disposables (>= 1.0.3)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"pkgload","pkgload","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,NA,"desc, methods, pkgbuild, rlang, rprojroot, rstudioapi, utils,
+withr",NA,"bitops, covr, Rcpp, testthat",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"PKI","PKI","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-5.1",NA,"R (>= 2.9.0), base64enc",NA,NA,NA,"gmp","GPL-2 | GPL-3 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"plogr","plogr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.0",NA,NA,NA,NA,"Rcpp",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"plotKML","plotKML","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5-8",NA,"R (>= 2.13.0)","methods, tools, utils, XML, sp, raster, rgdal, spacetime,
+colorspace, plotrix, dismo, aqp, pixmap, plyr, stringr,
+colorRamps, scales, gstat, zoo, RColorBrewer, RSAGA, classInt",NA,"adehabitat, maptools, fossil, spcosa, rjson, animation,
+spatstat, RCurl, rgbif, Hmisc, GSIF, uuid, intervals, reshape,
+gdalUtils, snowfall, parallel",NA,"GPL",NA,NA,NA,NA,"no","3.4.1"
+"plotrix","plotrix","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.7-2",NA,NA,"grDevices, graphics, stats, utils",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"pls","pls","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.6-0",NA,"R (>= 2.10)","grDevices, graphics, methods, stats",NA,"MASS, parallel, Rmpi",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"plyr","plyr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8.4",NA,"R (>= 3.1.0)","Rcpp (>= 0.11.0)","Rcpp","abind, testthat, tcltk, foreach, doParallel, itertools,
+iterators, covr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"png","png","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-7",NA,"R (>= 2.9.0)",NA,NA,NA,NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.1"
+"pracma","pracma","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.4",NA,"R (>= 3.1.0)","graphics, grDevices, stats, utils",NA,"quadprog",NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.1"
+"praise","praise","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,NA,NA,NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"prettydoc","prettydoc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.1",NA,NA,"rmarkdown (>= 1.0)",NA,"knitr, KernSmooth",NA,"Apache License (>= 2.0)",NA,NA,NA,NA,"no","3.4.4"
+"prettyunits","prettyunits","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.2",NA,NA,"magrittr, assertthat, methods",NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"processx","processx","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.1.0",NA,NA,"assertthat, crayon, R6, utils","testthat","covr, debugme, parallel, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"prodlim","prodlim","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2018.04.18",NA,"R (>= 2.9.0)","Rcpp (>= 0.11.5), stats, graphics, survival, KernSmooth, lava","Rcpp",NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"progress","progress","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.0",NA,NA,"hms, prettyunits, R6, crayon",NA,"Rcpp, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"promises","promises","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.1",NA,NA,"R6, Rcpp, later, rlang, stats, magrittr","later, Rcpp","testthat, future, knitr, rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"proto","proto","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,NA,NA,NA,"testthat, covr",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"psych","psych","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8.4",NA,"R (>= 2.10)","mnormt,parallel,stats,graphics,grDevices,methods,foreign,lattice,nlme",NA,"GPArotation, lavaan, sem, lme4,Rcsdp, graph, Rgraphviz",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"purrr","purrr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.5",NA,"R (>= 3.1)","magrittr (>= 1.5), rlang (>= 0.1), tibble",NA,"covr, dplyr (>= 0.7.5), knitr, rmarkdown, testthat",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"qdapRegex","qdapRegex","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7.2",NA,"R (>= 3.1.0)","stringi (>= 0.5-5)",NA,"testthat",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.1"
+"quantreg","quantreg","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","5.36",NA,"R (>= 2.6), stats, SparseM","methods, graphics, Matrix, MatrixModels",NA,"tripack, akima, MASS, survival, rgl, logspline, nor1mix,
+Formula, zoo",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"R1magic","R1magic","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.2",NA,"stats, utils",NA,NA,NA,NA,"GPL (>= 3)",NA,NA,NA,NA,"no","3.4.1"
+"R6","R6","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.2.2",NA,"R (>= 3.0)",NA,NA,"knitr, microbenchmark, pryr, testthat, ggplot2, scales",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"randomForest","randomForest","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.6-14",NA,"R (>= 3.2.2), stats",NA,NA,"RColorBrewer, MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"raster","raster","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.6-7",NA,"methods, sp (>= 1.2-0), R (>= 3.0.0)","Rcpp","Rcpp","rgdal (>= 0.9-1), rgeos (>= 0.3-8), ncdf4, igraph, tcltk,
+parallel, rasterVis, MASS, sf",NA,"GPL (>= 3)",NA,NA,NA,NA,"yes","3.4.1"
+"RColorBrewer","RColorBrewer","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-2",NA,"R (>= 2.0.0)",NA,NA,NA,NA,"Apache License 2.0",NA,NA,NA,NA,"no","3.4.1"
+"Rcpp","Rcpp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.12.17",NA,"R (>= 3.0.0)","methods, utils",NA,"RUnit, inline, rbenchmark, knitr, rmarkdown, pinp, pkgKitten
+(>= 0.1.2)",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"RcppArmadillo","RcppArmadillo","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.600.0.0",NA,"R (>= 3.3.0)","Rcpp (>= 0.11.0), stats, utils, methods","Rcpp","RUnit, Matrix, pkgKitten, reticulate, rmarkdown, knitr, pinp,
+slam",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"RcppEigen","RcppEigen","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.3.4.0",NA,"R (>= 2.15.1)","Matrix (>= 1.1-0), Rcpp (>= 0.11.0), stats, utils","Rcpp","inline, RUnit, pkgKitten",NA,"GPL (>= 2) | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"RcppRoll","RcppRoll","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.0",NA,"R (>= 2.15.1)","Rcpp","Rcpp","zoo, testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"RCurl","RCurl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.95-4.10",NA,"R (>= 3.0.0), methods, bitops",NA,NA,"Rcompression, XML",NA,"BSD",NA,NA,NA,NA,"yes","3.4.4"
+"readODS","readODS","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.6.4",NA,NA,"xml2 (>= 1.0.0), cellranger, readr",NA,"dplyr, testthat, datasets",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"readr","readr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.1",NA,"R (>= 3.0.2)","Rcpp (>= 0.12.0.5), tibble, hms, R6","Rcpp, BH","curl, testthat, knitr, rmarkdown, stringi, covr",NA,"GPL (>= 2) | file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"readxl","readxl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,NA,"cellranger, Rcpp (>= 0.12.12), tibble (>= 1.1)","Rcpp","covr, knitr, rmarkdown, rprojroot (>= 1.1), testthat",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"recipes","recipes","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.3",NA,"R (>= 3.1), dplyr, broom","tibble, stats, ipred, dimRed (>= 0.1.0), lubridate, timeDate,
+ddalpha, purrr (>= 0.2.3), rlang (>= 0.1.1), gower, RcppRoll,
+tidyselect (>= 0.1.1), magrittr, Matrix, tidyr, pls",NA,"testthat, rpart, kernlab, fastICA, RANN, igraph, knitr,
+rsample (>= 0.0.2), ggplot2, rmarkdown, covr",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"rematch","rematch","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.1",NA,NA,NA,NA,"covr, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"rematch2","rematch2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0.1",NA,NA,"tibble",NA,"covr, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"ReporteRs","ReporteRs","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.10",NA,"R (>= 3.0), ReporteRsjars (>= 0.0.2)","grDevices, rJava, utils, rvg (>= 0.1.2), xml2, gdtools, png,
+R.utils, knitr, shiny, htmltools",NA,"ggplot2, jpeg, bmp, testthat, magrittr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"ReporteRsjars","ReporteRsjars","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.0.4",NA,"R (>= 3.0)","rJava",NA,NA,NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"reprex","reprex","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.0",NA,"R (>= 3.1)","callr (>= 2.0.0), clipr (>= 0.4.0), rlang, rmarkdown, tools,
+utils, whisker, withr",NA,"covr, devtools, fortunes, knitr, miniUI, rprojroot,
+rstudioapi, shiny, styler, testthat (>= 2.0.0)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"reshape","reshape","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.7",NA,"R (>= 2.6.1)","plyr",NA,NA,NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"reshape2","reshape2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.3",NA,"R (>= 3.1)","plyr (>= 1.8.1), Rcpp, stringr","Rcpp","covr, lattice, testthat (>= 0.8.0)",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"reticulate","reticulate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.9",NA,"R (>= 3.0)","utils, graphics, jsonlite, Rcpp (>= 0.12.7), Matrix","Rcpp","testthat, knitr, callr, rmarkdown",NA,"Apache License 2.0",NA,NA,NA,NA,"yes","3.4.4"
+"rex","rex","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.2",NA,NA,"magrittr, lazyeval",NA,"testthat, knitr, rmarkdown, dplyr, ggplot2, Hmisc, stringr,
+rvest, roxygen2, covr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"rgdal","rgdal","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-3",NA,"R (>= 3.3.0), methods, sp (>= 1.1-0)","grDevices, graphics, stats, utils","sp",NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"rgeos","rgeos","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3-28",NA,"R (>= 3.3.0)","methods, sp (>= 1.1-0), utils, stats, graphics","sp","maptools (>= 0.8-5), testthat, XML, maps, rgdal",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"rgl","rgl","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.99.16",NA,"R (>= 3.2.0)","graphics, grDevices, stats, utils, htmlwidgets, htmltools,
+knitr, jsonlite (>= 0.9.20), shiny, magrittr, crosstalk,
+manipulateWidget (>= 0.9.0)",NA,"MASS, rmarkdown, deldir, orientlib, lattice, misc3d,
+rstudioapi, magick",NA,"GPL",NA,NA,NA,NA,"yes","3.4.4"
+"RgoogleMaps","RgoogleMaps","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.2",NA,"R (>= 2.10)","graphics, stats, utils, grDevices, methods, png",NA,"PBSmapping, maptools, sp, loa, RColorBrewer, leaflet",NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"rio","rio","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.10",NA,"R (>= 2.15.0)","tools, stats, utils, foreign, haven (>= 1.1.0), curl (>= 0.6),
+data.table (>= 1.9.8), readxl (>= 0.1.1), openxlsx, tibble",NA,"datasets, bit64, testthat, knitr, magrittr, clipr, csvy,
+feather, fst, jsonlite, readODS (>= 1.6.4), readr, rmatio, xml2
+(>= 1.2.0), yaml",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"rjags","rjags","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4-6",NA,"R (>= 2.14.0), coda (>= 0.13)",NA,NA,"tcltk",NA,"GPL (== 2)",NA,NA,NA,NA,"yes","3.4.4"
+"rJava","rJava","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9-10",NA,"R (>= 2.5.0), methods",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"rjson","rjson","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.20",NA,"R (>= 3.1.0)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"RJSONIO","RJSONIO","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-0",NA,NA,"methods",NA,NA,NA,"BSD_3_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"rlang","rlang","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.1",NA,"R (>= 3.1.0)",NA,NA,"crayon, knitr, methods, pillar, rmarkdown (>= 0.2.65),
+testthat, covr",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"rmarkdown","rmarkdown","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.10",NA,"R (>= 3.0)","tools, utils, knitr (>= 1.18), yaml (>= 2.1.5), htmltools (>=
+0.3.5), evaluate (>= 0.8), base64enc, jsonlite, rprojroot,
+mime, tinytex (>= 0.3), methods, stringr (>= 1.2.0)",NA,"shiny (>= 0.11), tufte, testthat, digest, dygraphs, tibble",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"R.methodsS3","R.methodsS3","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.7.1",NA,"R (>= 2.13.0)","utils",NA,NA,NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.1"
+"robustbase","robustbase","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.93-1",NA,"R (>= 3.0.2)","stats, graphics, utils, methods, DEoptimR",NA,"grid, MASS, lattice, boot, cluster, Matrix, robust,
+fit.models, MPV, xtable, ggplot2, GGally, RColorBrewer,
+reshape2, sfsmisc, catdata, doParallel, foreach, skewt",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"R.oo","R.oo","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.22.0",NA,"R (>= 2.13.0), R.methodsS3 (>= 1.7.1)","methods, utils",NA,"tools",NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.4"
+"roxygen2","roxygen2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","6.1.0",NA,"R (>= 3.1)","brew, commonmark, desc, digest, methods, pkgload, purrr, R6
+(>= 2.1.2), Rcpp (>= 0.11.0), stringi, stringr (>= 1.0.0),
+utils, xml2","Rcpp","covr, devtools, knitr, rmarkdown, testthat (>= 0.8.0)",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"RPostgreSQL","RPostgreSQL","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-2",NA,"R (>= 2.9.0), methods, DBI (>= 0.3)",NA,NA,NA,NA,"GPL-2 | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"rprojroot","rprojroot","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-2",NA,"R (>= 3.0.0)","backports",NA,"testthat, mockr, knitr, withr, rmarkdown",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"RSAGA","RSAGA","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.0",NA,"R (>= 2.10), gstat, shapefiles, plyr","stats, utils, rgdal",NA,"knitr, rmarkdown, testthat, maptools, rgeos",NA,"GPL-2 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"rsconnect","rsconnect","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.8",NA,"R (>= 3.0.0)","digest, PKI, RCurl, RJSONIO, packrat (>= 0.4.8-1), yaml (>=
+2.1.5), rstudioapi (>= 0.5)",NA,"knitr, testthat, rmarkdown (>= 1.1), plumber (>= 0.3.2),
+shiny, sourcetools, xtable","BiocInstaller","GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"Rsolnp","Rsolnp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.16",NA,"R (>= 2.10.0)","truncnorm, parallel, stats",NA,NA,NA,"GPL",NA,NA,NA,NA,"no","3.4.1"
+"RSQLite","RSQLite","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.1",NA,"R (>= 3.1.0)","bit64, blob (>= 1.1.1), DBI (>= 1.0.0), memoise, methods,
+pkgconfig, Rcpp (>= 0.12.7)","BH, plogr (>= 0.2.0), Rcpp","DBItest, knitr, rmarkdown, testthat",NA,"LGPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"rstudioapi","rstudioapi","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,NA,NA,NA,"testthat, knitr, rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"R.utils","R.utils","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.6.0",NA,"R (>= 2.14.0), R.oo (>= 1.21.0)","methods, utils, tools, R.methodsS3 (>= 1.7.1)",NA,"digest (>= 0.6.10)",NA,"LGPL (>= 2.1)",NA,NA,NA,NA,"no","3.4.1"
+"rvest","rvest","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.2",NA,"R (>= 3.0.1), xml2","httr (>= 0.5), selectr, magrittr",NA,"testthat, knitr, png, stringi (>= 0.3.1), rmarkdown, covr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"rvg","rvg","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.9",NA,"R (>= 3.0)","grDevices, Rcpp (>= 0.12.12), officer (>= 0.2.0), gdtools (>=
+0.1.6), xml2 (>= 1.0.0)","Rcpp, gdtools","htmltools, testthat, covr, grid",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"RViennaCL","RViennaCL","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.7.1.7",NA,NA,NA,NA,"gpuR",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"sandwich","sandwich","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.4-0",NA,"R (>= 2.10.0)","stats, utils, zoo",NA,"AER, car, geepack, lattice, lmtest, MASS, multiwayvcov, pcse,
+plm, pscl, scatterplot3d, stats4, strucchange, survival",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"sanitizers","sanitizers","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,NA,NA,NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"scales","scales","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.0",NA,"R (>= 2.13)","RColorBrewer, dichromat, plyr, munsell (>= 0.2), labeling,
+Rcpp, R6, viridisLite","Rcpp","testthat (>= 0.8), bit64, covr, hms",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"scape","scape","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.3-2",NA,"R (>= 2.10)","stats, utils, coda, Hmisc, lattice",NA,"gdata",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"scatterplot3d","scatterplot3d","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3-41",NA,"R (>= 2.7.0)","grDevices, graphics, stats",NA,NA,NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"segclust2d","segclust2d","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,"R (>= 3.3.0)","RColorBrewer (>= 1.1-2), dplyr (>= 0.5.0), plyr (>= 1.8.4),
+reshape2 (>= 1.4.1), ggplot2(>= 2.1.0), magrittr, Rcpp, zoo,
+grDevices, graphics, stats, utils, scales","Rcpp, RcppArmadillo","knitr, rmarkdown, testthat, dygraphs (>= 1.1.1-1), xts (>=
+0.9-7), leaflet (>= 1.0.1), sp (>= 1.2-3), adehabitatLT,
+depmixS4, moveHMM (>= 1.2), htmltools, move, devtools",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"selectr","selectr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4-1",NA,"R (>= 3.0)","methods, stringr, R6",NA,"testthat, XML, xml2",NA,"BSD_3_clause + file LICENCE",NA,NA,NA,NA,"no","3.4.4"
+"servr","servr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.10",NA,"R (>= 3.0.0)","mime (>= 0.2), httpuv (>= 1.4.0), xfun, jsonlite",NA,"tools, later, rstudioapi, knitr (>= 1.9), rmarkdown",NA,"GPL",NA,NA,NA,NA,"no","3.4.4"
+"sf","sf","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-3",NA,"R (>= 3.3.0), methods","utils, stats, tools, graphics, grDevices, grid, Rcpp, DBI (>=
+0.8), units (>= 0.5-1), classInt, magrittr","Rcpp","lwgeom (>= 0.1-2), maps, rgdal, rgeos, sp (>= 1.2-4), raster,
+spatstat, tmap, maptools, RSQLite, tibble (>= 1.4.1), pillar,
+rlang, dplyr (>= 0.7-0), tidyr (>= 0.7-2), RPostgreSQL,
+RPostgres (>= 1.1.0), odbc, tidyselect, ggplot2, mapview,
+testthat, knitr, covr, microbenchmark, rmarkdown",NA,"GPL-2 | MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"sfsmisc","sfsmisc","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1-2",NA,"R (>= 3.2.0)","grDevices, methods, utils, stats",NA,"datasets, tcltk, cluster, lattice, MASS, Matrix, nlme, lokern","mgcv, rpart, nor1mix, polycor, sm, tikzDevice","GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"shapefiles","shapefiles","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.7",NA,"R (>= 1.6.0), foreign",NA,NA,NA,NA,"GPL",NA,NA,NA,NA,NA,"3.4.1"
+"shiny","shiny","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,"R (>= 3.0.2), methods","utils, grDevices, httpuv (>= 1.4.3), mime (>= 0.3), jsonlite
+(>= 0.9.16), xtable, digest, htmltools (>= 0.3.5), R6 (>= 2.0),
+sourcetools, later (>= 0.7.2), promises (>= 1.0.1), tools,
+crayon, rlang",NA,"datasets, Cairo (>= 1.5-5), testthat, knitr (>= 1.6),
+markdown, rmarkdown, ggplot2, magrittr",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"shinyjs","shinyjs","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0",NA,"R (>= 3.1.0)","digest (>= 0.6.8), htmltools (>= 0.2.9), jsonlite, shiny (>=
+1.0.0)",NA,"knitr (>= 1.7), rmarkdown, shinyAce, testthat (>= 0.9.1), V8
+(>= 0.6)",NA,"AGPL-3",NA,NA,NA,NA,"no","3.4.4"
+"sna","sna","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.4",NA,"R (>= 2.0.0), utils, statnet.common, network",NA,NA,"rgl, numDeriv, SparseM",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"sourcetools","sourcetools","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.7",NA,"R (>= 3.0.2)",NA,NA,"testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"sp","sp","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3-1",NA,"R (>= 3.0.0), methods","utils, stats, graphics, grDevices, lattice, grid",NA,"RColorBrewer, rgdal (>= 0.8-7), rgeos (>= 0.3-13), gstat,
+maptools, deldir",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"spacetime","spacetime","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2-1",NA,"R (>= 3.0.0)","graphics, utils, stats, methods, lattice, sp (>= 1.1-0), zoo
+(>= 1.7-9), xts (>= 0.8-8), intervals",NA,"adehabitatLT, cshapes, diveMove, foreign, gstat (>= 1.0-16),
+maps, mapdata, maptools, plm, raster, RColorBrewer, rgdal,
+rgeos, RPostgreSQL, knitr, googleVis, ISOcodes",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"spam","spam","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.2-0",NA,"R (>= 3.1), dotCall64, grid, methods",NA,NA,"spam64, fields, SparseM, Matrix, testthat, R.rsp, truncdist",NA,"LGPL-2 | BSD_3_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"SparseM","SparseM","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.77",NA,"R (>= 2.15), methods","graphics, stats, utils",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"spData","spData","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.9.0",NA,"R (>= 3.3.0)",NA,NA,"foreign, maptools, raster, rgdal, sf, sp, spDataLarge (>=
+0.2.7.0), spdep",NA,"CC0",NA,NA,NA,NA,"no","3.4.4"
+"sqldf","sqldf","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.4-11",NA,"R (>= 3.1.0), gsubfn (>= 0.6), proto, RSQLite","DBI, chron",NA,"RH2, RMySQL, RPostgreSQL, svUnit, tcltk, MASS",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"SQUAREM","SQUAREM","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2017.10-1",NA,"R (>= 3.0)",NA,NA,"setRNG",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"stabs","stabs","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-3",NA,"R (>= 2.14.0), methods, stats, parallel","graphics, grDevices, utils",NA,"glmnet, lars, mboost (> 2.3-0), gamboostLSS (>= 1.2-0), QUIC,
+TH.data, hdi, testthat, knitr, rmarkdown, igraph, huge",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"statnet.common","statnet.common","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","4.1.4",NA,NA,"utils, methods, coda",NA,"covr",NA,"GPL-3 + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"stringdist","stringdist","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.9.5.1",NA,"R (>= 2.15.3)","parallel",NA,"testthat",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"stringi","stringi","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.3",NA,"R (>= 2.14)","tools, utils, stats",NA,NA,NA,"file LICENSE","yes",NA,NA,NA,"yes","3.4.4"
+"stringr","stringr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3.1",NA,"R (>= 3.1)","glue (>= 1.2.0), magrittr, stringi (>= 1.1.7)",NA,"covr, htmltools, htmlwidgets, knitr, rmarkdown, testthat",NA,"GPL-2 | file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"styler","styler","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.2",NA,NA,"backports, cli, enc (>= 0.2), magrittr, purrr (>= 0.2.3),
+rematch2, rlang, rprojroot, tibble (>= 1.4.2), withr",NA,"data.tree, dplyr, here, knitr, rmarkdown, rstudioapi,
+testthat",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"tensorflow","tensorflow","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8",NA,"R (>= 3.1)","config, jsonlite (>= 1.2), processx, reticulate (>= 1.5),
+tfruns (>= 1.0), utils, yaml, rstudioapi (>= 0.7)",NA,"testthat, keras, tfestimators",NA,"Apache License 2.0",NA,NA,NA,NA,"no","3.4.4"
+"testMarie","testMarie","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,NA,"car,
+ggplot2",NA,"knitr,
+rmarkdown,
+testthat",NA,"What license is it under?",NA,NA,NA,NA,NA,"3.4.4"
+"testPackage","testPackage","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,NA,"car",NA,"knitr,
+rmarkdown,
+testthat",NA,"What license is it under?",NA,NA,NA,NA,NA,"3.4.4"
+"testthat","testthat","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.0.0",NA,"R (>= 3.1)","cli, crayon, digest, magrittr, methods, praise, R6 (>= 2.2.0),
+rlang, withr (>= 2.0.0)",NA,"covr, devtools, knitr, rmarkdown, xml2",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"tfruns","tfruns","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.3",NA,"R (>= 3.1)","utils, jsonlite (>= 1.2), base64enc, yaml, config, magrittr,
+whisker, tidyselect, rlang, rstudioapi (>= 0.7), reticulate",NA,"testthat, knitr",NA,"Apache License 2.0",NA,NA,NA,NA,"no","3.4.4"
+"TH.data","TH.data","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-8",NA,"R (>= 2.10.0), survival, MASS",NA,NA,"dplyr, gdata, plyr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"tibble","tibble","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.2",NA,"R (>= 3.1.0)","cli, crayon, methods, pillar (>= 1.1.0), rlang, utils",NA,"covr, dplyr, import, knitr (>= 1.5.32), microbenchmark,
+mockr, nycflights13, rmarkdown, testthat, withr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"tidygraph","tidygraph","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.0",NA,NA,"tibble, dplyr (>= 0.7), igraph, magrittr, utils, rlang, R6,
+Rcpp, tools, stats, tidyr","Rcpp","network, data.tree, ape, graph, methods, testthat, covr,
+seriation, netrankr, influenceR, NetSwan",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"tidyr","tidyr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.8.1",NA,"R (>= 3.1)","dplyr (>= 0.7.0), glue, magrittr, purrr, Rcpp, rlang, stringi,
+tibble, tidyselect","Rcpp","covr, gapminder, knitr, rmarkdown, testthat",NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"tidyselect","tidyselect","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2.4",NA,"R (>= 3.1)","glue, purrr, rlang (>= 0.2.0), Rcpp (>= 0.12.0)","Rcpp (>= 0.12.0),","covr, dplyr, testthat",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"tidyverse","tidyverse","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.1",NA,NA,"broom (>= 0.4.2), cli (>= 1.0.0), crayon (>= 1.3.4), dplyr (>=
+0.7.4), dbplyr (>= 1.1.0), forcats (>= 0.2.0), ggplot2 (>=
+2.2.1), haven (>= 1.1.0), hms (>= 0.3), httr (>= 1.3.1),
+jsonlite (>= 1.5), lubridate (>= 1.7.1), magrittr (>= 1.5),
+modelr (>= 0.1.1), purrr (>= 0.2.4), readr (>= 1.1.1), readxl
+(>= 1.0.0), reprex (>= 0.1.1), rlang (>= 0.1.4), rstudioapi (>=
+0.7), rvest (>= 0.3.2), stringr (>= 1.2.0), tibble (>= 1.3.4),
+tidyr (>= 0.7.2), xml2 (>= 1.1.1)",NA,"feather (>= 0.3.1), knitr (>= 1.17), rmarkdown (>= 1.7.4)",NA,"GPL-3 | file LICENSE",NA,NA,NA,NA,"no","3.4.1"
+"timeDate","timeDate","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3043.102",NA,"R (>= 2.15.1), graphics, utils, stats, methods",NA,NA,"date, RUnit",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"tinytex","tinytex","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6",NA,NA,"xfun (>= 0.3)",NA,"testit",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"truncnorm","truncnorm","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-8",NA,"R (>= 3.4.0)",NA,NA,"testthat",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"tweenr","tweenr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.5",NA,"R (>= 3.2.0)","Rcpp (>= 0.12.3), grDevices","Rcpp",NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.1"
+"udunits2","udunits2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.13",NA,"R (>= 2.10.0)",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.1"
+"units","units","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.6-0",NA,"R (>= 3.0.0)","Rcpp","Rcpp","udunits2, NISTunits, measurements, xml2, tibble, pillar,
+knitr, testthat, ggforce, rmarkdown, magrittr",NA,"GPL-2",NA,NA,NA,NA,"yes","3.4.4"
+"usethis","usethis","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.4.0",NA,"R (>= 3.1)","clipr (>= 0.3.0), clisymbols, crayon, curl (>= 2.7), desc, fs
+(>= 1.2.0), gh, git2r (>= 0.23), glue, rlang, rprojroot (>=
+1.2), rstudioapi, utils, whisker",NA,"covr, knitr, magick, rmarkdown, roxygen2, spelling (>= 1.2),
+styler (>= 1.0.2), testthat (>= 2.0.0), withr",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"utf8","utf8","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.1.4",NA,"R (>= 2.10)",NA,NA,"knitr, rmarkdown, testthat",NA,"Apache License (== 2.0) | file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"uuid","uuid","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1-2",NA,"R (>= 2.9.0)",NA,NA,NA,NA,"MIT + file LICENSE",NA,NA,NA,NA,"yes","3.4.1"
+"VGAM","VGAM","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0-5",NA,"R (>= 3.4.0), methods, stats, stats4, splines",NA,NA,"VGAMdata, MASS, mgcv",NA,"GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"viridis","viridis","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.1",NA,"R (>= 2.10), viridisLite (>= 0.3.0)","stats, ggplot2 (>= 1.0.1), gridExtra",NA,"hexbin (>= 1.27.0), scales, MASS, knitr, dichromat,
+colorspace, rasterVis, httr, mapproj, vdiffr, svglite (>=
+1.2.0), testthat, covr, rmarkdown, rgdal",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"viridisLite","viridisLite","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.0",NA,"R (>= 2.10)",NA,NA,"hexbin (>= 1.27.0), ggplot2 (>= 1.0.1), testthat, covr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"webshot","webshot","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.5.0",NA,"R (>= 3.0)","magrittr, jsonlite, withr, processx",NA,"httpuv, knitr, rmarkdown, shiny",NA,"GPL-2",NA,NA,NA,NA,"no","3.4.4"
+"wesanderson","wesanderson","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3.6",NA,"R (>= 3.0)",NA,NA,"ggplot2",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"whisker","whisker","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3-2",NA,NA,NA,NA,"markdown",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.1"
+"withr","withr","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.2",NA,"R (>= 3.0.2)","stats, graphics, grDevices",NA,"testthat, covr, lattice, DBI, RSQLite, methods, knitr,
+rmarkdown",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.4"
+"xfun","xfun","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.3",NA,NA,"tools",NA,"testit, parallel, rstudioapi, tinytex, mime, markdown, knitr,
+rmarkdown",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"XLConnect","XLConnect","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-15",NA,"R (>= 2.10.0), XLConnectJars (== 0.2-15)","methods, rJava",NA,"RUnit, lattice, ggplot2 (>= 0.9.3), zoo",NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"XLConnectJars","XLConnectJars","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.2-15",NA,NA,"rJava",NA,NA,NA,"GPL-3",NA,NA,NA,NA,"no","3.4.4"
+"XML","XML","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","3.98-1.11",NA,"R (>= 2.13.0), methods, utils",NA,NA,"bitops, RCurl",NA,"BSD_2_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"xml2","xml2","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.2.0",NA,"R (>= 3.1.0)","Rcpp","Rcpp (>= 0.12.12)","testthat, curl, covr, knitr, rmarkdown, magrittr, httr",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"xtable","xtable","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8-2",NA,"R (>= 2.10.0)","stats, utils",NA,"knitr, lsmeans, spdep, splm, sphet, plm, zoo, survival",NA,"GPL (>= 2)",NA,NA,NA,NA,"no","3.4.1"
+"xts","xts","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.10-2",NA,"zoo (>= 1.7-12)","methods","zoo","timeSeries, timeDate, tseries, chron, fts, tis, RUnit",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"yaml","yaml","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","2.1.19",NA,NA,NA,NA,"testthat",NA,"BSD_3_clause + file LICENSE",NA,NA,NA,NA,"yes","3.4.4"
+"zeallot","zeallot","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","0.1.0",NA,NA,NA,NA,"testthat, knitr, rmarkdown, purrr, magrittr",NA,"MIT + file LICENSE",NA,NA,NA,NA,"no","3.4.4"
+"zip","zip","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.0.0",NA,NA,NA,NA,"covr, testthat, withr",NA,"CC0",NA,NA,NA,NA,"yes","3.4.1"
+"zoo","zoo","/home/metienne/R/x86_64-pc-linux-gnu-library/3.4","1.8-2",NA,"R (>= 3.1.0), stats","utils, graphics, grDevices, lattice (>= 0.20-27)",NA,"coda, chron, DAAG, fts, ggplot2, mondate, scales,
+strucchange, timeDate, timeSeries, tis, tseries, xts",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"rJava","rJava","/usr/lib/R/site-library","0.9-8",NA,"R (>= 2.5.0), methods",NA,NA,NA,NA,"GPL-2",NA,NA,NA,NA,"yes","3.2.3"
+"base","base","/usr/lib/R/library","3.4.4","base",NA,NA,NA,"methods",NA,"Part of R 3.4.4",NA,NA,NA,NA,NA,"3.4.4"
+"boot","boot","/usr/lib/R/library","1.3-20","recommended","R (>= 3.0.0), graphics, stats",NA,NA,"MASS, survival",NA,"Unlimited",NA,NA,NA,NA,"no","3.4.1"
+"class","class","/usr/lib/R/library","7.3-14","recommended","R (>= 3.0.0), stats, utils","MASS",NA,NA,NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.0"
+"cluster","cluster","/usr/lib/R/library","2.0.7-1","recommended","R (>= 3.2.0)","graphics, grDevices, stats, utils",NA,"MASS, Matrix",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"codetools","codetools","/usr/lib/R/library","0.2-15","recommended","R (>= 2.1)",NA,NA,NA,NA,"GPL",NA,NA,NA,NA,"no","3.3.1"
+"compiler","compiler","/usr/lib/R/library","3.4.4","base",NA,NA,NA,NA,NA,"Part of R 3.4.4",NA,NA,NA,NA,NA,"3.4.4"
+"datasets","datasets","/usr/lib/R/library","3.4.4","base",NA,NA,NA,NA,NA,"Part of R 3.4.4",NA,NA,NA,NA,NA,"3.4.4"
+"foreign","foreign","/usr/lib/R/library","0.8-70","recommended","R (>= 3.0.0)","methods, utils, stats",NA,NA,NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"graphics","graphics","/usr/lib/R/library","3.4.4","base",NA,"grDevices",NA,NA,NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"grDevices","grDevices","/usr/lib/R/library","3.4.4","base",NA,NA,NA,"KernSmooth",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"grid","grid","/usr/lib/R/library","3.4.4","base",NA,"grDevices, utils",NA,"lattice",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"KernSmooth","KernSmooth","/usr/lib/R/library","2.23-15","recommended","R (>= 2.5.0), stats",NA,NA,"MASS",NA,"Unlimited",NA,NA,NA,NA,"yes","3.4.0"
+"lattice","lattice","/usr/lib/R/library","0.20-35","recommended","R (>= 3.0.0)","grid, grDevices, graphics, stats, utils",NA,"KernSmooth, MASS, latticeExtra","chron","GPL (>= 2)",NA,NA,NA,NA,"yes","3.3.3"
+"MASS","MASS","/usr/lib/R/library","7.3-50","recommended","R (>= 3.1.0), grDevices, graphics, stats, utils","methods",NA,"lattice, nlme, nnet, survival",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.4"
+"Matrix","Matrix","/usr/lib/R/library","1.2-14","recommended","R (>= 3.2.0)","methods, graphics, grid, stats, utils, lattice",NA,"expm, MASS","MatrixModels, graph, SparseM, sfsmisc","GPL (>= 2) | file LICENCE",NA,NA,NA,NA,"yes","3.4.4"
+"methods","methods","/usr/lib/R/library","3.4.4","base",NA,"utils, stats",NA,"codetools",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"mgcv","mgcv","/usr/lib/R/library","1.8-24","recommended","R (>= 2.14.0), nlme (>= 3.1-64)","methods, stats, graphics, Matrix",NA,"splines, parallel, survival, MASS",NA,"GPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"nlme","nlme","/usr/lib/R/library","3.1-137","recommended","R (>= 3.4.0)","graphics, stats, utils, lattice",NA,"Hmisc, MASS",NA,"GPL (>= 2) | file LICENCE",NA,NA,NA,NA,"yes","3.4.4"
+"nnet","nnet","/usr/lib/R/library","7.3-12","recommended","R (>= 2.14.0), stats, utils",NA,NA,"MASS",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.0"
+"parallel","parallel","/usr/lib/R/library","3.4.4","base",NA,"tools, compiler",NA,"methods","snow, nws, Rmpi","Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"rpart","rpart","/usr/lib/R/library","4.1-13","recommended","R (>= 2.15.0), graphics, stats, grDevices",NA,NA,"survival",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.4.3"
+"spatial","spatial","/usr/lib/R/library","7.3-11","recommended","R (>= 3.0.0), graphics, stats, utils",NA,NA,"MASS",NA,"GPL-2 | GPL-3",NA,NA,NA,NA,"yes","3.2.5"
+"splines","splines","/usr/lib/R/library","3.4.4","base",NA,"graphics, stats",NA,"Matrix, methods",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"stats","stats","/usr/lib/R/library","3.4.4","base",NA,"utils, grDevices, graphics",NA,"MASS, Matrix, SuppDists, methods, stats4",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"stats4","stats4","/usr/lib/R/library","3.4.4","base",NA,"graphics, methods, stats",NA,NA,NA,"Part of R 3.4.4",NA,NA,NA,NA,NA,"3.4.4"
+"survival","survival","/usr/lib/R/library","2.42-3","recommended","R (>= 2.13.0)","graphics, Matrix, methods, splines, stats, utils",NA,NA,NA,"LGPL (>= 2)",NA,NA,NA,NA,"yes","3.4.4"
+"tcltk","tcltk","/usr/lib/R/library","3.4.4","base",NA,"utils",NA,NA,NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"tools","tools","/usr/lib/R/library","3.4.4","base",NA,NA,NA,"codetools, methods, xml2, curl",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"
+"utils","utils","/usr/lib/R/library","3.4.4","base",NA,NA,NA,"methods, XML",NA,"Part of R 3.4.4",NA,NA,NA,NA,"yes","3.4.4"

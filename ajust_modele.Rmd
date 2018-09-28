@@ -22,3 +22,10 @@ library(dplyr)
 
 
 [Les diapos du cours ](ajust_modele.pdf)
+
+
+Les données du Sénégal 
+
+TP : 
+[Le Thiof au Sénégal](http://www.au-senegal.com/+-Thiof-+.html?lang=fr)
+[les données](data/data_PA_Thiof.txt)
