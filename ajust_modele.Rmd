@@ -29,3 +29,9 @@ Les données du Sénégal
 TP : 
 [Le Thiof au Sénégal](http://www.au-senegal.com/+-Thiof-+.html?lang=fr)
 [les données](data/data_PA_Thiof.txt)
+
+
+
+## Devoir à rendre 
+
+[les données Pêche industrielle](data/data_PI_Thiof.txt)
