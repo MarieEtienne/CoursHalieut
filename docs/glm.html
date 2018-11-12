@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Modèle linéaire Généralisé</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Stat 4 Halieutes</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+<li>
+  <a href="https://github.com/MarieEtienne/CoursHalieut">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-child"></span>
+     
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intror_visu.html">Visualisation</a>
+    </li>
+    <li>
+      <a href="intror_rappel.html">Rappels de statistique</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-adjust"></span>
+     
+    Echantillonnage
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="echant_variabilite.html">Variabilité d'échantillonnage</a>
+    </li>
+    <li>
+      <a href="echant_strategie.html">Stratégie d'échantillonnage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-tilde"></span>
+     
+    Modélisation statistique
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ajust_modele.html">Modèle linéaire</a>
+    </li>
+    <li>
+      <a href="glm.html">Modèle linéaire Généralisé</a>
+    </li>
+    <li>
+      <a href="bayes.html">Modélisation bayésienne</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Modèle linéaire Généralisé</h1>
+
+</div>
+
+
+
+
+<p>Les auteurs ont collecté dans la littérature et dans les archives des muséums, des informations sur la présence ou l’absence de grenouilles sauvages dans 237 points d’eau de Californie. Pour chacun des sites, on dispose donc de sa position (longitude + latitude) de la source de l’information (Museum, Literature, PersCom ou Field Note) ainsi que de l’information sur la présence/absence de grenouilles.\ On cherche à caractériser l’aire de répartition de cette espèce en étudiant comment varie la probabilité de trouver des grenouilles dans un point d’eau en fonction de la latitude et de la longitude. On pourra aussi se demander si les différentes sources d’information documentent les mêmes &quot; types &quot; de points d’eau. \ Les données se trouvent dans le fichier Grenouille.don \ Les colonnes sont : Source Source2 presabs(Présence/Absence) latitude longitude \</p>
+
+<p>Les données sont disponibles sur <a href="data/Grenouille.don">grenouille</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grenouille &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(<span class="st">&#39;data&#39;</span>, <span class="st">&#39;Grenouille.don&#39;</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)
+n &lt;-<span class="st"> </span><span class="kw">nrow</span>(Grenouille)
+
+<span class="kw">summary</span>(Grenouille)</code></pre></div>
+<pre><code>##         Source       Source2   Status     Latitude       Longitude     
+##  FieldNote : 10   MVZ    :59   A:113   Min.   :32.64   Min.   :-123.0  
+##  Literature:  7   Perscom:31   P:123   1st Qu.:34.39   1st Qu.:-121.8  
+##  Museum    :188   LACM   :26           Median :35.47   Median :-120.4  
+##  Perscom   : 31   CAS-SU :15           Mean   :35.92   Mean   :-120.1  
+##                   SDNHM  :15           3rd Qu.:37.72   3rd Qu.:-118.7  
+##                   UMMZ   :12           Max.   :40.49   Max.   :-116.4  
+##                   (Other):78</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grenouille <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">pres_bin =</span> <span class="kw">ifelse</span>(Status<span class="op">==</span><span class="st">&#39;A&#39;</span>, <span class="dv">0</span>, <span class="dv">1</span>)) -&gt;<span class="st"> </span>Grenouille
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>Grenouille, <span class="kw">aes</span>(<span class="dt">x=</span>Latitude, <span class="dt">y=</span>pres_bin)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
+p</code></pre></div>
+<p><img src="glm_files/figure-html/desc-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>Grenouille, <span class="kw">aes</span>(<span class="dt">x=</span>Longitude, <span class="dt">y=</span>pres_bin)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
+p</code></pre></div>
+<p><img src="glm_files/figure-html/desc-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>Grenouille, <span class="kw">aes</span>(<span class="dt">y =</span> Latitude, <span class="dt">x =</span> Longitude, <span class="dt">col =</span> Status)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()
+p</code></pre></div>
+<p><img src="glm_files/figure-html/desc-3.png" width="672" /></p>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm1  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status<span class="op">~</span>Latitude, <span class="dt">family=</span>binomial, <span class="dt">data=</span>Grenouille)
+
+<span class="kw">summary</span>(glm1)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Status ~ Latitude, family = binomial, data = Grenouille)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.635  -1.078   0.951   1.096   1.308  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept) -7.32756    2.52734  -2.899  0.00374 **
+## Latitude     0.20645    0.07034   2.935  0.00334 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 326.74  on 235  degrees of freedom
+## Residual deviance: 317.81  on 234  degrees of freedom
+## AIC: 321.81
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glm1)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: Status
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##          Df Deviance Resid. Df Resid. Dev
+## NULL                       235     326.74
+## Latitude  1   8.9292       234     317.81</code></pre>
+
+<span class="math display">\[\begin{align*}
+Y_{k}  &amp; \sim \mathcal{B}(p_k) \\
+ logit(p_k) &amp; = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k 
+\end{align*}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm12  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status<span class="op">~</span>Latitude<span class="op">+</span>Longitude, <span class="dt">family=</span>binomial, <span class="dt">data=</span>Grenouille)
+
+<span class="kw">summary</span>(glm12)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Status ~ Latitude + Longitude, family = binomial, 
+##     data = Grenouille)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.6435  -0.3011   0.2393   0.4404   2.0575  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -265.0912    32.1226  -8.252  &lt; 2e-16 ***
+## Latitude      -2.1157     0.3171  -6.671 2.53e-11 ***
+## Longitude     -2.8382     0.3523  -8.056 7.87e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 326.74  on 235  degrees of freedom
+## Residual deviance: 146.81  on 233  degrees of freedom
+## AIC: 152.81
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glm12)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: Status
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##           Df Deviance Resid. Df Resid. Dev
+## NULL                        235     326.74
+## Latitude   1    8.929       234     317.81
+## Longitude  1  171.002       233     146.81</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Anova</span>(glm12)</code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: Status
+##           LR Chisq Df Pr(&gt;Chisq)    
+## Latitude    100.04  1  &lt; 2.2e-16 ***
+## Longitude   171.00  1  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+
+<p>Les données sont disponibles sur <a href="data/Fourmis.txt">fourmis</a></p>
+
+Le but de l’étude présentée est d’étudier la diversité des fourmis sur le site expérimental des Nourragues en Guyane Française. Le protocole expérimental suivant a été mis en place : on récolte <span class="math inline">\(1m^2\)</span> de litière que l’on pèse. Le poids de litière (variable ) est vu comme un proxy (un indicateur) de l’épaisseur de la litière. On compte ensuite le nombre d’espèces différentes présentes dans l’échantillon (variable ). 50 points d’échantillonage distants d’au moins 10m ont été choisis :
+
+<p>D’autre part, étant donnée la relative petite taille de la forêt d’Inselberg () seuls 20 points d’échantillonnage ont été sélectionnés pour ce site.</p>
+<p>Enfin les conditions de recueil (humides ou sèches, variable ) ont été notées pour tester leur influence sur la présence des fourmis.</p>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fourmis &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(<span class="st">&#39;data&#39;</span>,<span class="st">&#39;Fourmis.txt&#39;</span>),<span class="dt">header=</span>T, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)
+
+
+Fourmis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Site, Conditions) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+## # Groups:   Site [?]
+##   Site  Conditions `n()`
+##   &lt;fct&gt; &lt;fct&gt;      &lt;int&gt;
+## 1 FLWT  Dry           24
+## 2 FLWT  Wet           26
+## 3 FTWT  Dry           24
+## 4 FTWT  Wet           26
+## 5 GPWT  Dry           22
+## 6 GPWT  Wet           28
+## 7 INWT  Dry           13
+## 8 INWT  Wet            7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span> Fourmis, <span class="kw">aes</span>(<span class="dt">x=</span>Site, <span class="dt">y=</span>Effectifs, <span class="dt">col=</span> Conditions)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() </code></pre></div>
+<p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span> Fourmis, <span class="kw">aes</span>(<span class="dt">x=</span>Weight, <span class="dt">y=</span>Effectifs, <span class="dt">col=</span> Conditions)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() </code></pre></div>
+<p><img src="glm_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fourmis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">log_weight=</span> <span class="kw">log</span>(Weight)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>log_weight, <span class="dt">y=</span>Effectifs, <span class="dt">col=</span> Conditions)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() </code></pre></div>
+<p><img src="glm_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fourmis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">log_weight=</span> <span class="kw">log</span>(Weight), <span class="dt">log_effectif =</span> <span class="kw">log</span>(Effectifs)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>log_weight, <span class="dt">y=</span>log_effectif, <span class="dt">col=</span> Conditions)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() </code></pre></div>
+<p><img src="glm_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
+<p>On souhaite étudier les variables qui influencent potentiellement le nombre d’espèces de fourmis présentes dans le milieu. A l’aide de graphiques bien choisis, proposer des variables candidates.</p>
+<p>Que peut-on dire du plan d’expérience ?</p>
+
+<p>On modélise des comptages par des lois de Poisson</p>
+<span class="math display">\[\begin{align}
+Y_{ijk} &amp; \sim \mathcal{P}(\lambda_{ij})
+
+\end{align}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glmInt &lt;-<span class="st">  </span><span class="kw">glm</span>(Effectifs<span class="op">~</span>Site<span class="op">*</span>Conditions,<span class="dt">offset=</span><span class="kw">log</span>(Weight),
+             <span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>, <span class="dt">data=</span>Fourmis )
+<span class="kw">summary</span>(glmInt)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Effectifs ~ Site * Conditions, family = &quot;poisson&quot;, 
+##     data = Fourmis, offset = log(Weight))
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.2267  -0.9268  -0.1522   0.8252   3.6257  
+## 
+## Coefficients:
+##                        Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)             0.49531    0.04969   9.968  &lt; 2e-16 ***
+## SiteFTWT               -0.55200    0.08425  -6.552 5.69e-11 ***
+## SiteGPWT               -0.74225    0.08857  -8.380  &lt; 2e-16 ***
+## SiteINWT               -0.38293    0.09727  -3.937 8.26e-05 ***
+## ConditionsWet          -0.02802    0.07132  -0.393  0.69438    
+## SiteFTWT:ConditionsWet -0.37426    0.12476  -3.000  0.00270 ** 
+## SiteGPWT:ConditionsWet  0.16746    0.11880   1.410  0.15866    
+## SiteINWT:ConditionsWet  0.47387    0.14148   3.349  0.00081 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 534.13  on 169  degrees of freedom
+## Residual deviance: 301.41  on 162  degrees of freedom
+## AIC: 1017.2
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glmInt)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: poisson, link: log
+## 
+## Response: Effectifs
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##                 Df Deviance Resid. Df Resid. Dev
+## NULL                              169     534.13
+## Site             3  201.731       166     332.40
+## Conditions       1    0.000       165     332.40
+## Site:Conditions  3   30.994       162     301.41</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Anova</span>(glmInt)</code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: Effectifs
+##                 LR Chisq Df Pr(&gt;Chisq)    
+## Site             200.543  3  &lt; 2.2e-16 ***
+## Conditions         0.000  1     0.9883    
+## Site:Conditions   30.994  3  8.526e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(emmeans)</code></pre></div>
+<pre><code>## NOTE: As of emmeans versions &gt; 1.2.3,
+##       The &#39;cld&#39; function will be deprecated in favor of &#39;CLD&#39;.
+##       You may use &#39;cld&#39; only if you have package:multcomp attached.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">emmeans</span>(glmInt,pairwise<span class="op">~</span>Site<span class="op">*</span>Conditions,<span class="dt">adjust=</span><span class="st">&quot;bonferroni&quot;</span>)</code></pre></div>
+<pre><code>## $emmeans
+##  Site Conditions      emmean         SE  df   asymp.LCL   asymp.UCL
+##  FLWT Dry         0.49530878 0.04969040 Inf  0.39791739  0.59270016
+##  FTWT Dry        -0.05669534 0.06804135 Inf -0.19005395  0.07666326
+##  GPWT Dry        -0.24694408 0.07332322 Inf -0.39065495 -0.10323321
+##  INWT Dry         0.11237809 0.08362226 Inf -0.05151852  0.27627470
+##  FLWT Wet         0.46728482 0.05116443 Inf  0.36700437  0.56756526
+##  FTWT Wet        -0.45897816 0.07647000 Inf -0.60885661 -0.30909971
+##  GPWT Wet        -0.10751148 0.06041102 Inf -0.22591491  0.01089194
+##  INWT Wet         0.55822786 0.08908707 Inf  0.38362041  0.73283532
+## 
+## Results are given on the log (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast               estimate         SE  df z.ratio p.value
+##  FLWT,Dry - FTWT,Dry  0.55200412 0.08425415 Inf   6.552  &lt;.0001
+##  FLWT,Dry - GPWT,Dry  0.74225285 0.08857443 Inf   8.380  &lt;.0001
+##  FLWT,Dry - INWT,Dry  0.38293069 0.09727187 Inf   3.937  0.0023
+##  FLWT,Dry - FLWT,Wet  0.02802396 0.07132275 Inf   0.393  1.0000
+##  FLWT,Dry - FTWT,Wet  0.95428693 0.09119647 Inf  10.464  &lt;.0001
+##  FLWT,Dry - GPWT,Wet  0.60282026 0.07822165 Inf   7.707  &lt;.0001
+##  FLWT,Dry - INWT,Wet -0.06291909 0.10200805 Inf  -0.617  1.0000
+##  FTWT,Dry - GPWT,Dry  0.19024874 0.10002960 Inf   1.902  1.0000
+##  FTWT,Dry - INWT,Dry -0.16907343 0.10780681 Inf  -1.568  1.0000
+##  FTWT,Dry - FLWT,Wet -0.52398016 0.08513181 Inf  -6.155  &lt;.0001
+##  FTWT,Dry - FTWT,Wet  0.40228281 0.10235862 Inf   3.930  0.0024
+##  FTWT,Dry - GPWT,Wet  0.05081614 0.09098966 Inf   0.558  1.0000
+##  FTWT,Dry - INWT,Wet -0.61492321 0.11209876 Inf  -5.486  &lt;.0001
+##  GPWT,Dry - INWT,Dry -0.35932217 0.11121590 Inf  -3.231  0.0346
+##  GPWT,Dry - FLWT,Wet -0.71422890 0.08940970 Inf  -7.988  &lt;.0001
+##  GPWT,Dry - FTWT,Wet  0.21203408 0.10594317 Inf   2.001  1.0000
+##  GPWT,Dry - GPWT,Wet -0.13943260 0.09500414 Inf  -1.468  1.0000
+##  GPWT,Dry - INWT,Wet -0.80517194 0.11538111 Inf  -6.978  &lt;.0001
+##  INWT,Dry - FLWT,Wet -0.35490673 0.09803306 Inf  -3.620  0.0082
+##  INWT,Dry - FTWT,Wet  0.57135625 0.11331524 Inf   5.042  &lt;.0001
+##  INWT,Dry - GPWT,Wet  0.21988957 0.10316091 Inf   2.132  0.9253
+##  INWT,Dry - INWT,Wet -0.44584977 0.12218506 Inf  -3.649  0.0074
+##  FLWT,Wet - FTWT,Wet  0.92626297 0.09200794 Inf  10.067  &lt;.0001
+##  FLWT,Wet - GPWT,Wet  0.57479630 0.07916622 Inf   7.261  &lt;.0001
+##  FLWT,Wet - INWT,Wet -0.09094305 0.10273415 Inf  -0.885  1.0000
+##  FTWT,Wet - GPWT,Wet -0.35146667 0.09745334 Inf  -3.607  0.0087
+##  FTWT,Wet - INWT,Wet -1.01720602 0.11740600 Inf  -8.664  &lt;.0001
+##  GPWT,Wet - INWT,Wet -0.66573935 0.10763827 Inf  -6.185  &lt;.0001
+## 
+## Results are given on the log (not the response) scale. 
+## P value adjustment: bonferroni method for 28 tests</code></pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

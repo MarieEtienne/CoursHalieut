@@ -367,22 +367,19 @@ div.tocify {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-tilde"></span>
      
-    Ajustement de modèles
+    Modélisation statistique
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="ajust_modele.html">La modélisation</a>
+      <a href="ajust_modele.html">Modèle linéaire</a>
     </li>
     <li>
-      <a href="ajust_vrais.html">Vraisemblance de modèles usuels</a>
+      <a href="glm.html">Modèle linéaire Généralisé</a>
     </li>
     <li>
-      <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>
-    </li>
-    <li>
-      <a href="ajust_tests.html">Intervalles de confiance et tests</a>
+      <a href="bayes.html">Modélisation bayésienne</a>
     </li>
   </ul>
 </li>
@@ -447,9 +444,9 @@ enseignants</code></pre></div>
 </div>
 <div id="lire-des-donnees-depuis-une-url" class="section level2">
 <h2>Lire des données depuis une url</h2>
-<p>On souhaite lire le fichier <a href="http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt">decathlon</a></p>
+<p>On souhaite lire le fichier <a href="http://www.agrocampus-ouest.fr/math/RforStat/decathlon.csv">decathlon</a></p>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">monFichier &lt;-<span class="st"> &#39;http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/103303_decath.txt&#39;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">monFichier &lt;-<span class="st"> &#39;http://math.agrocampus-ouest.fr/infoglueDeliverLive/digitalAssets/107906_decath.txt&#39;</span>
 decathlon &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> monFichier, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)
 <span class="kw">head</span>(decathlon, <span class="dt">n=</span><span class="dv">2</span>)</code></pre></div>
 <pre><code>##        X X100m Longueur Poids Hauteur X400m X110m.haies Disque Perche
@@ -1040,7 +1037,6 @@ OtoYFT &lt;-<span class="st"> </span><span class="kw">sqlQuery</span>( <span cla
 </div>
 </div>
 
-<p><img src="LogoAgrocampusOuest.gif" heigth="84" width="84"></img>  <a href="https://www.agrocampus-ouest.fr/">Visit Agrocampus Ouest</a>  </p>
 
 
 </div>

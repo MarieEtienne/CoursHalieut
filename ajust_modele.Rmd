@@ -1,5 +1,5 @@
 ---
-title: "Modélisation statistique"
+title: "Modèle linéaire"
 output: 
   html_document:
    toc: true
@@ -21,7 +21,7 @@ library(dplyr)
 
 
 
-[Les diapos du cours ](ajust_modele.pdf)
+[Les diapos du cours ](lm_cours.pdf)
 
 
 Les données du Sénégal 

@@ -31,22 +31,21 @@ navbar:
         href: echant_variabilite.html
       - text: "Stratégie d'échantillonnage"
         href: echant_strategie.html
-  - text: "Ajustement de modèles"
+  - text: "Modélisation statistique"
     icon: fa-tilde
     menu:
-      - text: "La modélisation"
+      - text: "Modèle linéaire"
         href: ajust_modele.html
-      - text: "Vraisemblance de modèles usuels"
-        href: ajust_vrais.html
-      - text: "Estimation par maximum de vraisemblance"
-        href: ajust_estim.html
-      - text: "Intervalles de confiance et tests"
-        href: ajust_tests.html
-    
+      - text: "Modèle linéaire Généralisé"
+        href: glm.html
+      - text: "Modélisation bayésienne"
+        href: bayes.html
+
+     
+      
 output:
   html_document:
     theme: lumen
     highlight: haddock
-    include:
-      after_body: footer.html
+
     

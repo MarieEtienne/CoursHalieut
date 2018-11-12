@@ -367,22 +367,19 @@ div.tocify {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-tilde"></span>
      
-    Ajustement de modèles
+    Modélisation statistique
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="ajust_modele.html">La modélisation</a>
+      <a href="ajust_modele.html">Modèle linéaire</a>
     </li>
     <li>
-      <a href="ajust_vrais.html">Vraisemblance de modèles usuels</a>
+      <a href="glm.html">Modèle linéaire Généralisé</a>
     </li>
     <li>
-      <a href="ajust_estim.html">Estimation par maximum de vraisemblance</a>
-    </li>
-    <li>
-      <a href="ajust_tests.html">Intervalles de confiance et tests</a>
+      <a href="bayes.html">Modélisation bayésienne</a>
     </li>
   </ul>
 </li>
@@ -552,9 +549,9 @@ lm_eau_annee       &lt;-<span class="st"> </span><span class="kw">lm</span>(T_ea
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: T_eau
-##             Df  Sum Sq Mean Sq F value Pr(&gt;F)
-## annee        1     8.2  8.2134  0.6466 0.4214
-## Residuals 2189 27806.8 12.7030</code></pre>
+##              Df  Sum Sq Mean Sq F value Pr(&gt;F)
+## annee_fact    5    35.3  7.0592  0.5552 0.7344
+## Residuals  2185 27779.8 12.7138</code></pre>
 <p>Sans grande surprise, on ne met pas en évidence d’effet années, mais on constate également que la variance est très grande.</p>
 <p>Néanmoins il est possible que cette absence d’effet année soit du à une trop grande variabilité du fait de la variabilité annuelle de la température au cours de l’année.</p>
 </div>
@@ -879,7 +876,7 @@ nls_vonB &lt;-<span class="st"> </span><span class="kw">nls</span>(length <span 
 ## Residual standard error: 1.701 on 17 degrees of freedom
 ## 
 ## Number of iterations to convergence: 15 
-## Achieved convergence tolerance: 9.989e-07</code></pre>
+## Achieved convergence tolerance: 9.313e-07</code></pre>
 <p>Les hypothèses sur les résidus étant les mêmes, il faut les vérifier ‘à la main’.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_nls_vonB &lt;-<span class="st"> </span>df_growth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
   <span class="dt">fitted =</span> <span class="kw">nlsResiduals</span>(nls_vonB)<span class="op">$</span>resi2[,<span class="dv">1</span>],
@@ -905,7 +902,6 @@ R2_<span class="dv">1</span>   &lt;-<span class="st"> </span>RSS_<span class="dv
 <p>A rendre en binome sous forme de fichier RMarkdown pour le vendredi 14 septembre.</p>
 </div>
 
-<p><img src="LogoAgrocampusOuest.gif" heigth="84" width="84"></img>  <a href="https://www.agrocampus-ouest.fr/">Visit Agrocampus Ouest</a>  </p>
 
 
 </div>

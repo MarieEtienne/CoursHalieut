@@ -1,0 +1,170 @@
+---
+title: "Modèle linéaire Généralisé"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(ggplot2)
+library(dplyr)
+library(car)
+```
+
+
+
+\section{Les grenouilles à pattes rouges de Californie}
+
+\subsection{Présentation du problème}
+
+Les auteurs ont collecté dans la littérature et dans les archives des muséums, des informations
+sur la présence ou l'absence de grenouilles sauvages dans 237 points d'eau de Californie. Pour
+chacun des sites, on dispose donc de sa position (longitude + latitude) de la source de
+l'information (Museum, Literature, PersCom ou Field Note) ainsi que de l'information sur la
+présence/absence de grenouilles.\\
+On cherche à caractériser l'aire de répartition de cette espèce en étudiant comment varie la
+probabilité de trouver des grenouilles dans un point d'eau en fonction de la latitude et de la
+longitude. On pourra aussi se demander si les différentes sources d'information documentent
+les mêmes " types " de points d'eau. \\
+Les données se trouvent dans le fichier Grenouille.don \\
+Les colonnes sont : Source Source2 presabs(Présence/Absence) latitude longitude \\
+
+
+\subsection{Analyse descriptive}
+
+Les données sont disponibles sur [grenouille](data/Grenouille.don)
+
+```{r desc}
+
+Grenouille <- read.table(file.path('data', 'Grenouille.don'), sep="",header=TRUE)
+n <- nrow(Grenouille)
+
+summary(Grenouille)
+
+Grenouille %>% mutate(pres_bin = ifelse(Status=='A', 0, 1)) -> Grenouille
+
+p <- ggplot(data=Grenouille, aes(x=Latitude, y=pres_bin)) + geom_point()
+p
+
+p <- ggplot(data=Grenouille, aes(x=Longitude, y=pres_bin)) + geom_point()
+p
+
+
+p <- ggplot(data=Grenouille, aes(y = Latitude, x = Longitude, col = Status)) + geom_point() + coord_fixed()
+p
+```
+
+
+
+
+\subsection{Etude de l'effet Latitude seule}
+\begin{align*}
+Y_{k}  & \sim \mathcal{B}(p_k) \\
+ logit(p_k) & = \beta_0 + \beta_1 x^{(1)}_k 
+\end{align*}
+
+
+
+```{r}
+glm1  <-  glm(Status~Latitude, family=binomial, data=Grenouille)
+
+summary(glm1)
+anova(glm1)
+
+```
+
+\subsection{Introduction de la longitude}
+
+\begin{align*}
+Y_{k}  & \sim \mathcal{B}(p_k) \\
+ logit(p_k) & = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k 
+\end{align*}
+
+
+```{r}
+glm12  <-  glm(Status~Latitude+Longitude, family=binomial, data=Grenouille)
+
+summary(glm12)
+anova(glm12)
+Anova(glm12)
+```
+
+
+
+\section{Etude des espèces de fourmis dans la forêt du Nourragues}
+
+ Les données sont disponibles sur [fourmis](data/Fourmis.txt)
+ 
+\subsection{Présentation du protocole}
+Le but de l'étude présentée est d'étudier la diversité des fourmis sur le site expérimental des Nourragues en Guyane Française. Le protocole expérimental suivant a été mis en place : on récolte $1m^2$ de litière que l'on pèse. Le poids de litière (variable \verb+Weight+) est vu comme un proxy (un indicateur) de l'épaisseur de la litière. On compte ensuite le nombre d'espèces différentes présentes dans l'échantillon (variable \verb+Effectif+). 50 points d'échantillonage distants d'au moins 10m ont été choisis :
+\begin{itemize}
+\item sur la forêt de plateau (\verb+GPWT+),
+\item dans la foret de liane (\verb+FLWT+),
+\item dans la foret de transition (\verb+FTWT+).
+\end{itemize}
+D'autre part, étant donnée la relative petite taille de la forêt d'Inselberg (\verb+INWT+) seuls 20 points d'échantillonnage ont été sélectionnés pour ce site.
+
+Enfin les conditions de recueil (humides ou sèches, variable \verb+Conditions+) ont été notées pour tester leur influence sur la présence des fourmis. 
+
+
+\subsection{Analyse descriptive}
+
+```{r}
+Fourmis <- read.table(file.path('data','Fourmis.txt'),header=T, sep=',')
+
+
+Fourmis %>% group_by(Site, Conditions) %>% summarise(n())
+
+ggplot(data= Fourmis, aes(x=Site, y=Effectifs, col= Conditions)) + geom_boxplot() 
+
+
+ggplot(data= Fourmis, aes(x=Weight, y=Effectifs, col= Conditions)) + geom_point() 
+
+Fourmis %>% mutate(log_weight= log(Weight)) %>% ggplot(aes(x=log_weight, y=Effectifs, col= Conditions)) + geom_point() 
+
+Fourmis %>% mutate(log_weight= log(Weight), log_effectif = log(Effectifs)) %>% ggplot(aes(x=log_weight, y=log_effectif, col= Conditions)) + geom_point() 
+
+```
+
+
+On souhaite étudier les variables qui influencent potentiellement le nombre d'espèces de fourmis présentes dans le milieu. A l'aide de graphiques bien choisis, proposer des variables candidates.\par
+
+Que peut-on dire du plan d'expérience ?
+
+\subsection{Modélisation}
+\subsubsection*{Effet des conditions de recueil et du site}
+
+On modélise des comptages par des lois de Poisson
+
+\begin{align}
+Y_{ijk} & \sim \mathcal{P}(\lambda_{ij})
+
+\end{align}
+
+
+```{r}
+glmInt <-  glm(Effectifs~Site*Conditions,offset=log(Weight),
+             family="poisson", data=Fourmis )
+summary(glmInt)
+anova(glmInt)
+Anova(glmInt)
+```
+
+
+\subsubsection*{Effectif attendu}
+
+```{r}
+library(emmeans)
+emmeans(glmInt,pairwise~Site*Conditions,adjust="bonferroni")
+```
+
