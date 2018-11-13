@@ -203,7 +203,7 @@ Ajuster un modèle de présence absence sur les données pour construire une pro
 Attention à construire une probabilité débarassée des déséquilibres expérimentaux. 
 
 
-### Un modèle de présence 
+### Un modèle de biomasse 
 
 Ajuster un modèle pour les captures positives. En déduire une capture positive moyenne par année.
 
