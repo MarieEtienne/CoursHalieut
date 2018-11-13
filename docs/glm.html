@@ -397,10 +397,14 @@ div.tocify {
 </div>
 
 
-
-
+<div id="les-grenouilles-a-pattes-rouges-de-californie" class="section level2">
+<h2>Les grenouilles à pattes rouges de Californie</h2>
+<div id="presentation-du-probleme" class="section level3">
+<h3>Présentation du problème</h3>
 <p>Les auteurs ont collecté dans la littérature et dans les archives des muséums, des informations sur la présence ou l’absence de grenouilles sauvages dans 237 points d’eau de Californie. Pour chacun des sites, on dispose donc de sa position (longitude + latitude) de la source de l’information (Museum, Literature, PersCom ou Field Note) ainsi que de l’information sur la présence/absence de grenouilles.\ On cherche à caractériser l’aire de répartition de cette espèce en étudiant comment varie la probabilité de trouver des grenouilles dans un point d’eau en fonction de la latitude et de la longitude. On pourra aussi se demander si les différentes sources d’information documentent les mêmes &quot; types &quot; de points d’eau. \ Les données se trouvent dans le fichier Grenouille.don \ Les colonnes sont : Source Source2 presabs(Présence/Absence) latitude longitude \</p>
-
+</div>
+<div id="analyse-descriptive" class="section level3">
+<h3>Analyse descriptive</h3>
 <p>Les données sont disponibles sur <a href="data/Grenouille.don">grenouille</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grenouille &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(<span class="st">&#39;data&#39;</span>, <span class="st">&#39;Grenouille.don&#39;</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)
 n &lt;-<span class="st"> </span><span class="kw">nrow</span>(Grenouille)
@@ -425,8 +429,13 @@ p</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>Grenouille, <span class="kw">aes</span>(<span class="dt">y =</span> Latitude, <span class="dt">x =</span> Longitude, <span class="dt">col =</span> Status)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()
 p</code></pre></div>
 <p><img src="glm_files/figure-html/desc-3.png" width="672" /></p>
+</div>
+<div id="etude-de-leffet-latitude-seule" class="section level3">
+<h3>Etude de l’effet Latitude seule</h3>
+<p><span class="math display">\[ Y_k  \overset{i.i.d}{\sim}\mathcal{B}(p_k), \quad logit(p_k)  = \beta_0 + \beta_1 x^{(1)}_k   \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm1  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status <span class="op">~</span><span class="st"> </span>Latitude, <span class="dt">family =</span> binomial, <span class="dt">data=</span>Grenouille)
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm1  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status<span class="op">~</span>Latitude, <span class="dt">family=</span>binomial, <span class="dt">data=</span>Grenouille)
+glm0 &lt;-<span class="st"> </span><span class="kw">glm</span>(Status <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">family =</span> binomial, <span class="dt">data=</span>Grenouille)
 
 <span class="kw">summary</span>(glm1)</code></pre></div>
 <pre><code>## 
@@ -451,27 +460,51 @@ p</code></pre></div>
 ## AIC: 321.81
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glm1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glm0, glm1, <span class="dt">test=</span><span class="st">&#39;Chisq&#39;</span>)</code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
-## Model: binomial, link: logit
-## 
-## Response: Status
-## 
-## Terms added sequentially (first to last)
-## 
-## 
-##          Df Deviance Resid. Df Resid. Dev
-## NULL                       235     326.74
-## Latitude  1   8.9292       234     317.81</code></pre>
-
-<span class="math display">\[\begin{align*}
-Y_{k}  &amp; \sim \mathcal{B}(p_k) \\
- logit(p_k) &amp; = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k 
-\end{align*}\]</span>
+## Model 1: Status ~ 1
+## Model 2: Status ~ Latitude
+##   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)   
+## 1       235     326.74                        
+## 2       234     317.81  1   8.9292 0.002806 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="introduction-de-la-longitude" class="section level3">
+<h3>Introduction de la longitude</h3>
+<p><span class="math display">\[ Y_{k}  \sim \mathcal{B}(p_k), \quad  logit(p_k)  = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k. \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm12  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status<span class="op">~</span>Latitude<span class="op">+</span>Longitude, <span class="dt">family=</span>binomial, <span class="dt">data=</span>Grenouille)
 
-<span class="kw">summary</span>(glm12)</code></pre></div>
+<span class="kw">anova</span>(glm1, glm12, <span class="dt">test=</span><span class="st">&#39;Chisq&#39;</span>)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Status ~ Latitude
+## Model 2: Status ~ Latitude + Longitude
+##   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+## 1       234     317.81                          
+## 2       233     146.81  1      171 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm2  &lt;-<span class="st">  </span><span class="kw">glm</span>(Status <span class="op">~</span><span class="st"> </span>Longitude, <span class="dt">family=</span>binomial, <span class="dt">data=</span>Grenouille)
+
+<span class="kw">anova</span>(glm0, glm2)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Status ~ 1
+## Model 2: Status ~ Longitude
+##   Resid. Df Resid. Dev Df Deviance
+## 1       235     326.74            
+## 2       234     246.85  1   79.892</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(glm0, glm1)</code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Status ~ 1
+## Model 2: Status ~ Latitude
+##   Resid. Df Resid. Dev Df Deviance
+## 1       235     326.74            
+## 2       234     317.81  1   8.9292</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(glm12)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Status ~ Latitude + Longitude, family = binomial, 
@@ -519,14 +552,20 @@ Y_{k}  &amp; \sim \mathcal{B}(p_k) \\
 ## Longitude   171.00  1  &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-
+</div>
+</div>
+<div id="etude-des-especes-de-fourmis-dans-la-foret-du-nourragues" class="section level2">
+<h2>Etude des espèces de fourmis dans la forêt du Nourragues</h2>
 <p>Les données sont disponibles sur <a href="data/Fourmis.txt">fourmis</a></p>
-
+<div id="presentation-du-protocole" class="section level3">
+<h3>Présentation du protocole</h3>
 Le but de l’étude présentée est d’étudier la diversité des fourmis sur le site expérimental des Nourragues en Guyane Française. Le protocole expérimental suivant a été mis en place : on récolte <span class="math inline">\(1m^2\)</span> de litière que l’on pèse. Le poids de litière (variable ) est vu comme un proxy (un indicateur) de l’épaisseur de la litière. On compte ensuite le nombre d’espèces différentes présentes dans l’échantillon (variable ). 50 points d’échantillonage distants d’au moins 10m ont été choisis :
 
 <p>D’autre part, étant donnée la relative petite taille de la forêt d’Inselberg () seuls 20 points d’échantillonnage ont été sélectionnés pour ce site.</p>
 <p>Enfin les conditions de recueil (humides ou sèches, variable ) ont été notées pour tester leur influence sur la présence des fourmis.</p>
-
+</div>
+<div id="analyse-descriptive-1" class="section level3">
+<h3>Analyse descriptive</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fourmis &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">file.path</span>(<span class="st">&#39;data&#39;</span>,<span class="st">&#39;Fourmis.txt&#39;</span>),<span class="dt">header=</span>T, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)
 
 
@@ -553,12 +592,13 @@ Fourmis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 <p><img src="glm_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
 <p>On souhaite étudier les variables qui influencent potentiellement le nombre d’espèces de fourmis présentes dans le milieu. A l’aide de graphiques bien choisis, proposer des variables candidates.</p>
 <p>Que peut-on dire du plan d’expérience ?</p>
-
+</div>
+<div id="modelisation" class="section level3">
+<h3>Modélisation</h3>
+<div id="effet-des-conditions-de-recueil-et-du-site" class="section level4">
+<h4>Effet des conditions de recueil et du site</h4>
 <p>On modélise des comptages par des lois de Poisson</p>
-<span class="math display">\[\begin{align}
-Y_{ijk} &amp; \sim \mathcal{P}(\lambda_{ij})
-
-\end{align}\]</span>
+<p><span class="math display">\[Y_{ijk}  \overset{i.i.d}{\sim} \mathcal{P}(\lambda_{ij} E_{ijk})\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glmInt &lt;-<span class="st">  </span><span class="kw">glm</span>(Effectifs<span class="op">~</span>Site<span class="op">*</span>Conditions,<span class="dt">offset=</span><span class="kw">log</span>(Weight),
              <span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>, <span class="dt">data=</span>Fourmis )
 <span class="kw">summary</span>(glmInt)</code></pre></div>
@@ -616,7 +656,9 @@ Y_{ijk} &amp; \sim \mathcal{P}(\lambda_{ij})
 ## Site:Conditions   30.994  3  8.526e-07 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-
+</div>
+<div id="effectif-attendu" class="section level4">
+<h4>Effectif attendu</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(emmeans)</code></pre></div>
 <pre><code>## NOTE: As of emmeans versions &gt; 1.2.3,
 ##       The &#39;cld&#39; function will be deprecated in favor of &#39;CLD&#39;.
@@ -669,6 +711,45 @@ Y_{ijk} &amp; \sim \mathcal{P}(\lambda_{ij})
 ## 
 ## Results are given on the log (not the response) scale. 
 ## P value adjustment: bonferroni method for 28 tests</code></pre>
+</div>
+</div>
+</div>
+<div id="indices-dabondances-pour-le-faux-fletan-du-pacifique" class="section level2">
+<h2>Indices d’abondances pour le faux flétan du pacifique</h2>
+<p>L’objectif est maintenant de construire un indice d’abondance annuel pour le faux flétan du Pacifique , <em>Atheresthes stomias</em> au large de l’ile de Vancouver. Les données <a href="data/GroundfishExtraction.csv">Groundfish</a> contiennent des données de captures par pêche scientifique au chalut de 1996 à 2009. Sont renseignés :</p>
+<ul>
+<li>un identifiant unique <code>FISHING_EVENT_ID</code>,</li>
+<li>l’année <code>YEAR</code></li>
+<li>le mois <code>MONTH</code>,</li>
+<li>le jour <code>DAY</code>,</li>
+<li>le jour, heure de début de chalutage <code>START_TIME</code> et fin <code>END_TIME</code>,</li>
+<li>la durée de chalutage en minutes <code>DURATION</code>,</li>
+<li>la latitude initiale <code>START_LATITUDE</code> et finale <code>END_LATITUDE</code>, de même pour la longitude <code>START_LONGITUDE</code>, <code>END_LATITUDE</code>,</li>
+<li>un identifiant du block pour l’échantillonnage stratifié <code>BLOCK_DESIGNATION</code>,</li>
+<li>une profondeur initiale <code>START_DEPTH</code> et finale <code>END_DEPTH</code>,</li>
+<li>la surface chalutée <code>SWEPT_AREA_KM2</code>,</li>
+<li>l’espèce ciblée <code>TARGET_SPECIES</code>,</li>
+<li>les captures pour ’ espèces <code>DOVER_SOLE</code>, <code>REX_SOLE</code>, <code>ARROWTOOTH_FLOUNDER</code>, <code>PACIFIC_OCEAN_PERCH</code>.</li>
+</ul>
+<div id="faire-une-analyse-descriptive-des-donnees" class="section level3">
+<h3>Faire une analyse descriptive des données</h3>
+<p>On souhaite visualiser un potentiel effet année sur la probabilité de présence mais également sur la capture moyenne lorsque capture il y a.</p>
+<p>Pour la probabilité de trouver du flétan et pour la capture moyenne, peut on suspecter un effet mois ? un effet espèce cible ? un effet durée de chalutage ?</p>
+</div>
+<div id="un-modele-de-presence" class="section level3">
+<h3>Un modèle de présence</h3>
+<p>Ajuster un modèle de présence absence sur les données pour construire une probabilité de présence annuelle. Il faut se méfier des effets potentiels du mois de capture, de la durée de chalutage, de l’espèce cible.</p>
+<p>Attention à construire une probabilité débarassée des déséquilibres expérimentaux.</p>
+</div>
+<div id="un-modele-de-presence-1" class="section level3">
+<h3>Un modèle de présence</h3>
+<p>Ajuster un modèle pour les captures positives. En déduire une capture positive moyenne par année.</p>
+</div>
+<div id="un-indice-dabondance" class="section level3">
+<h3>Un indice d’abondance</h3>
+<p>Combiner les deux résultats précédents pour construire une série d’indice d’abondance débarassés des effets indésirables.</p>
+</div>
+</div>
 
 
 

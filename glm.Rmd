@@ -23,9 +23,9 @@ library(car)
 
 
 
-\section{Les grenouilles à pattes rouges de Californie}
+## Les grenouilles à pattes rouges de Californie
 
-\subsection{Présentation du problème}
+### Présentation du problème
 
 Les auteurs ont collecté dans la littérature et dans les archives des muséums, des informations
 sur la présence ou l'absence de grenouilles sauvages dans 237 points d'eau de Californie. Pour
@@ -40,7 +40,7 @@ Les données se trouvent dans le fichier Grenouille.don \\
 Les colonnes sont : Source Source2 presabs(Présence/Absence) latitude longitude \\
 
 
-\subsection{Analyse descriptive}
+### Analyse descriptive
 
 Les données sont disponibles sur [grenouille](data/Grenouille.don)
 
@@ -67,32 +67,36 @@ p
 
 
 
-\subsection{Etude de l'effet Latitude seule}
-\begin{align*}
-Y_{k}  & \sim \mathcal{B}(p_k) \\
- logit(p_k) & = \beta_0 + \beta_1 x^{(1)}_k 
-\end{align*}
+### Etude de l'effet Latitude seule
+$$ Y_k  \overset{i.i.d}{\sim}\mathcal{B}(p_k), \quad logit(p_k)  = \beta_0 + \beta_1 x^{(1)}_k   $$ 
 
 
 
 ```{r}
-glm1  <-  glm(Status~Latitude, family=binomial, data=Grenouille)
+glm1  <-  glm(Status ~ Latitude, family = binomial, data=Grenouille)
+
+glm0 <- glm(Status ~ 1, family = binomial, data=Grenouille)
 
 summary(glm1)
-anova(glm1)
+anova(glm0, glm1, test='Chisq')
 
 ```
 
-\subsection{Introduction de la longitude}
+### Introduction de la longitude
 
-\begin{align*}
-Y_{k}  & \sim \mathcal{B}(p_k) \\
- logit(p_k) & = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k 
-\end{align*}
+$$ Y_{k}  \sim \mathcal{B}(p_k), \quad  logit(p_k)  = \beta_0 + \beta_1 x^{(1)}_k + \beta_2 x^{(2)}_k. $$
 
 
 ```{r}
 glm12  <-  glm(Status~Latitude+Longitude, family=binomial, data=Grenouille)
+
+anova(glm1, glm12, test='Chisq')
+
+glm2  <-  glm(Status ~ Longitude, family=binomial, data=Grenouille)
+
+anova(glm0, glm2)
+
+anova(glm0, glm1)
 
 summary(glm12)
 anova(glm12)
@@ -101,11 +105,11 @@ Anova(glm12)
 
 
 
-\section{Etude des espèces de fourmis dans la forêt du Nourragues}
+## Etude des espèces de fourmis dans la forêt du Nourragues
 
  Les données sont disponibles sur [fourmis](data/Fourmis.txt)
  
-\subsection{Présentation du protocole}
+### Présentation du protocole 
 Le but de l'étude présentée est d'étudier la diversité des fourmis sur le site expérimental des Nourragues en Guyane Française. Le protocole expérimental suivant a été mis en place : on récolte $1m^2$ de litière que l'on pèse. Le poids de litière (variable \verb+Weight+) est vu comme un proxy (un indicateur) de l'épaisseur de la litière. On compte ensuite le nombre d'espèces différentes présentes dans l'échantillon (variable \verb+Effectif+). 50 points d'échantillonage distants d'au moins 10m ont été choisis :
 \begin{itemize}
 \item sur la forêt de plateau (\verb+GPWT+),
@@ -117,7 +121,7 @@ D'autre part, étant donnée la relative petite taille de la forêt d'Inselberg 
 Enfin les conditions de recueil (humides ou sèches, variable \verb+Conditions+) ont été notées pour tester leur influence sur la présence des fourmis. 
 
 
-\subsection{Analyse descriptive}
+### Analyse descriptive 
 
 ```{r}
 Fourmis <- read.table(file.path('data','Fourmis.txt'),header=T, sep=',')
@@ -141,15 +145,13 @@ On souhaite étudier les variables qui influencent potentiellement le nombre d'e
 
 Que peut-on dire du plan d'expérience ?
 
-\subsection{Modélisation}
-\subsubsection*{Effet des conditions de recueil et du site}
+### Modélisation
+
+#### Effet des conditions de recueil et du site
 
 On modélise des comptages par des lois de Poisson
 
-\begin{align}
-Y_{ijk} & \sim \mathcal{P}(\lambda_{ij})
-
-\end{align}
+$$Y_{ijk}  \overset{i.i.d}{\sim} \mathcal{P}(\lambda_{ij} E_{ijk})$$
 
 
 ```{r}
@@ -161,10 +163,53 @@ Anova(glmInt)
 ```
 
 
-\subsubsection*{Effectif attendu}
+#### Effectif attendu
 
 ```{r}
 library(emmeans)
 emmeans(glmInt,pairwise~Site*Conditions,adjust="bonferroni")
 ```
+
+
+## Indices d'abondances pour le faux flétan du pacifique
+
+L'objectif est maintenant de construire un indice d'abondance annuel pour le faux flétan du Pacifique , *Atheresthes stomias* au large de l'ile de Vancouver.  Les données [Groundfish](data/GroundfishExtraction.csv) contiennent des données de captures par pêche scientifique au chalut  de 1996 à 2009. 
+Sont renseignés :
+
+- un identifiant unique `FISHING_EVENT_ID`,
+- l'année `YEAR`
+- le mois `MONTH`,
+- le jour `DAY`,
+- le jour, heure de début de chalutage `START_TIME` et fin  `END_TIME`,
+- la durée de chalutage en minutes `DURATION`,
+- la latitude initiale `START_LATITUDE` et finale 	`END_LATITUDE`, de même pour la longitude `START_LONGITUDE`, `END_LATITUDE`, 
+- un identifiant du block pour l'échantillonnage stratifié `BLOCK_DESIGNATION`,
+- une profondeur initiale `START_DEPTH` et finale `END_DEPTH`, 
+- la surface chalutée `SWEPT_AREA_KM2`,
+- l'espèce ciblée `TARGET_SPECIES`, 
+- les captures pour ' espèces `DOVER_SOLE`, 	`REX_SOLE`, 	`ARROWTOOTH_FLOUNDER`, 	`PACIFIC_OCEAN_PERCH`.
+
+
+### Faire une analyse descriptive des données
+
+On souhaite visualiser un potentiel effet année sur la probabilité de présence mais également sur la capture moyenne lorsque capture il y a. 
+
+Pour la probabilité de trouver du flétan et pour la capture moyenne, peut on suspecter un effet mois ? un effet espèce cible ? un effet durée de chalutage ? 
+
+### Un modèle de présence 
+
+Ajuster un modèle de présence absence sur les données pour construire une probabilité de présence annuelle. Il faut se méfier des effets potentiels du mois de capture, de la durée de chalutage, de l'espèce cible.
+
+Attention à construire une probabilité débarassée des déséquilibres expérimentaux. 
+
+
+### Un modèle de présence 
+
+Ajuster un modèle pour les captures positives. En déduire une capture positive moyenne par année.
+
+
+### Un indice d'abondance
+
+Combiner les deux résultats précédents pour construire une série d'indice d'abondance débarassés des effets indésirables.
+
 
