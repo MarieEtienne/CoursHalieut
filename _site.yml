@@ -38,6 +38,8 @@ navbar:
         href: ajust_modele.html
       - text: "Modèle linéaire Généralisé"
         href: glm.html
+      - text: "Modèle additif Généralisé"
+        href: gam.html
       - text: "Modélisation bayésienne"
         href: bayes.html
 
