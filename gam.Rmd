@@ -19,7 +19,7 @@ library(purrr)
 library(dplyr)
 ```
 
-
+Les données [ozone](data/ozone.csv) 
 
 [Les diapos du cours ](gam_cours.pdf)
 
