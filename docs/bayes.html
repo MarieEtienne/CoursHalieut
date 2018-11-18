@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Modélisation bayésienne pour l’écologie</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Stat 4 Halieutes</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Organisation</a>
+</li>
+<li>
+  <a href="https://github.com/MarieEtienne/CoursHalieut">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-child"></span>
+     
+    Introduction à R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="intror_presentation.html">Présentation du logiciel R</a>
+    </li>
+    <li>
+      <a href="intror_rstudio.html">Environnement RStudio</a>
+    </li>
+    <li>
+      <a href="intror_manip.html">Manipulation de données</a>
+    </li>
+    <li>
+      <a href="intror_visu.html">Visualisation</a>
+    </li>
+    <li>
+      <a href="intror_rappel.html">Rappels de statistique</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-adjust"></span>
+     
+    Echantillonnage
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="echant_variabilite.html">Variabilité d'échantillonnage</a>
+    </li>
+    <li>
+      <a href="echant_strategie.html">Stratégie d'échantillonnage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-tilde"></span>
+     
+    Modélisation statistique
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="ajust_modele.html">Modèle linéaire</a>
+    </li>
+    <li>
+      <a href="glm.html">Modèle linéaire Généralisé</a>
+    </li>
+    <li>
+      <a href="gam.html">Modèle additif Généralisé</a>
+    </li>
+    <li>
+      <a href="bayes.html">Modélisation bayésienne</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Modélisation bayésienne pour l’écologie</h1>
+
+</div>
+
+
+<p>Les slides sont disponibles<br />
+<a href="bayes_cours_1.pdf">Cours Partie1</a> <a href="bayes_cours_2.pdf">Cours Partie2</a></p>
+<p>Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne.</p>
+<div id="rappel-sur-quelques-lois-de-probabilite" class="section level1">
+<h1>Rappel sur quelques lois de probabilité</h1>
+<div id="lois-continues" class="section level2">
+<h2>Lois continues</h2>
+<div id="loi-exponentielle" class="section level3">
+<h3>Loi exponentielle</h3>
+<p>La loi exponentielle a pour support <span class="math inline">\(\left[0,+\infty\right[\)</span>. <span class="math inline">\(X\)</span> suit une loi exponentielle de paramètre <span class="math inline">\(\lambda\)</span> si elle a pour densité <span class="math display">\[[X=t]=\left\lbrace 
+\begin{array}{l}
+\lambda exp(-\lambda \,t) \quad t\geq 0,\cr
+0 \quad sinon\cr
+\end{array}\right.
+\]</span> L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{1}{\lambda} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{1}{\lambda^2}.\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="fl">0.1</span>)
+<span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+lambda&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>)
+
+ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(lambda, <span class="cf">function</span>(l_){
+  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dexp</span>(abc, <span class="dt">rate=</span>l_), <span class="dt">lambda=</span>l_)
+})
+
+res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
+res<span class="op">$</span>lambda &lt;-<span class="st"> </span><span class="kw">as.factor</span>(res<span class="op">$</span>lambda)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>lambda)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()
+<span class="kw">print</span>(p)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;expDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))</code></pre></div>
+</div>
+<div id="loi-gamma-et-inverse-gamma" class="section level3">
+<h3>Loi Gamma et Inverse Gamma</h3>
+<p>Si <span class="math inline">\(Y_1, \ldots, Y_n\)</span> sont des variables i.i.d de loi exponentielle de paramètre <span class="math inline">\(\lambda\)</span> alors <span class="math inline">\(X=\sum_{i=1}^n Y_i\)</span> suit une loi Gamma de paramètres de forme <span class="math inline">\(n\)</span> et de paramètre d’échelle <span class="math inline">\(\lambda\)</span>. On peut généraliser la définition à un <span class="math inline">\(n\)</span> non entier. Le support d’une loi Gamma est <span class="math inline">\(\left[0,+\infty\right[\)</span> et si <span class="math inline">\(X\)</span> suit une loi <span class="math inline">\(\Gamma(a,b)\)</span>, sa densité est donnée par~: <span class="math display">\[[X=t]=\left\lbrace
+\begin{array}{l}
+ \frac{b^a t^{a-1} e^{-b\, t}}{\Gamma(a)} \quad t\geq 0,\cr
+0 \quad sinon\cr
+\end{array}\right. \]</span></p>
+<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{a}{b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a}{b^2}.\]</span> Quelques exemples de lois Gamma pour différentes valeurs de <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span>~:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="fl">0.1</span>)
+<span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))
+a&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)
+b&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)
+z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(a,b)
+zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
+ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
+  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dgamma</span>(abc, <span class="dt">rate=</span>z[r_,<span class="dv">1</span>], <span class="dt">shape =</span> z[r_,<span class="dv">2</span>]), <span class="dt">a_b=</span>zconc[r_])
+})
+
+res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>a_b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))
+<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;gammaDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))</code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(p)</code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<p>On dit que <span class="math inline">\(X\)</span> suit une loi Inverse-Gamma si <span class="math inline">\(X^{-1}\)</span> suit une loi Gamma. Par ces propriétés mathématiques, la loi Inverse Gamma est naturellement candidate comme prior pour le paramètre de variance dans un modèle normal. En effet si <span class="math inline">\(Y\sim\mathcal{N}(\mu,\sigma^2)\)</span> avec <span class="math inline">\(\mu\)</span> connu et <span class="math inline">\(\sigma^2 \sim \Gamma(a,b)\)</span>, alors <span class="math inline">\(\sigma^2\vert Y,\mu \sim \Gamma(a&#39;,b&#39;)\)</span>.</p>
+</div>
+<div id="loi-beta" class="section level3">
+<h3>Loi Beta</h3>
+<p>La loi Beta a pour support <span class="math inline">\(\left[0,\right]\)</span>. Si <span class="math inline">\(X\)</span> suit une loi beta de paramètre <span class="math inline">\((a,b)\)</span> alors la densité de <span class="math inline">\(X\)</span> est donnée par <span class="math display">\[[X=t]=\left\lbrace
+\begin{array}{l}
+ \frac{\Gamma(a+b) t^{a-1} (1-t)^{b-1} }{\Gamma(a)\Gamma(b)} \quad t\in [0,1] ,\cr
+0 \quad sinon\cr
+\end{array}\right. \]</span></p>
+<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{a}{a+b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a\,b }{(a+b)^2 (a+b+1)}.\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)
+a&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">2</span>)
+b&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">2</span>)
+
+z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(a,b)
+zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
+
+ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
+  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dbeta</span>(abc, z[r_ , <span class="dv">1</span>] , z[r_ , <span class="dv">2</span>]), <span class="dt">a_b=</span>zconc[r_])
+})
+
+res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>a_b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))
+<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;betaDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="bayes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{betaDist.pdf} -->
+<!-- \end{figure}  -->
+</div>
+</div>
+<div id="lois-discretes" class="section level2">
+<h2>Lois discrètes</h2>
+<div id="loi-binnomiale" class="section level3">
+<h3>Loi binnomiale</h3>
+<p><span class="math inline">\(Y\)</span> suit une loi de Bernoulli si le support de <span class="math inline">\(Y\)</span> est <span class="math inline">\(\left\lbrace 0,1\right\rbrace\)</span> et <span class="math inline">\(\mathbb{P}(Y=1)=p\)</span>.<br />
+Si <span class="math inline">\(Y_1,\ldots, Y_n\)</span> sont des variables aléatoires indépendantes qui suivent une loi de Bernoulli de paramètre <span class="math inline">\(p\)</span>, alors <span class="math inline">\(X=\sum_{i=1}^n Y_i\)</span> suit une loi binomiale de paramètres <span class="math inline">\((n,p)\)</span>. Le support de <span class="math inline">\(X\)</span> est <span class="math inline">\(\left\lbrace 0,1, \ldots n\right\rbrace\)</span> est la loi de probabilité de <span class="math inline">\(X\)</span> est donnée par <span class="math display">\[[X=k] =
+ \left(\begin{array}{c} k \cr n \cr \end{array} \right)  p^k \, (1-p)^{n-k} \qquad k \in \left\lbrace 0,1, \ldots n\right\rbrace \]</span></p>
+<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=n\, p \quad \mbox{et}\quad \mathbb{V}(X)=n \, (1-p)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>)
+n&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>)
+p&lt;-<span class="kw">c</span>(<span class="fl">0.2</span>,<span class="fl">0.5</span>, <span class="fl">0.8</span>)
+
+z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(n,p)
+zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
+
+ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
+  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span> <span class="kw">dbinom</span>(abc, <span class="dt">size =</span> z[r_ , <span class="dv">1</span>] ,<span class="dt">p =</span> z[r_ , <span class="dv">2</span>]) , <span class="dt">n_p=</span>zconc[r_])
+})
+
+res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>n_p)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;binomDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="bayes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{binomDist.pdf} -->
+<!-- \caption{Distribution binomiale pour différentes valeurs de n et p}\label{fig:bin} -->
+<!-- \end{figure}  -->
+</div>
+<div id="loi-de-poisson" class="section level3">
+<h3>Loi de Poisson</h3>
+<p>Le support d’une loi de Poisson est <span class="math inline">\(\mathbb{N}\)</span>. <span class="math inline">\(X\)</span> suit une loi de Poisson de paramètre <span class="math inline">\(\lambda\)</span> si <span class="math display">\[[X=k]=\frac{\lambda^k}{k!}\exp{(-\lambda\, k)}\quad k \in \mathbb{N}\]</span> L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\lambda \quad \mbox{et}\quad \mathbb{V}(X)=\lambda\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">1</span>)
+lambda&lt;-<span class="kw">c</span>(<span class="fl">0.5</span> , <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">10</span>)
+
+ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), <span class="cf">function</span>(r_){
+  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span> <span class="kw">dpois</span>(abc, <span class="dt">lambda =</span> lambda[r_]) , <span class="dt">lambda=</span><span class="kw">as.character</span>(lambda[r_]))
+})
+
+res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>lambda)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;poisDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="bayes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{poisDist.pdf} -->
+<!-- \caption{Distribution de Poisson pour différentes valeurs de $\lambda$}\label{fig:bin} -->
+<!-- \end{figure}  -->
+</div>
+</div>
+</div>
+<div id="application-using-the-binomial-model-for-capture-data" class="section level1">
+<h1>Application using the binomial model for capture data</h1>
+<p>While monitoring a large population of size <span class="math inline">\(n\)</span> unknown, <span class="math inline">\(m\)</span> individuals have been marked and released. The population might be considered as <span class="math inline">\(m\)</span> marked individuals and <span class="math inline">\(n-m\)</span> unmarked individuals. A recapture experiment leads to <span class="math inline">\(YM\)</span> marked animals and <span class="math inline">\(YNM\)</span> unmarked. What is the size of the population.</p>
+<div id="modelling-and-estimating-the-capture-efficiency" class="section level2">
+<h2>Modelling and Estimating the capture efficiency</h2>
+The probability of capture might be infered from the recapture dataset and the experiment might be modelled as
+<span class="math display">\[\begin{equation}
+ YM \sim \mathcal{B}(m, p).
+\end{equation}\]</span>
+<p>The capture mark recapture experiment has been used for the first time on these conditions. Few is known on the probability of capture. Therefore an uniform prior is chosen to model the a priori knowledge on <span class="math inline">\(p\)</span>.</p>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="dv">53</span>
+YM &lt;-<span class="st"> </span><span class="dv">9</span></code></pre></div>
+</div>
+<div id="theoretical-posterior-distribution" class="section level3">
+<h3>Theoretical posterior distribution</h3>
+<p>Because the uniform distribution is a special case of beta distribution, the full bayesian specification for the model is a so called beta binomial model which has analytical posterior distribution.</p>
+<p><span class="math display">\[\pi(p\vert  YM_{obs}) \sim \mathcal{B}eta(YM + 1,  m-YM +1)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s1 &lt;-<span class="st"> </span><span class="dv">1</span>
+s2 &lt;-<span class="st"> </span><span class="dv">1</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">100</span>)))
+stat_post &lt;-<span class="st"> </span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
+                      <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> YM<span class="op">+</span>s1, <span class="dt">shape2 =</span> m<span class="op">-</span>YM<span class="op">+</span>s2))
+stat_prior &lt;-<span class="st"> </span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;green&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
+                      <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> s1, <span class="dt">shape2 =</span> s2))
+p <span class="op">+</span><span class="st"> </span>stat_prior <span class="op">+</span>stat_post</code></pre></div>
+<p><img src="bayes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+</div>
+<div id="implementing-a-mcmc-algorithm" class="section level2">
+<h2>Implementing a MCMC algorithm</h2>
+<div id="compute-the-likelihood-for-a-given-value-of-p" class="section level3">
+<h3>Compute the likelihood for a given value of <span class="math inline">\(p\)</span></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binom_loglikelihood&lt;-<span class="st"> </span><span class="cf">function</span>(y, p, m){
+  <span class="kw">dbinom</span>(<span class="dt">x =</span> y, <span class="dt">size=</span>m, <span class="dt">prob =</span> p)
+}
+
+<span class="kw">binom_loglikelihood</span>(<span class="dt">y=</span>YM, <span class="dt">p=</span><span class="fl">0.1</span>, <span class="dt">m=</span>m)</code></pre></div>
+<pre><code>## [1] 0.04297662</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">binom_loglikelihood</span>(<span class="dt">y=</span>YM, <span class="dt">p=</span><span class="fl">0.2</span>, <span class="dt">m=</span>m)</code></pre></div>
+<pre><code>## [1] 0.1235354</code></pre>
+</div>
+<div id="a-function-to-update-the-current-parameter-value" class="section level3">
+<h3>A function to update the current parameter value</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rprop &lt;-<span class="st"> </span><span class="cf">function</span>(p.courant, <span class="dt">sd.explore=</span><span class="fl">0.1</span>){
+  p.courant <span class="op">+</span><span class="st"> </span>sd.explore<span class="op">*</span><span class="kw">rnorm</span>(<span class="dv">1</span>)
+}
+
+dprop &lt;-<span class="st"> </span><span class="cf">function</span>(p.courant, p.propose, <span class="dt">sd.explore=</span><span class="fl">0.1</span>){
+ <span class="kw">dnorm</span>(p.courant<span class="op">-</span>p.propose, <span class="dt">sd=</span>sd.explore)
+}</code></pre></div>
+</div>
+<div id="metropolis-hastings-ratio" class="section level3">
+<h3>Metropolis Hastings ratio</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ratio &lt;-<span class="st"> </span><span class="cf">function</span>(p.courant, p.propose, sd.explore){
+  <span class="cf">if</span>(p.propose<span class="op">&gt;</span><span class="dv">1</span> <span class="op">||</span><span class="st"> </span>p.propose <span class="op">&lt;</span><span class="dv">0</span> ){
+    rat &lt;-<span class="st"> </span><span class="dv">0</span>
+  } <span class="cf">else</span>
+  {
+   rat &lt;-<span class="st">  </span>(<span class="kw">binom_loglikelihood</span>(YM, p.propose, <span class="dt">m=</span>m) <span class="op">*</span><span class="st"> </span><span class="kw">dbeta</span>(p.propose, s1, s2)) <span class="op">/</span><span class="st"> </span>(<span class="kw">binom_loglikelihood</span>(YM, p.courant, <span class="dt">m=</span>m) <span class="op">*</span><span class="st"> </span><span class="kw">dbeta</span>(p.courant, s1, s2))<span class="op">*</span>(<span class="kw">dprop</span>(p.propose, p.courant, sd.explore) <span class="op">/</span><span class="st"> </span><span class="kw">dprop</span>(p.courant, p.propose, sd.explore)) 
+  }
+  <span class="kw">return</span>(rat)
+}</code></pre></div>
+</div>
+<div id="metropolis-hastings-algorithm" class="section level3">
+<h3>Metropolis Hastings algorithm</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.init     &lt;-<span class="st"> </span><span class="fl">0.8</span>
+n.iter     &lt;-<span class="st"> </span><span class="dv">500</span>
+sd.tune    &lt;-<span class="st"> </span><span class="fl">0.1</span>
+
+p.post     &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, n.iter)
+p.courant  &lt;-<span class="st"> </span>p.init
+  
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="op">:</span><span class="st"> </span>n.iter){
+   p.cand &lt;-<span class="st"> </span><span class="kw">rprop</span>(p.courant, <span class="dt">sd.explore =</span> sd.tune)  
+   rat &lt;-<span class="st"> </span><span class="kw">ratio</span>(p.courant, p.cand, sd.tune)
+   <span class="cf">if</span>(<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>rat){
+     p.post[i] &lt;-<span class="st">  </span>p.courant &lt;-<span class="st"> </span>p.cand
+   } <span class="cf">else</span> {
+     p.post[i] &lt;-<span class="st"> </span>p.courant
+   }
+}
+
+df.post  &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">p.post=</span>p.post, <span class="dt">niter=</span><span class="dv">1</span><span class="op">:</span>n.iter)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.post, <span class="kw">aes</span>(<span class="dt">x=</span>niter, <span class="dt">y=</span>p.post)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
+p</code></pre></div>
+<p><img src="bayes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.post, <span class="kw">aes</span>(<span class="dt">x=</span>p.post)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="op">+</span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p.post, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;green&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
+                      <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> s1, <span class="dt">shape2 =</span> s2)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p.post, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
+                      <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> YM<span class="op">+</span>s1, <span class="dt">shape2 =</span> m<span class="op">-</span>YM<span class="op">+</span>s2))
+p</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="bayes_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

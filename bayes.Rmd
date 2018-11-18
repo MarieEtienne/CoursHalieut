@@ -1,0 +1,310 @@
+---
+title: "Modélisation bayésienne pour l'écologie"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   logo: LogoAgrocampusOuest.jpg
+   number_sections: false
+   highlight: tango
+   css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(ggplot2)
+library(dplyr)
+```
+
+
+Les slides sont disponibles  
+[Cours Partie1](bayes_cours_1.pdf)
+[Cours Partie2](bayes_cours_2.pdf)
+
+Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne. 
+
+
+# Rappel sur quelques lois de probabilité
+
+## Lois continues
+
+### Loi exponentielle
+La loi exponentielle a pour support $\left[0,+\infty\right[$. $X$ suit une loi exponentielle de paramètre $\lambda$ si elle a pour densité
+$$[X=t]=\left\lbrace 
+\begin{array}{l}
+\lambda exp(-\lambda \,t) \quad t\geq 0,\cr
+0 \quad sinon\cr
+\end{array}\right.
+$$
+L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{1}{\lambda} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{1}{\lambda^2}.$$
+
+```{r fig.show='hide'}
+abc<-seq(0,20,0.1)
+par(mfcol=c(2,2))
+lambda<-c(0.1, 0.5, 1, 2)
+
+ll <- lapply(lambda, function(l_){
+  data.frame(x=abc, y=dexp(abc, rate=l_), lambda=l_)
+})
+
+res <- do.call('rbind', ll)
+res$lambda <- as.factor(res$lambda)
+p <- ggplot(data = res, aes(x=x, y=y, col=lambda)) + geom_line()
+print(p)
+suppressMessages(ggsave(filename = 'expDist.pdf', width = 5, height=4))
+```
+
+
+
+### Loi Gamma et Inverse Gamma
+Si $Y_1, \ldots, Y_n$ sont des variables i.i.d de loi exponentielle de paramètre
+ $\lambda$ alors $X=\sum_{i=1}^n Y_i$ suit une loi Gamma de paramètres de forme
+  $n$ et de paramètre d'échelle $\lambda$.  On peut généraliser la définition à un $n$ non entier. Le support d'une loi Gamma est
+$\left[0,+\infty\right[$ et si $X$ suit une loi $\Gamma(a,b)$, sa densité est donnée par~:
+$$[X=t]=\left\lbrace
+\begin{array}{l}
+ \frac{b^a t^{a-1} e^{-b\, t}}{\Gamma(a)} \quad t\geq 0,\cr
+0 \quad sinon\cr
+\end{array}\right. $$
+
+L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{a}{b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a}{b^2}.$$
+Quelques exemples de lois Gamma pour différentes valeurs de $a$ et $b$~:
+```{r, fig.show='hide'}
+abc<-seq(0,20,0.1)
+par(mfcol=c(3,3))
+a<-c(0.1, 1, 10)
+b<-c(0.1, 1, 10)
+z <- expand.grid(a,b)
+zconc <- paste(z$Var1, z$Var2, sep='_')
+ll <- lapply(1:nrow(z), function(r_){
+  data.frame(x=abc, y=dgamma(abc, rate=z[r_,1], shape = z[r_,2]), a_b=zconc[r_])
+})
+
+res <- do.call('rbind', ll)
+p <- ggplot(data = res, aes(x=x, y=y, col=a_b)) + geom_line() + ylim(c(0,5))
+suppressMessages(ggsave(plot = p, filename = 'gammaDist.pdf', width = 5, height=4))
+print(p)
+```
+
+On dit que $X$ suit une loi Inverse-Gamma si $X^{-1}$ suit une loi Gamma. Par ces propriétés mathématiques, la loi Inverse Gamma est naturellement candidate comme prior pour le paramètre de variance dans un modèle normal.
+En effet si $Y\sim\mathcal{N}(\mu,\sigma^2)$ avec $\mu$ connu et $\sigma^2 \sim \Gamma(a,b)$, alors $\sigma^2\vert Y,\mu \sim \Gamma(a',b')$.
+
+
+### Loi Beta
+
+La loi Beta a pour support $\left[0,\right]$. Si $X$ suit une loi beta de paramètre $(a,b)$ alors la densité de $X$ est donnée par
+$$[X=t]=\left\lbrace
+\begin{array}{l}
+ \frac{\Gamma(a+b) t^{a-1} (1-t)^{b-1} }{\Gamma(a)\Gamma(b)} \quad t\in [0,1] ,\cr
+0 \quad sinon\cr
+\end{array}\right. $$
+
+
+L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{a}{a+b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a\,b }{(a+b)^2 (a+b+1)}.$$
+
+```{r}
+abc<-seq(0,1,0.01)
+a<-c(0.1, 1, 2)
+b<-c(0.1, 1, 2)
+
+z <- expand.grid(a,b)
+zconc <- paste(z$Var1, z$Var2, sep='_')
+
+ll <- lapply(1:nrow(z), function(r_){
+  data.frame(x=abc, y=dbeta(abc, z[r_ , 1] , z[r_ , 2]), a_b=zconc[r_])
+})
+
+res <- do.call('rbind', ll)
+p <- ggplot(data = res, aes(x=x, y=y, col=a_b)) + geom_line() + ylim(c(0,5))
+suppressMessages(ggsave(plot = p, filename = 'betaDist.pdf', width = 5, height=4))
+print(p)
+```
+
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{betaDist.pdf} -->
+<!-- \end{figure}  -->
+
+
+## Lois discrètes
+
+### Loi binnomiale
+  $Y$ suit une loi de Bernoulli si le support de $Y$ est $\left\lbrace 0,1\right\rbrace$ et $\mathbb{P}(Y=1)=p$.     
+  Si $Y_1,\ldots, Y_n$ sont des variables aléatoires indépendantes qui suivent une loi de Bernoulli de paramètre $p$, alors $X=\sum_{i=1}^n Y_i$ suit une loi binomiale de paramètres $(n,p)$.
+  Le support de $X$ est   $\left\lbrace 0,1, \ldots n\right\rbrace$ est la loi de probabilité de $X$ est donnée par
+$$[X=k] =
+ \left(\begin{array}{c} k \cr n \cr \end{array} \right)  p^k \, (1-p)^{n-k} \qquad k \in \left\lbrace 0,1, \ldots n\right\rbrace $$
+
+L'espérance et la variance sont données par $$\mathbb{E}(X)=n\, p \quad \mbox{et}\quad \mathbb{V}(X)=n \, (1-p)$$
+```{r}
+abc<-seq(0,10,1)
+n<-c(1,5,10)
+p<-c(0.2,0.5, 0.8)
+
+z <- expand.grid(n,p)
+zconc <- paste(z$Var1, z$Var2, sep='_')
+
+ll <- lapply(1:nrow(z), function(r_){
+  data.frame(x=abc, y= dbinom(abc, size = z[r_ , 1] ,p = z[r_ , 2]) , n_p=zconc[r_])
+})
+
+res <- do.call('rbind', ll)
+p <- ggplot(data = res, aes(x=x, y=y, col=n_p)) + geom_line() + ylim(c(0,1))
+suppressMessages(ggsave(plot = p, filename = 'binomDist.pdf', width = 5, height=4))
+print(p)
+```
+
+
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{binomDist.pdf} -->
+<!-- \caption{Distribution binomiale pour différentes valeurs de n et p}\label{fig:bin} -->
+<!-- \end{figure}  -->
+
+
+
+### Loi de Poisson
+Le support d'une loi de Poisson est $\mathbb{N}$. $X$ suit une loi de Poisson de paramètre $\lambda$ si
+$$[X=k]=\frac{\lambda^k}{k!}\exp{(-\lambda\, k)}\quad k \in \mathbb{N}$$
+L'espérance et la variance sont données par $$\mathbb{E}(X)=\lambda \quad \mbox{et}\quad \mathbb{V}(X)=\lambda$$
+
+```{r}
+abc<-seq(0,20,1)
+lambda<-c(0.5 , 1, 4, 10)
+
+ll <- lapply(1:length(lambda), function(r_){
+  data.frame(x=abc, y= dpois(abc, lambda = lambda[r_]) , lambda=as.character(lambda[r_]))
+})
+
+res <- do.call('rbind', ll)
+p <- ggplot(data = res, aes(x=x, y=y, col=lambda)) + geom_line() + ylim(c(0,1))
+suppressMessages(ggsave(plot = p, filename = 'poisDist.pdf', width = 5, height=4))
+print(p)
+```
+
+<!-- \begin{figure}[h] -->
+<!-- \includegraphics[width=0.8\textwidth]{poisDist.pdf} -->
+<!-- \caption{Distribution de Poisson pour différentes valeurs de $\lambda$}\label{fig:bin} -->
+<!-- \end{figure}  -->
+
+
+# Application using the binomial model for capture data
+
+
+While monitoring a large population of size $n$ unknown, $m$ individuals have been marked and released.
+The population might be considered as $m$ marked individuals and $n-m$ unmarked individuals. 
+A recapture experiment leads to $YM$ marked animals and $YNM$ unmarked. What is the size of the population.
+
+
+## Modelling and Estimating the capture efficiency
+
+The probability of capture might be infered from the recapture dataset and the experiment might be modelled as 
+\begin{equation}
+ YM \sim \mathcal{B}(m, p).
+\end{equation}
+
+The capture mark recapture experiment has been used for the first time on these conditions. Few is known on the probability of capture. Therefore an uniform prior is chosen to model the a priori knowledge on $p$.
+
+### Data
+```{r}
+m <- 53
+YM <- 9
+```
+
+### Theoretical posterior distribution
+Because the uniform distribution is a special case of beta distribution, the full bayesian specification for the model is a so called beta binomial model which has analytical posterior distribution.
+
+$$\pi(p\vert  YM_{obs}) \sim \mathcal{B}eta(YM + 1,  m-YM +1)$$
+
+```{r}
+s1 <- 1
+s2 <- 1
+p <- ggplot(data = data.frame(x=seq(0,1, length.out = 100)))
+stat_post <- stat_function(aes(x = x, y = ..y..), fun = dbeta, colour="red", n = 100,
+                      args = list(shape1 = YM+s1, shape2 = m-YM+s2))
+stat_prior <- stat_function(aes(x = x, y = ..y..), fun = dbeta, colour="green", n = 100,
+                      args = list(shape1 = s1, shape2 = s2))
+p + stat_prior +stat_post
+
+```
+
+
+## Implementing a MCMC algorithm
+
+### Compute the likelihood for a given value of $p$
+
+```{r}
+binom_loglikelihood<- function(y, p, m){
+  dbinom(x = y, size=m, prob = p)
+}
+
+binom_loglikelihood(y=YM, p=0.1, m=m)
+binom_loglikelihood(y=YM, p=0.2, m=m)
+
+```
+
+### A function to update the current parameter value
+
+```{r}
+rprop <- function(p.courant, sd.explore=0.1){
+  p.courant + sd.explore*rnorm(1)
+}
+
+dprop <- function(p.courant, p.propose, sd.explore=0.1){
+ dnorm(p.courant-p.propose, sd=sd.explore)
+}
+
+```
+
+### Metropolis Hastings ratio
+
+```{r}
+ratio <- function(p.courant, p.propose, sd.explore){
+  if(p.propose>1 || p.propose <0 ){
+    rat <- 0
+  } else
+  {
+   rat <-  (binom_loglikelihood(YM, p.propose, m=m) * dbeta(p.propose, s1, s2)) / (binom_loglikelihood(YM, p.courant, m=m) * dbeta(p.courant, s1, s2))*(dprop(p.propose, p.courant, sd.explore) / dprop(p.courant, p.propose, sd.explore)) 
+  }
+  return(rat)
+}
+```
+
+### Metropolis Hastings algorithm
+
+```{r}
+p.init     <- 0.8
+n.iter     <- 500
+sd.tune    <- 0.1
+
+p.post     <- rep(NA, n.iter)
+p.courant  <- p.init
+  
+for (i in 1 : n.iter){
+   p.cand <- rprop(p.courant, sd.explore = sd.tune)  
+   rat <- ratio(p.courant, p.cand, sd.tune)
+   if(runif(1)<rat){
+     p.post[i] <-  p.courant <- p.cand
+   } else {
+     p.post[i] <- p.courant
+   }
+}
+
+df.post  <- data.frame(p.post=p.post, niter=1:n.iter)
+p <- ggplot(data = df.post, aes(x=niter, y=p.post)) + geom_point()
+p
+
+p <- ggplot(data = df.post, aes(x=p.post)) + geom_histogram(aes(y=..density..)) + xlim(c(0,1)) +stat_function(aes(x = p.post, y = ..y..), fun = dbeta, colour="green", n = 100,
+                      args = list(shape1 = s1, shape2 = s2)) + stat_function(aes(x = p.post, y = ..y..), fun = dbeta, colour="red", n = 100,
+                      args = list(shape1 = YM+s1, shape2 = m-YM+s2))
+p
+
+```
+
+
+
+
+
+
