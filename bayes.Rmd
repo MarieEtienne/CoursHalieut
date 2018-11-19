@@ -25,6 +25,17 @@ Les slides sont disponibles
 [Cours Partie1](bayes_cours_1.pdf)
 [Cours Partie2](bayes_cours_2.pdf)
 
+# Installation logiciel
+
+Pour les manipulations, nous aurons besoin de 
+OpenBugs disponible [ici](http://www.openbugs.net/w/FrontPage).
+
+Sous linux, il faut installer [wine](https://www.winehq.org/) puis OpenBugs sous wine.
+
+On va utliser également [Jags](http://mcmc-jags.sourceforge.net/) disponible sous Linux et Windows et le package [rjags](http://cran.r-project.org/package=rjags).
+
+
+
 Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne. 
 
 
