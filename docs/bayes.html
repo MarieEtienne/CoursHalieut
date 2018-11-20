@@ -407,139 +407,10 @@ div.tocify {
 <p>Pour les manipulations, nous aurons besoin de OpenBugs disponible <a href="http://www.openbugs.net/w/FrontPage">ici</a>.</p>
 <p>Sous linux, il faut installer <a href="https://www.winehq.org/">wine</a> puis OpenBugs sous wine.</p>
 <p>On va utliser également <a href="http://mcmc-jags.sourceforge.net/">Jags</a> disponible sous Linux et Windows et le package <a href="http://cran.r-project.org/package=rjags">rjags</a>.</p>
-<p>Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne.</p>
 </div>
-<div id="rappel-sur-quelques-lois-de-probabilite" class="section level1">
-<h1>Rappel sur quelques lois de probabilité</h1>
-<div id="lois-continues" class="section level2">
-<h2>Lois continues</h2>
-<div id="loi-exponentielle" class="section level3">
-<h3>Loi exponentielle</h3>
-<p>La loi exponentielle a pour support <span class="math inline">\(\left[0,+\infty\right[\)</span>. <span class="math inline">\(X\)</span> suit une loi exponentielle de paramètre <span class="math inline">\(\lambda\)</span> si elle a pour densité <span class="math display">\[[X=t]=\left\lbrace 
-\begin{array}{l}
-\lambda exp(-\lambda \,t) \quad t\geq 0,\cr
-0 \quad sinon\cr
-\end{array}\right.
-\]</span> L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{1}{\lambda} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{1}{\lambda^2}.\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="fl">0.1</span>)
-<span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
-lambda&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>)
-
-ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(lambda, <span class="cf">function</span>(l_){
-  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dexp</span>(abc, <span class="dt">rate=</span>l_), <span class="dt">lambda=</span>l_)
-})
-
-res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
-res<span class="op">$</span>lambda &lt;-<span class="st"> </span><span class="kw">as.factor</span>(res<span class="op">$</span>lambda)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>lambda)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()
-<span class="kw">print</span>(p)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;expDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))</code></pre></div>
-</div>
-<div id="loi-gamma-et-inverse-gamma" class="section level3">
-<h3>Loi Gamma et Inverse Gamma</h3>
-<p>Si <span class="math inline">\(Y_1, \ldots, Y_n\)</span> sont des variables i.i.d de loi exponentielle de paramètre <span class="math inline">\(\lambda\)</span> alors <span class="math inline">\(X=\sum_{i=1}^n Y_i\)</span> suit une loi Gamma de paramètres de forme <span class="math inline">\(n\)</span> et de paramètre d’échelle <span class="math inline">\(\lambda\)</span>. On peut généraliser la définition à un <span class="math inline">\(n\)</span> non entier. Le support d’une loi Gamma est <span class="math inline">\(\left[0,+\infty\right[\)</span> et si <span class="math inline">\(X\)</span> suit une loi <span class="math inline">\(\Gamma(a,b)\)</span>, sa densité est donnée par~: <span class="math display">\[[X=t]=\left\lbrace
-\begin{array}{l}
- \frac{b^a t^{a-1} e^{-b\, t}}{\Gamma(a)} \quad t\geq 0,\cr
-0 \quad sinon\cr
-\end{array}\right. \]</span></p>
-<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{a}{b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a}{b^2}.\]</span> Quelques exemples de lois Gamma pour différentes valeurs de <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span>~:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="fl">0.1</span>)
-<span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))
-a&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)
-b&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)
-z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(a,b)
-zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
-ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
-  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dgamma</span>(abc, <span class="dt">rate=</span>z[r_,<span class="dv">1</span>], <span class="dt">shape =</span> z[r_,<span class="dv">2</span>]), <span class="dt">a_b=</span>zconc[r_])
-})
-
-res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>a_b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))
-<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;gammaDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))</code></pre></div>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(p)</code></pre></div>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
-<p>On dit que <span class="math inline">\(X\)</span> suit une loi Inverse-Gamma si <span class="math inline">\(X^{-1}\)</span> suit une loi Gamma. Par ces propriétés mathématiques, la loi Inverse Gamma est naturellement candidate comme prior pour le paramètre de variance dans un modèle normal. En effet si <span class="math inline">\(Y\sim\mathcal{N}(\mu,\sigma^2)\)</span> avec <span class="math inline">\(\mu\)</span> connu et <span class="math inline">\(\sigma^2 \sim \Gamma(a,b)\)</span>, alors <span class="math inline">\(\sigma^2\vert Y,\mu \sim \Gamma(a&#39;,b&#39;)\)</span>.</p>
-</div>
-<div id="loi-beta" class="section level3">
-<h3>Loi Beta</h3>
-<p>La loi Beta a pour support <span class="math inline">\(\left[0,\right]\)</span>. Si <span class="math inline">\(X\)</span> suit une loi beta de paramètre <span class="math inline">\((a,b)\)</span> alors la densité de <span class="math inline">\(X\)</span> est donnée par <span class="math display">\[[X=t]=\left\lbrace
-\begin{array}{l}
- \frac{\Gamma(a+b) t^{a-1} (1-t)^{b-1} }{\Gamma(a)\Gamma(b)} \quad t\in [0,1] ,\cr
-0 \quad sinon\cr
-\end{array}\right. \]</span></p>
-<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\frac{a}{a+b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a\,b }{(a+b)^2 (a+b+1)}.\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)
-a&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">2</span>)
-b&lt;-<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">2</span>)
-
-z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(a,b)
-zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
-
-ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
-  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span><span class="kw">dbeta</span>(abc, z[r_ , <span class="dv">1</span>] , z[r_ , <span class="dv">2</span>]), <span class="dt">a_b=</span>zconc[r_])
-})
-
-res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>a_b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))
-<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;betaDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
-<span class="kw">print</span>(p)</code></pre></div>
-<p><img src="bayes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{betaDist.pdf} -->
-<!-- \end{figure}  -->
-</div>
-</div>
-<div id="lois-discretes" class="section level2">
-<h2>Lois discrètes</h2>
-<div id="loi-binnomiale" class="section level3">
-<h3>Loi binnomiale</h3>
-<p><span class="math inline">\(Y\)</span> suit une loi de Bernoulli si le support de <span class="math inline">\(Y\)</span> est <span class="math inline">\(\left\lbrace 0,1\right\rbrace\)</span> et <span class="math inline">\(\mathbb{P}(Y=1)=p\)</span>.<br />
-Si <span class="math inline">\(Y_1,\ldots, Y_n\)</span> sont des variables aléatoires indépendantes qui suivent une loi de Bernoulli de paramètre <span class="math inline">\(p\)</span>, alors <span class="math inline">\(X=\sum_{i=1}^n Y_i\)</span> suit une loi binomiale de paramètres <span class="math inline">\((n,p)\)</span>. Le support de <span class="math inline">\(X\)</span> est <span class="math inline">\(\left\lbrace 0,1, \ldots n\right\rbrace\)</span> est la loi de probabilité de <span class="math inline">\(X\)</span> est donnée par <span class="math display">\[[X=k] =
- \left(\begin{array}{c} k \cr n \cr \end{array} \right)  p^k \, (1-p)^{n-k} \qquad k \in \left\lbrace 0,1, \ldots n\right\rbrace \]</span></p>
-<p>L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=n\, p \quad \mbox{et}\quad \mathbb{V}(X)=n \, (1-p)\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>)
-n&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>)
-p&lt;-<span class="kw">c</span>(<span class="fl">0.2</span>,<span class="fl">0.5</span>, <span class="fl">0.8</span>)
-
-z &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(n,p)
-zconc &lt;-<span class="st"> </span><span class="kw">paste</span>(z<span class="op">$</span>Var1, z<span class="op">$</span>Var2, <span class="dt">sep=</span><span class="st">&#39;_&#39;</span>)
-
-ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(z), <span class="cf">function</span>(r_){
-  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span> <span class="kw">dbinom</span>(abc, <span class="dt">size =</span> z[r_ , <span class="dv">1</span>] ,<span class="dt">p =</span> z[r_ , <span class="dv">2</span>]) , <span class="dt">n_p=</span>zconc[r_])
-})
-
-res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>n_p)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
-<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;binomDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
-<span class="kw">print</span>(p)</code></pre></div>
-<p><img src="bayes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{binomDist.pdf} -->
-<!-- \caption{Distribution binomiale pour différentes valeurs de n et p}\label{fig:bin} -->
-<!-- \end{figure}  -->
-</div>
-<div id="loi-de-poisson" class="section level3">
-<h3>Loi de Poisson</h3>
-<p>Le support d’une loi de Poisson est <span class="math inline">\(\mathbb{N}\)</span>. <span class="math inline">\(X\)</span> suit une loi de Poisson de paramètre <span class="math inline">\(\lambda\)</span> si <span class="math display">\[[X=k]=\frac{\lambda^k}{k!}\exp{(-\lambda\, k)}\quad k \in \mathbb{N}\]</span> L’espérance et la variance sont données par <span class="math display">\[\mathbb{E}(X)=\lambda \quad \mbox{et}\quad \mathbb{V}(X)=\lambda\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abc&lt;-<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">1</span>)
-lambda&lt;-<span class="kw">c</span>(<span class="fl">0.5</span> , <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">10</span>)
-
-ll &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), <span class="cf">function</span>(r_){
-  <span class="kw">data.frame</span>(<span class="dt">x=</span>abc, <span class="dt">y=</span> <span class="kw">dpois</span>(abc, <span class="dt">lambda =</span> lambda[r_]) , <span class="dt">lambda=</span><span class="kw">as.character</span>(lambda[r_]))
-})
-
-res &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&#39;rbind&#39;</span>, ll)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> res, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">col=</span>lambda)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
-<span class="kw">suppressMessages</span>(<span class="kw">ggsave</span>(<span class="dt">plot =</span> p, <span class="dt">filename =</span> <span class="st">&#39;poisDist.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height=</span><span class="dv">4</span>))
-<span class="kw">print</span>(p)</code></pre></div>
-<p><img src="bayes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{poisDist.pdf} -->
-<!-- \caption{Distribution de Poisson pour différentes valeurs de $\lambda$}\label{fig:bin} -->
-<!-- \end{figure}  -->
-</div>
-</div>
+<div id="rappel-sur-quelques-lois-de-probabilites-utiles-dans-un-cadre-bayesien" class="section level1">
+<h1>Rappel sur quelques lois de probabilités utiles dans un cadre bayésien</h1>
+<p>Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne est disponible sur la page <a href="rappel_loi.html">Rappel</a></p>
 </div>
 <div id="application-using-the-binomial-model-for-capture-data" class="section level1">
 <h1>Application using the binomial model for capture data</h1>
@@ -568,7 +439,7 @@ stat_post &lt;-<span class="st"> </span><span class="kw">stat_function</span>(<s
 stat_prior &lt;-<span class="st"> </span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;green&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
                       <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> s1, <span class="dt">shape2 =</span> s2))
 p <span class="op">+</span><span class="st"> </span>stat_prior <span class="op">+</span>stat_post</code></pre></div>
-<p><img src="bayes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="bayes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="implementing-a-mcmc-algorithm" class="section level2">
@@ -628,14 +499,106 @@ p.courant  &lt;-<span class="st"> </span>p.init
 df.post  &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">p.post=</span>p.post, <span class="dt">niter=</span><span class="dv">1</span><span class="op">:</span>n.iter)
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.post, <span class="kw">aes</span>(<span class="dt">x=</span>niter, <span class="dt">y=</span>p.post)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 p</code></pre></div>
-<p><img src="bayes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="bayes_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.post, <span class="kw">aes</span>(<span class="dt">x=</span>p.post)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="op">+</span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p.post, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;green&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
                       <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> s1, <span class="dt">shape2 =</span> s2)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_function</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p.post, <span class="dt">y =</span> ..y..), <span class="dt">fun =</span> dbeta, <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>, <span class="dt">n =</span> <span class="dv">100</span>,
                       <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> YM<span class="op">+</span>s1, <span class="dt">shape2 =</span> m<span class="op">-</span>YM<span class="op">+</span>s2))
 p</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="bayes_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p><img src="bayes_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 </div>
+</div>
+</div>
+<div id="captures-successives-sans-remise" class="section level1">
+<h1>Captures successives sans remise</h1>
+<div id="problematique-et-modelisation" class="section level2">
+<h2>Problématique et modélisation</h2>
+<p>La méthode d’inventaire de DeLury (DeLury,1947) consiste à effectuer un certain nombre de pêches successives pour évaluer la taille d’une population inconnue <span class="math inline">\(\nu\)</span> à l’aide d’un dispositif de capture (le plus souvent pêche électrique) d’efficacité <span class="math inline">\(\pi\)</span> . L’efficacité <span class="math inline">\(\pi\)</span> est la probabilité de capture d’un individu: elle dépend du milieu et de l’effort de pêche, et peut dépendre de la taille de l’individu. Les poissons capturés à chaque pêche ne sont ni marqués, ni remis à l’eau.</p>
+<p>On appelle <span class="math inline">\(m\)</span> ce nombre de pêches successives et <span class="math inline">\(C_{1}, C_{2}, \ldots, C_{i},\ldots,C_{m}\)</span> les quantités capturées successivement obtenues.</p>
+<ul>
+<li>A l’aide de la loi binomiale, proposer un modèle simple d’échantillonnage de <span class="math inline">\(C_{1},C_{2},\ldots,C_{i},\ldots,C_{m}\)</span> et en dessiner le graphe acyclique orienté (DAG).</li>
+<li>Exprimer les hypothèses qui sous-tendent votre modélisation.</li>
+<li>Dire quelles sont les observables et quels sont les paramètres.</li>
+<li>Ecrire un programme de simulation sous <span class="math inline">\(R\)</span>  qui simule un enlèvement de <span class="math inline">\(m=4\)</span> pêches d’une population de poissons.</li>
+</ul>
+<p>On pourra prendre <span class="math inline">\(\nu=50\)</span> et <span class="math inline">\(\pi=\frac{1}{4}\)</span> pour fixer les idées.</p>
+<!-- \subsection{Considérations fréquentistes} -->
+<!-- Pour évaluer le peuplement le plus probable (dans un contexte -->
+<!-- fréquentiste) la classique méthode d'estimation de DeLury consiste -->
+<!-- à tracer la droite de régression sur les points $(x_{i},y_{i}% -->
+<!-- )_{i=1:n}$ avec $(x_{1}=0,y_{1}=C_{1})$ et pour $i>1:$ -->
+<!-- \begin{align*} -->
+<!-- x_{i}  & =\sum_{j=1}^{i-1}C_{j}\\ -->
+<!-- y_{i}  & =C_{i}% -->
+<!-- \end{align*} -->
+<!-- L'estimation classique du peuplement est donnée par l'abscisse de -->
+<!-- l'intersection de cette droite et de l'axe des $x.$ -->
+<!-- \begin{itemize} -->
+<!--    \item Donner l'idée constructive (pourquoi un modèle linéaire?) -->
+<!--    qui sous-tend la manière d'obtenir cet estimateur $\hat{\nu}(C_{1}% -->
+<!--    ,C_{2},...C_{i},...C_{m})$ et montrer comment la pente de cette droite est -->
+<!--    alors utile pour proposer une estimation $\hat{\pi}$ de $\pi.$ -->
+<!--    \item En déduire quelles sont les limites de cette estimation fréquentiste. -->
+<!--    \item En repétant un grand nombre de fois  votre programme de simulation -->
+<!--    sous $R$ \ (qui simule un enlèvement de $m=3\ $pêches d'une population -->
+<!--    de poissons) et en ne conservant que les jeux de données o\`{u} la -->
+<!--    technique d'estimation de DeLury "marche", évaluer le biais et la variance -->
+<!--    des estimateurs de la population et de l'efficacité du dispositif (On -->
+<!--    rappelle que, sous $R,$ la procédure $lm(y\sim x)$ permet d'obtenir, sous -->
+<!--    forme d'une liste, les divers résultats de la régression linéaire -->
+<!--    du vecteur $y$ sur le vecteur $x$). Donner néanmoins également le taux de bon -->
+<!--    fonctionnement de cette procédure. (On pourra conserver $\nu=50$ et -->
+<!--    $\pi=\frac{1}{4}$ pour fixer les idées au commencement de cet exercice, -->
+<!--    mais faire varier $m$ au moins de $2$ à $4$ pour voir comment le nombre de -->
+<!--    pêches joue sur la qualité de cette procédure d'estimation classique). N'oubliez pas de faire un ou des dessins illustratifs! -->
+<!--    \item Si le temps dont vous disposez le permet, considérer 9 cas: $\nu$ -->
+<!--    petit, moyen, grand et  $\pi$ petit, moyen ou grand, pour discuter des -->
+<!--    qualités de la méthode de DeLury.  -->
+<!--    \item Obtient-on les même estimateurs si on inverse les rôles de $x$ et $y$ dans le calcul? Etudier par simulation les propriétés de ces estimations alternatives? -->
+<!-- \end{itemize} -->
+</div>
+<div id="estimation-par-methode-bayesienne" class="section level2">
+<h2>Estimation par méthode bayésienne</h2>
+<p>Montrer qu’une loi béta de paramètres <span class="math inline">\(a=1,\)</span> <span class="math inline">\(b=3\)</span> est une loi a priori très acceptable pour encoder le jugement d’un expert en dispositif de pêche électrique annonçant que sa meilleure évaluation personnelle pour <span class="math inline">\(\pi\)</span> est de l’ordre de <span class="math inline">\(\frac{1}{4}\)</span> <span class="math inline">\(\ \)</span> et qu’il est prêt à parier <span class="math inline">\(50\%/50\%\)</span> environ sur l’intervalle <span class="math inline">\([0.1,0.4].\)</span></p>
+<ul>
+<li>Simuler les résultats un enlèvement de <span class="math inline">\(m=4\ \)</span>pêches d’une population de poissons avec <span class="math inline">\(\nu=50\)</span> et <span class="math inline">\(\pi=\frac{1}{4}\)</span> pour créer un jeu de données.</li>
+<li>Ecrire un programme avec appel à WinBUGS (ou jags) pour réaliser l’inférence du modèle après avoir choisi un prior peu informatif pour <span class="math inline">\(\nu\)</span>.</li>
+<li>Le faire tourner sur données simulées et vérifier la bonne qualité de l’encadrement réalisé par la loi a posteriori des “inconnues”.</li>
+<li>On pourra choisir quelques valeurs types du triplet génératif (<span class="math inline">\(m,\nu,\pi\)</span>) pour illustrer sur des jeux de données différents le fonctionnement de cette inférence bayésienne.</li>
+<li>Appliquer votre méthode bayésienne sur les deux jeux de données d’anguilles et vairons du Couesnon, (données tirées d’une enquête de Beaudouin et Pontini (1973) et reprises dans le tableau suivant), discuter des résultats (en imaginant que vous ayez acces aux données en deux temps : d’abord seulement les deux premières pêches, puis ensuite les trois pêches) et traduire les résultats de cette approche en recommandations à l’intention des gestionnaires du cours d’eau:</li>
+</ul>
+<table>
+<caption>Données extraites de Beaudouin et Pontini (1973)</caption>
+<thead>
+<tr class="header">
+<th align="left">Espèces</th>
+<th align="right">Peche1</th>
+<th align="right">Peche2</th>
+<th align="right">Peche3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Anguilles</td>
+<td align="right">28</td>
+<td align="right">11</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Vairons</td>
+<td align="right">60</td>
+<td align="right">54</td>
+<td align="right">58</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bibliographie" class="section level2">
+<h2>Bibliographie</h2>
+<ul>
+<li>Beaudouin P., Pontini G., 1973. étude hydrobiologique du bassin du Couesnon. Diplôme d’Agronomie approfondie, E. N . S. A., Rennes.</li>
+<li>DeLury D.B.,1947. On the estimation of biological populations. Biometrics, 3(4) , 145-167.</li>
+</ul>
 </div>
 </div>
 

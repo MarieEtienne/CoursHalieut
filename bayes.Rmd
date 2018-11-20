@@ -18,6 +18,7 @@ library(stringr)
 library(purrr)
 library(ggplot2)
 library(dplyr)
+library(knitr)
 ```
 
 
@@ -35,170 +36,9 @@ Sous linux, il faut installer [wine](https://www.winehq.org/) puis OpenBugs sous
 On va utliser également [Jags](http://mcmc-jags.sourceforge.net/) disponible sous Linux et Windows et le package [rjags](http://cran.r-project.org/package=rjags).
 
 
+# Rappel sur quelques lois de probabilités utiles dans un cadre bayésien
+Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne est disponible sur la page [Rappel](rappel_loi.html)
 
-Un petit rappel sur les lois de probabilité utiles pour la modélisation bayésienne. 
-
-
-# Rappel sur quelques lois de probabilité
-
-## Lois continues
-
-### Loi exponentielle
-La loi exponentielle a pour support $\left[0,+\infty\right[$. $X$ suit une loi exponentielle de paramètre $\lambda$ si elle a pour densité
-$$[X=t]=\left\lbrace 
-\begin{array}{l}
-\lambda exp(-\lambda \,t) \quad t\geq 0,\cr
-0 \quad sinon\cr
-\end{array}\right.
-$$
-L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{1}{\lambda} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{1}{\lambda^2}.$$
-
-```{r fig.show='hide'}
-abc<-seq(0,20,0.1)
-par(mfcol=c(2,2))
-lambda<-c(0.1, 0.5, 1, 2)
-
-ll <- lapply(lambda, function(l_){
-  data.frame(x=abc, y=dexp(abc, rate=l_), lambda=l_)
-})
-
-res <- do.call('rbind', ll)
-res$lambda <- as.factor(res$lambda)
-p <- ggplot(data = res, aes(x=x, y=y, col=lambda)) + geom_line()
-print(p)
-suppressMessages(ggsave(filename = 'expDist.pdf', width = 5, height=4))
-```
-
-
-
-### Loi Gamma et Inverse Gamma
-Si $Y_1, \ldots, Y_n$ sont des variables i.i.d de loi exponentielle de paramètre
- $\lambda$ alors $X=\sum_{i=1}^n Y_i$ suit une loi Gamma de paramètres de forme
-  $n$ et de paramètre d'échelle $\lambda$.  On peut généraliser la définition à un $n$ non entier. Le support d'une loi Gamma est
-$\left[0,+\infty\right[$ et si $X$ suit une loi $\Gamma(a,b)$, sa densité est donnée par~:
-$$[X=t]=\left\lbrace
-\begin{array}{l}
- \frac{b^a t^{a-1} e^{-b\, t}}{\Gamma(a)} \quad t\geq 0,\cr
-0 \quad sinon\cr
-\end{array}\right. $$
-
-L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{a}{b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a}{b^2}.$$
-Quelques exemples de lois Gamma pour différentes valeurs de $a$ et $b$~:
-```{r, fig.show='hide'}
-abc<-seq(0,20,0.1)
-par(mfcol=c(3,3))
-a<-c(0.1, 1, 10)
-b<-c(0.1, 1, 10)
-z <- expand.grid(a,b)
-zconc <- paste(z$Var1, z$Var2, sep='_')
-ll <- lapply(1:nrow(z), function(r_){
-  data.frame(x=abc, y=dgamma(abc, rate=z[r_,1], shape = z[r_,2]), a_b=zconc[r_])
-})
-
-res <- do.call('rbind', ll)
-p <- ggplot(data = res, aes(x=x, y=y, col=a_b)) + geom_line() + ylim(c(0,5))
-suppressMessages(ggsave(plot = p, filename = 'gammaDist.pdf', width = 5, height=4))
-print(p)
-```
-
-On dit que $X$ suit une loi Inverse-Gamma si $X^{-1}$ suit une loi Gamma. Par ces propriétés mathématiques, la loi Inverse Gamma est naturellement candidate comme prior pour le paramètre de variance dans un modèle normal.
-En effet si $Y\sim\mathcal{N}(\mu,\sigma^2)$ avec $\mu$ connu et $\sigma^2 \sim \Gamma(a,b)$, alors $\sigma^2\vert Y,\mu \sim \Gamma(a',b')$.
-
-
-### Loi Beta
-
-La loi Beta a pour support $\left[0,\right]$. Si $X$ suit une loi beta de paramètre $(a,b)$ alors la densité de $X$ est donnée par
-$$[X=t]=\left\lbrace
-\begin{array}{l}
- \frac{\Gamma(a+b) t^{a-1} (1-t)^{b-1} }{\Gamma(a)\Gamma(b)} \quad t\in [0,1] ,\cr
-0 \quad sinon\cr
-\end{array}\right. $$
-
-
-L'espérance et la variance sont données par $$\mathbb{E}(X)=\frac{a}{a+b} \quad \mbox{et}\quad \mathbb{V}(X)=\frac{a\,b }{(a+b)^2 (a+b+1)}.$$
-
-```{r}
-abc<-seq(0,1,0.01)
-a<-c(0.1, 1, 2)
-b<-c(0.1, 1, 2)
-
-z <- expand.grid(a,b)
-zconc <- paste(z$Var1, z$Var2, sep='_')
-
-ll <- lapply(1:nrow(z), function(r_){
-  data.frame(x=abc, y=dbeta(abc, z[r_ , 1] , z[r_ , 2]), a_b=zconc[r_])
-})
-
-res <- do.call('rbind', ll)
-p <- ggplot(data = res, aes(x=x, y=y, col=a_b)) + geom_line() + ylim(c(0,5))
-suppressMessages(ggsave(plot = p, filename = 'betaDist.pdf', width = 5, height=4))
-print(p)
-```
-
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{betaDist.pdf} -->
-<!-- \end{figure}  -->
-
-
-## Lois discrètes
-
-### Loi binnomiale
-  $Y$ suit une loi de Bernoulli si le support de $Y$ est $\left\lbrace 0,1\right\rbrace$ et $\mathbb{P}(Y=1)=p$.     
-  Si $Y_1,\ldots, Y_n$ sont des variables aléatoires indépendantes qui suivent une loi de Bernoulli de paramètre $p$, alors $X=\sum_{i=1}^n Y_i$ suit une loi binomiale de paramètres $(n,p)$.
-  Le support de $X$ est   $\left\lbrace 0,1, \ldots n\right\rbrace$ est la loi de probabilité de $X$ est donnée par
-$$[X=k] =
- \left(\begin{array}{c} k \cr n \cr \end{array} \right)  p^k \, (1-p)^{n-k} \qquad k \in \left\lbrace 0,1, \ldots n\right\rbrace $$
-
-L'espérance et la variance sont données par $$\mathbb{E}(X)=n\, p \quad \mbox{et}\quad \mathbb{V}(X)=n \, (1-p)$$
-```{r}
-abc<-seq(0,10,1)
-n<-c(1,5,10)
-p<-c(0.2,0.5, 0.8)
-
-z <- expand.grid(n,p)
-zconc <- paste(z$Var1, z$Var2, sep='_')
-
-ll <- lapply(1:nrow(z), function(r_){
-  data.frame(x=abc, y= dbinom(abc, size = z[r_ , 1] ,p = z[r_ , 2]) , n_p=zconc[r_])
-})
-
-res <- do.call('rbind', ll)
-p <- ggplot(data = res, aes(x=x, y=y, col=n_p)) + geom_line() + ylim(c(0,1))
-suppressMessages(ggsave(plot = p, filename = 'binomDist.pdf', width = 5, height=4))
-print(p)
-```
-
-
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{binomDist.pdf} -->
-<!-- \caption{Distribution binomiale pour différentes valeurs de n et p}\label{fig:bin} -->
-<!-- \end{figure}  -->
-
-
-
-### Loi de Poisson
-Le support d'une loi de Poisson est $\mathbb{N}$. $X$ suit une loi de Poisson de paramètre $\lambda$ si
-$$[X=k]=\frac{\lambda^k}{k!}\exp{(-\lambda\, k)}\quad k \in \mathbb{N}$$
-L'espérance et la variance sont données par $$\mathbb{E}(X)=\lambda \quad \mbox{et}\quad \mathbb{V}(X)=\lambda$$
-
-```{r}
-abc<-seq(0,20,1)
-lambda<-c(0.5 , 1, 4, 10)
-
-ll <- lapply(1:length(lambda), function(r_){
-  data.frame(x=abc, y= dpois(abc, lambda = lambda[r_]) , lambda=as.character(lambda[r_]))
-})
-
-res <- do.call('rbind', ll)
-p <- ggplot(data = res, aes(x=x, y=y, col=lambda)) + geom_line() + ylim(c(0,1))
-suppressMessages(ggsave(plot = p, filename = 'poisDist.pdf', width = 5, height=4))
-print(p)
-```
-
-<!-- \begin{figure}[h] -->
-<!-- \includegraphics[width=0.8\textwidth]{poisDist.pdf} -->
-<!-- \caption{Distribution de Poisson pour différentes valeurs de $\lambda$}\label{fig:bin} -->
-<!-- \end{figure}  -->
 
 
 # Application using the binomial model for capture data
@@ -317,5 +157,106 @@ p
 
 
 
+
+# Captures successives sans remise
+
+## Problématique et modélisation
+
+La méthode d'inventaire de DeLury (DeLury,1947) consiste à effectuer
+un certain nombre de pêches successives pour évaluer la taille d'une
+population inconnue $\nu$ à l'aide d'un dispositif de capture (le plus
+souvent pêche électrique) d'efficacité $\pi$ . L'efficacité
+$\pi$ est la probabilité de capture d'un individu: elle dépend du
+milieu et de l'effort de pêche, et peut dépendre de la taille de
+l'individu. Les poissons capturés à chaque pêche ne sont ni
+marqués, ni remis à l'eau. 
+
+On appelle $m$ ce nombre de pêches successives et $C_{1}, C_{2}, \ldots, C_{i},\ldots,C_{m}$ les quantités capturées successivement obtenues.
+
+* A l'aide de la loi binomiale, proposer un modèle simple d'échantillonnage de $C_{1},C_{2},\ldots,C_{i},\ldots,C_{m}$ et en dessiner le
+	graphe acyclique orienté (DAG).
+* Exprimer les hypothèses qui sous-tendent votre modélisation.
+* Dire quelles sont les observables et quels sont les paramètres.
+* Ecrire un programme de simulation sous $R$ \ qui simule un enlèvement de $m=4$ pêches d'une population de poissons.
+
+On pourra prendre $\nu=50$ et $\pi=\frac{1}{4}$ pour fixer les idées.
+
+<!-- \subsection{Considérations fréquentistes} -->
+
+<!-- Pour évaluer le peuplement le plus probable (dans un contexte -->
+<!-- fréquentiste) la classique méthode d'estimation de DeLury consiste -->
+<!-- à tracer la droite de régression sur les points $(x_{i},y_{i}% -->
+<!-- )_{i=1:n}$ avec $(x_{1}=0,y_{1}=C_{1})$ et pour $i>1:$ -->
+<!-- \begin{align*} -->
+<!-- x_{i}  & =\sum_{j=1}^{i-1}C_{j}\\ -->
+<!-- y_{i}  & =C_{i}% -->
+<!-- \end{align*} -->
+
+
+<!-- L'estimation classique du peuplement est donnée par l'abscisse de -->
+<!-- l'intersection de cette droite et de l'axe des $x.$ -->
+
+<!-- \begin{itemize} -->
+<!-- 	\item Donner l'idée constructive (pourquoi un modèle linéaire?) -->
+<!-- 	qui sous-tend la manière d'obtenir cet estimateur $\hat{\nu}(C_{1}% -->
+<!-- 	,C_{2},...C_{i},...C_{m})$ et montrer comment la pente de cette droite est -->
+<!-- 	alors utile pour proposer une estimation $\hat{\pi}$ de $\pi.$ -->
+
+<!-- 	\item En déduire quelles sont les limites de cette estimation fréquentiste. -->
+
+<!-- 	\item En repétant un grand nombre de fois  votre programme de simulation -->
+<!-- 	sous $R$ \ (qui simule un enlèvement de $m=3\ $pêches d'une population -->
+<!-- 	de poissons) et en ne conservant que les jeux de données o\`{u} la -->
+<!-- 	technique d'estimation de DeLury "marche", évaluer le biais et la variance -->
+<!-- 	des estimateurs de la population et de l'efficacité du dispositif (On -->
+<!-- 	rappelle que, sous $R,$ la procédure $lm(y\sim x)$ permet d'obtenir, sous -->
+<!-- 	forme d'une liste, les divers résultats de la régression linéaire -->
+<!-- 	du vecteur $y$ sur le vecteur $x$). Donner néanmoins également le taux de bon -->
+<!-- 	fonctionnement de cette procédure. (On pourra conserver $\nu=50$ et -->
+<!-- 	$\pi=\frac{1}{4}$ pour fixer les idées au commencement de cet exercice, -->
+<!-- 	mais faire varier $m$ au moins de $2$ à $4$ pour voir comment le nombre de -->
+<!-- 	pêches joue sur la qualité de cette procédure d'estimation classique). N'oubliez pas de faire un ou des dessins illustratifs! -->
+
+<!-- 	\item Si le temps dont vous disposez le permet, considérer 9 cas: $\nu$ -->
+<!-- 	petit, moyen, grand et  $\pi$ petit, moyen ou grand, pour discuter des -->
+<!-- 	qualités de la méthode de DeLury.  -->
+<!-- 	\item Obtient-on les même estimateurs si on inverse les rôles de $x$ et $y$ dans le calcul? Etudier par simulation les propriétés de ces estimations alternatives? -->
+<!-- \end{itemize} -->
+
+## Estimation par méthode bayésienne
+
+Montrer qu'une loi béta de paramètres $a=1,$ $b=3$ est une loi a
+priori très acceptable pour encoder le jugement d'un expert en dispositif
+de pêche électrique annonçant que sa meilleure évaluation
+personnelle pour $\pi$ est de l'ordre de $\frac{1}{4}$ $\ $\ et qu'il est
+prêt à parier  $50\%/50\%$ environ sur l'intervalle $[0.1,0.4].$
+
+* Simuler les résultats un enlèvement de $m=4\ $pêches d'une	population de poissons avec $\nu=50$ et $\pi=\frac{1}{4}$ pour créer un
+	jeu de données.
+* Ecrire un programme avec appel à WinBUGS (ou jags) pour réaliser
+	l'inférence du modèle après avoir choisi un prior peu informatif
+	pour  $\nu$.
+* Le faire tourner sur données simulées et vérifier la bonne
+	qualité de l'encadrement réalisé par la loi a posteriori des
+	"inconnues". 
+* On pourra choisir quelques valeurs types du triplet génératif ($m,\nu,\pi$) pour illustrer sur des jeux de données différents le fonctionnement de cette inférence bayésienne.
+* Appliquer votre méthode bayésienne sur les deux jeux de
+	données d'anguilles et vairons du Couesnon, (données tirées d'une
+	enquête de Beaudouin et Pontini (1973) et reprises dans le tableau
+	suivant), discuter des résultats (en imaginant que vous ayez acces aux données en deux temps : d'abord seulement les deux premières pêches, puis ensuite les trois pêches) et traduire les résultats de cette
+	approche en recommandations à l'intention des gestionnaires du cours d'eau:
+
+```{r, echo = FALSE}
+df <- data.frame(Espèces = c('Anguilles', 'Vairons'), Peche1 = c(28, 60), Peche2=c(11,54), Peche3=c(4,58))
+kable(df, caption = 'Données extraites de Beaudouin et Pontini (1973)' )
+```
+
+
+
+## Bibliographie
+* Beaudouin P., Pontini G., 1973. étude hydrobiologique du bassin du
+	Couesnon. Diplôme d'Agronomie approfondie, E. N . S. A., Rennes.
+* DeLury D.B.,1947. On the estimation of biological populations. Biometrics,
+	3(4) , 145-167.
 
 
