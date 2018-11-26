@@ -260,3 +260,16 @@ kable(df, caption = 'Données extraites de Beaudouin et Pontini (1973)' )
 	3(4) , 145-167.
 
 
+
+# TD estimation de la taille d'une poulation d'otaries
+
+L'objectif du TD est d'estimer al aille d'une population d'otaries sur l'ile Marion en Antarctique.
+
+Un extrait de la publication présentant les données et le problème est disponible  [ici](data/Data-TDPup/Wege_et_al-2016-Marine_Mammal_Science.pdf).
+
+Nous nous appuierons sur 3 jeux de données qui sont
+* les expériences de capture marquage recapture [CMR_Data](data/Data-TDPup/CMR_Davis.csv)
+* les comptages directs [DC_Data](data/Data-TDPup/CDDirectCount_Davis.csv)
+* Les comptages depuis la falaise [Cliff_data](ClifftopCounts_Davis.csv)
+
+
