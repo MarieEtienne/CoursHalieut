@@ -270,6 +270,6 @@ Un extrait de la publication présentant les données et le problème est dispon
 Nous nous appuierons sur 3 jeux de données qui sont
 * les expériences de capture marquage recapture [CMR_Data](data/Data-TDPup/CMR_Davis.csv)
 * les comptages directs [DC_Data](data/Data-TDPup/CDDirectCount_Davis.csv)
-* Les comptages depuis la falaise [Cliff_data](ClifftopCounts_Davis.csv)
+* Les comptages depuis la falaise [Cliff_data](data/Data-TDPup/ClifftopCounts_Davis.csv)
 
 
