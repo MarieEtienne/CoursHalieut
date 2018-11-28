@@ -263,13 +263,103 @@ kable(df, caption = 'Données extraites de Beaudouin et Pontini (1973)' )
 
 # TD estimation de la taille d'une poulation d'otaries
 
-L'objectif du TD est d'estimer al aille d'une population d'otaries sur l'ile Marion en Antarctique.
+L'objectif du TD est d'estimer la taille d'une population d'otaries sur l'ile Marion en Antarctique.
 
 Un extrait de la publication présentant les données et le problème est disponible  [ici](data/Data-TDPup/Wege_et_al-2016-Marine_Mammal_Science.pdf).
 
 Nous nous appuierons sur 3 jeux de données qui sont
+
 * les expériences de capture marquage recapture [CMR_Data](data/Data-TDPup/CMR_Davis.csv)
 * les comptages directs [DC_Data](data/Data-TDPup/CDDirectCount_Davis.csv)
 * Les comptages depuis la falaise [Cliff_data](data/Data-TDPup/ClifftopCounts_Davis.csv)
 
+
+
+# TD estimation de la taille d'une poulation d'otaries
+
+L'objectif de deuxième TD  est  d'estimer l'évolution du stock de merlus de Namibie entre 1964 et 1988.
+
+
+La publication présentant les données et le problème de l'évaluation de stochk est disponible [ici](data/Data-TDNamibianHake/Kirchner_etal_2012.pdf).
+
+Les [données](data/Data-TDNamibianHake/NamibianHake_catch_and_abundance.csv) donnent
+
+* les captures en millier de tonnes,
+* Un indice d'abondance relatif (CPUE) exprimé en tonnes par heure de chalutage.
+
+## Quelques idées sur un modèle de dynamique de stocks
+
+Un modèle assez classique de dynamique de population, nommé modèle de production de biommasse, est donné par la formule suivante :
+$$B_{t+1} = B_t + r B_{t} \left ( 1- \frac{B_t}{K}\right) - C_t$$
+Expliquer pourquoi une gestion soutenable est caractérisée  par  une population telle que $$  C_{t}= r B_{t} \left ( 1  - \frac{B_t}{K} \right).$$
+
+Cette fonction à la forme suivante 
+```{r, echo = FALSE}
+K <- 1000
+r <- 0.3
+
+x <- seq(0, K, 10)
+data.frame(b = x) %>% mutate(C = r *b * (1 -  b /K )) -> stock
+ggplot() + geom_line(data = stock, aes(x=b,  y=C)) + xlab('Biomasse') + ylab('Captures')
+
+```
+
+On appelle capture maximale durable $C_{MSY}$ la quantité  $rK/4$, expliquer ce que représente cette quantité.
+
+
+Dans le cadre d'une gestion durable de la pêche on essaie au plus possible de s'approcher de la biommasse correspondant à cette valeur de référence. Pour cela il faut être capable d'estimer $r$ et $K$.
+
+
+
+## Simulation d'un modèle de production de biomasse
+
+On se fixe $K=1000$ et $r=0.3$, simuler un modèle de dynamique d'une population non exploitée.
+
+Ce modèle est une simplification, on va donc y ajouter une part de stochasticité pour tenir compte de l'approximation de notre processus.
+
+On définit maintenant
+$$B_{t+1} = \left \lbrace B_t + r B_{t} \left ( 1- \frac{B_t}{K}\right) \right \rbrace e^{E_t} - C_t,$$
+où $E_t$ est un bruit gaussien $\mathcal{N}(0,\sigma^2_P)$.
+
+
+Refaire la simulation avec $\sigma_P=0.5$, $\sigma_P=1$, $\sigma_P=2$.
+
+
+Bien sûr dans un contexte réelle, $B_t$ n'est jamais connue. Par contre, on peut avoir accès à un indice d'abondance $I_t$. On suppose que 
+$$I_t = q \, B_t \, e^{O_t},$$
+où $O_t$ est un bruit gaussien $\mathcal{N}(0,\sigma_O^2)$.
+
+```{r}
+Nstep <- 30
+B <- numeric( Nstep)
+K <- 1000
+r <- 0.3
+sigma_P <- 0.01
+q <- 0.1 
+sigma_O <- 0.01
+
+B[1]  <- .9 * K
+
+
+E <- rnorm(Nstep,sd = sigma_P)
+O <- rnorm(Nstep,sd = sigma_O)
+for(i in 1:(Nstep - 1)){
+  B[i+1] <- (B[i] + r * B[i] * (1 - B[i]/K)) * exp(E[i])
+}
+
+data.frame(time = 1:Nstep, B = B, I = q * B * exp(O)) -> stock
+
+
+
+ggplot() + geom_line(data = stock, aes(x=time,  y=B)) +
+  xlab('Annee') + ylab('Biomass') +
+  geom_point(data = stock, aes(x=time,  y=I / q), col = 'red') + ggtitle('Les variables cachées et observées')
+
+
+ggplot() +
+  xlab('Annee') + ylab('Biomass') +
+  geom_point(data = stock, aes(x=time,  y=I / q), col = 'red') + ggtitle('Les variables  observées')
+```
+
+Le but à partir des observations d'indices d'abondance, on veut reconstruire la chronique des biomasses.
 
