@@ -275,7 +275,7 @@ Nous nous appuierons sur 3 jeux de données qui sont
 
 
 
-# TD estimation de la taille d'une poulation d'otaries
+# TD estimation de l'évolution du stock de merlu en Namibie 
 
 L'objectif de deuxième TD  est  d'estimer l'évolution du stock de merlus de Namibie entre 1964 et 1988.
 
