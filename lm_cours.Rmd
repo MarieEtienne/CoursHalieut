@@ -1,0 +1,258 @@
+---
+title: "Modélisation statistique"
+author: "Marie-Pierre Etienne"
+institute: "https://github.com/MarieEtienne"
+date: "Septembre 2018"
+csl: "resources/apa-no-doi-no-issue.csl"
+output:
+  beamer_presentation:
+    slide_level: 2
+    highlight: tango
+    includes: 
+      in_header: resources/common_preamble.tex
+      before_body: resources/common_startup.tex
+bibliography: resources/bibliography.bib
+fontsize: 10pt
+params: 
+  child_path : "Rmd_files/"
+  setup_path : "resources/"
+---
+
+```{r setup, include = FALSE, cahe = FALSE}
+
+source('resources/knitr_setup.R')
+# knitr::opts_chunk$set(warning = FALSE, message = FALSE, cache = TRUE, 
+#                       verbose = TRUE, size = 'footnotesize',
+#                       dev = 'pdf', fig.align = "center", results = "markup", 
+#                fig.width = 6, fig.height = 4,  fig.pos = 'htbp!', 
+#                out.width = '.8\\textwidth',
+#                fig.path = "figures/", cache.path = "cache/")
+```
+
+# Introduction
+
+## Motivations
+
+- **Comprendre** : des mécanismes biologiques, économiques, ... 
+
+## Motivations
+
+- **Comprendre** : des mécanismes biologiques, économiques, ... 
+
+![](figures/LePape_al.png){width="200px"}  ![](figures/LePape_al2.png){width="100px"}
+
+Type de modèles :
+
+\ ![](figures/LePape_al3.png){width="150px"}
+
+
+## Motivations
+
+
+- **Comprendre** : des mécanismes biologiques, économiques, ... 
+
+- **Prédire** : des tendances, des choix, ....
+
+## Motivations
+
+
+- **Comprendre** : des mécanismes biologiques, économiques, ... 
+
+- **Prédire** : des tendances, des choix, ....
+
+\ ![](figures/iotc.png){width="200px"}
+
+
+
+## Motivations
+
+
+- **Comprendre** : des mécanismes biologiques, économiques, ... 
+
+- **Prédire** : des tendances, des choix, ....
+
+- **Communiquer** : sur l'état d'un système, les conséquences d'une décision
+
+ ![](figures/icatt_0.png){width="200px"}
+ ![](figures/icatt.png){width="200px"}
+
+
+
+
+## Les outils :  différents types de modèles
+
+
+- **Machine Learning** (deep learning)  
+ ![](figures/Deeplearning.png){width="200px"}
+Modèles boites noires, gourmands en données avec un but purement prédictif (réseaux de neurones, forêts aléatoires, ...)
+
+
+- **Modèle stochastique**
+
+De la simple mesure de corrélation jusqu'au modèle mécaniste ....
+
+- **Modèle déterministe**
+
+Le plus souvent dans la panoplie des modèles mécanistes
+
+## Un exemple : relation von Bertalanffy  
+
+Des données de croisance 
+```{r, echo = FALSE, out.width = "0.7\\textwidth"}
+load('data/large_growthdataset.Rdata')
+ggplot(data=large_growth_data, aes(x= age, y = length)) + geom_point()
+```
+
+## Un exemple : relation longueur et âge
+
+Des données de croisance 
+
+Ajustement, 'lissage' par la méthode 'loess'
+
+```{r, echo = FALSE, out.width = "0.7\\textwidth"}
+load('data/large_growthdataset.Rdata')
+ggplot(data=large_growth_data, aes(x= age, y = length)) + geom_point() + geom_smooth(method = 'loess', se = FALSE)
+```
+
+On veut représenter le comportement moyen.
+
+## Un exemple : relation longueur et âge
+
+Des données de croisance 
+
+Ajustement, 'lissage' par la méthode 'loess'
+
+```{r, echo = FALSE, out.width = "0.7\\textwidth"}
+load('data/large_growthdataset.Rdata')
+p_sexe <- ggplot(data=large_growth_data, aes(x= age, y = length, col = sexe)) + geom_point() 
+p_sexe  <- p_sexe  + geom_smooth(method = 'loess', se = FALSE, linetype = "dotdash")
+p_sexe
+```
+
+On ne peut pas facilement tester si les deux courbes sont significativement différentes.
+
+
+
+## Un exemple : relation longueur et âge
+
+Ajustement d'une relation de von Bertalanffy
+
+$$L_k = L_{\inf} \left ( 1 - e^{ \left \lbrace - K ( x - x_0 ) \right\rbrace } \right) $$
+
+```{r, echo = FALSE, out.width=".7\\textwidth"}
+
+f_vonB <- function(x, param){
+  Linf <- param[1]; 
+  K    <- param[2]
+  x0   <- param[3]
+  
+  Linf * (1 - exp( -K * (x - x0)))
+}
+large_growth_data$sexe_num <- as.numeric(large_growth_data$sexe) - 1 
+
+estim_nls <- nls(length ~  (ldiff_m * sexe_num  + Linf) * ( 1 - exp( - (kdiff_m * sexe_num  + K) * (age - (xdiff_m * sexe_num  + x0) ) ) ), data=large_growth_data , start=list(Linf = 35,  K = 0.3, x0 = 10, ldiff_m = 0, kdiff_m = 0, xdiff_m = 0  ) )
+
+
+coef_f <- coef(estim_nls)[1:3]
+coef_m <- coef_f  + coef(estim_nls)[4:6]
+
+xl  <- range(large_growth_data$age)
+abs <- data.frame(x= seq(xl[1], xl[2], length.out = 100) )
+adjusted_vb <- abs %>% bind_rows(x=abs) %>% mutate(sexe = c(rep('f', 100), rep('m', 100)) ) %>% mutate(y = ifelse(sexe == 'f', f_vonB(x, param = coef_f), f_vonB(x, param = coef_m) ))
+p_sexe + geom_line(data = adjusted_vb,  aes(x = x, y = y, col = sexe))
+```
+
+On a perdu en ajustement mais on peut tester une différence mâle femelle.
+
+
+
+
+## Un exemple : relation von Bertalanffy
+
+```{r}
+summary(estim_nls)
+```
+
+## Un exemple : relation von Bertalanffy
+
+![Fondements vonB - Etienne Rivot](figures/ER_VB.png)
+
+## Modèle de production de biomasse
+
+
+$$B_{t+1} = B_t + g( B_t - C_t),\quad g(b) = \rho b \left (1 - \frac{b}{\kappa}\right)$$
+
+$$B_{MSY} = \frac{\kappa}{2}, \quad C_{MSY} = \frac{\kappa \rho}{4}$$
+```{r, echo = FALSE}
+kappa  <- 50
+rho   <- 1
+f_prod <- function(b, kappa, rho){
+  gain <- rho * b *( 1 - b/kappa)
+  ifelse( gain >= 0, gain, NA)
+} 
+
+ndisc <- 101
+abs <- seq(0, 100, length.out = ndisc)
+current_biomass <- data.frame(b=rep(abs,3), kappa_n= c(rep(50,ndisc), rep(100, 2* ndisc)), rho_n= c(rep(1, 2 * ndisc), rep(.5, ndisc) ) ) %>% mutate(kappa=as.factor(kappa_n), rho = as.factor(rho_n))
+
+ p <- current_biomass %>% group_by(rho, kappa) %>% 
+ mutate(gain =  f_prod(b, kappa=kappa_n, rho = rho_n )) %>% ggplot(aes(x=b, y=gain, col=kappa:rho)) + geom_line()  +  geom_segment(aes(x = kappa_n/2, y = 0,   xend = kappa_n/2, yend = rho_n*kappa_n/4, colour = kappa:rho))
+ print(p)
+```
+
+## Des modèles de dynamiques de population - Equations différentielles
+![Etienne Rivot : Dynamique de population](figures/ER_Lokta.png)
+
+## Des modèles écosystémiques - flux
+  ![Etienne Rivot : Ecopath](figures/ER_ecopath.png)
+
+
+
+
+## Des modèles individus centrés
+  ![Etienne Rivot : IBM](figures/ER_IBM.png)
+  
+  
+# Démarche de modélisation
+
+## Comment se lancer 
+ 
+ **Il n'existe pas un unique bon modèle qui répond à toutes les questions**
+
+--
+
+Douglas Adams Le Guide du voyageur galactique :
+
+ *Quarante-deux ! cria Loonquawl. Et c'est tout ce que t'as à nous montrer au bout de sept millions et demi d'années de boulot ?*
+ 
+ *J'ai vérifié très soigneusement, dit l'ordinateur, et c'est incontestablement la réponse exacte. Je crois que le problème, pour être tout à fait franc avec vous, est que vous n'avez jamais vraiment bien saisi la question.  *
+ 
+--
+
+*Essentially, all models are wrong, but some are useful.* (Box, George E. P.; Norman R. Draper)
+
+
+## Comment se lancer 
+
+1. Définir l'objectif de la modélisation : prédire, comprendre, 
+2. Adopter un principe de parcimonie : choisir le plus petit niveau de complexité raisonnable pour répondre à la question.
+
+
+## Le rôle des données
+
+- Pour émettre des hypothèses
+- Pour ajuster le modèle
+- Pour tester les qualités du modèle
+
+## Comment s'y prendre 
+
+- une démarche itérative : on ne construit jamais un modèle en une fois.
+- des outils pour estimer les paramètres : MCO, max de vraisemblance 
+- des outils pour vérifier que le modèle est identifiable (au moins en pratique)
+- des outils pour juger les qualités prédictives d'un modèle 
+
+
+## Et maintenant
+  ![Etienne Rivot : conclusions](figures/ER_outils.png)
+  
+  
